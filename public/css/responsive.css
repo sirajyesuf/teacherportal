@@ -1,0 +1,638 @@
+/*
+====================================
+Medium Screen - Others
+====================================
+*/
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+	.adduser-area {
+		padding: 80px 80px;
+	}
+
+	.main-wrapper {
+	  	padding: 20px 30px 40px 25px;
+	}
+
+	.menu-bar {
+		padding-left: 40px;
+	}
+
+	.main-part {
+		padding-left: 0;
+	}
+
+	.header-addbtn .search-box input {
+		width: 260px;
+		margin-right: 0;
+	}
+
+	.staff-right {
+	    padding-left: 50px;
+	}
+
+	.staff-area {
+		padding-left: 20px;
+	}
+
+	.staff-box {
+		width: 400px;
+	}
+
+	.lesson-upper .note-upper ul li {
+		padding-right: 32px;
+	}
+
+	.student-leftprt .note-upper ul li {
+        padding-right: 15px;
+    }
+
+    .student-leftprt .note-upper ul {
+    	flex-wrap: wrap;
+    }
+
+    .student-leftprt .note-upper ul li:first-child {
+    	width: 100%;
+    	margin-bottom: 12px;
+    }
+
+    .student-rightprt {
+    	padding-left: 20px;
+    }
+
+    .student-right2prt {
+    	margin-top: 45px;
+    }
+
+    .student-leftprt .note-upper ul li {
+    	padding-top: 2px;
+    	padding-bottom: 6px;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+/*
+====================================
+Small Screen - Tablate
+====================================
+*/
+@media screen and (min-width: 768px) and (max-width: 991px) {
+	.adduser-area {
+		padding: 80px 50px;
+	}
+
+	.adduser-title {
+	    margin-top: 25px;
+	    padding-left: 0px;
+	}
+
+	.main-wrapper {
+	  	padding: 20px 20px 40px 15px;
+	}
+
+	.header-left h2 {
+		font-size: 32px;
+	}
+
+	.menu-bar {
+		padding-left: 40px;
+	}
+
+	.student-box a {
+        padding: 0px 8px;
+    }
+
+    .student-box span {
+        font-size: 14px;
+    }
+
+    .student-box span img {
+        max-width: 21px;
+    }
+
+    .student-box {
+        padding: 15px 15px 15px 10px;
+    }
+
+    .student-cnt p {
+        font-size: 15px;
+    }
+
+    .student-cnt p img {
+        max-width: 15px;
+        margin-right: 4px;
+    }
+
+    .student-box .calender-btn {
+        padding: 0 12px;
+    }
+
+    .main-part {
+		padding-left: 5px;
+	}
+
+	.header-addbtn ul {
+	    margin-left: 0;
+	    position: initial;
+	    transform: initial;
+	    padding: 5px 0 10px;
+	}
+
+	.header-addbtn .search-box input {
+		width: 260px;
+		margin-right: 0;
+	}
+
+	.header-addbtn ul li {
+		padding-left: 10px;
+		padding-right: 20px;
+	}
+
+	.staff-right {
+	    padding-left: 30px;
+	}
+
+	.staff-area {
+		padding-left: 15px;
+	}
+
+	.staff-box {
+		width: 340px;
+		padding: 20px 25px;
+		margin-top: 25px;
+	}
+
+	.note-wrapper {
+		padding: 24px 20px
+	}
+
+	.note-upper ul li {
+		padding-right: 45px;
+	}
+
+	.note-cnt {
+		padding: 25px 20px;
+	}
+
+	.note-upper ul li h2 {
+		font-size: 32px;
+	}
+
+	.lesson-upper .note-upper ul li {
+		padding-right: 20px;
+	}
+
+	.lesson-upper .note-upper ul li h2 {
+		font-size: 30px;
+	}
+
+	.lesson-upper .search-box input {
+		width: 235px;
+		margin-right: 0;
+		margin-left: 0;
+	}
+
+	.lesson-table table tr td {
+		height: 120px;
+	}
+
+    .student-rightprt {
+    	max-width: 100%;
+    	padding-left: 0px;
+    	margin-left: 0;
+    	padding-top: 50px;
+    }
+
+    .tls-part a {
+    	right: 0;
+    	bottom: -5px;
+    }
+
+    .student-leftprt .note-upper ul li {
+        padding-right: 14px;
+    }
+
+    .note-upper ul li a {
+        padding: 10px 10px;
+    }
+
+    .note-upper ul li a img {
+        margin-right: 2px;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+/*
+====================================
+Small Screen - Mobile
+====================================
+*/
+@media screen and (max-width: 767px) {
+	.adduser-area {
+		padding: 60px 35px;
+	}
+
+	.adduser-title {
+	    margin-top: 25px;
+	    padding-left: 0px!important;
+	}
+
+	.main-wrapper {
+	  	padding: 20px 16px 30px 15px;
+	}
+
+	.header-left h2 {
+		font-size: 25px;
+		padding: 8px 30px;
+		border-radius: 8px;
+	}
+
+	.header-middle p {
+		font-size: 20px;
+	}
+
+	.header-right a {
+		padding: 8px 30px;
+	}
+
+	.menu-bar {
+		padding-left: 25px;
+		padding-top: 10px;
+	}
+
+	.student-box {
+		max-width: 500px;
+		width: 100%;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.main-part {
+		padding-left: 0;
+	}
+
+	.header-addbtn ul {
+	    margin-left: 0;
+	    position: initial;
+	    transform: initial;
+	    padding: 5px 0 10px;
+	}
+
+	.header-addbtn .search-box input {
+		width: 250px;
+		margin-right: 0;
+	}
+
+	.header-addbtn ul li {
+		padding-left: 0px;
+		padding-right: 10px;
+	}
+
+	.staff-area {
+		padding-left: 15px;
+		padding-right: 15px;
+	}
+
+	.staff-main {
+		display: block;
+	}
+
+	.staff-right {
+	    padding-left: 0;
+	}
+
+	.staff-box {
+		width: 100%;
+		margin-top: 25px;
+	}
+
+	.note-cnt {
+		min-height: initial;
+		padding-bottom: 50px;
+	}
+
+	.note-upper ul li {
+		padding-right: 45px;
+	}
+
+	.note-cnt {
+		padding: 25px 20px;
+	}
+
+	.note-upper ul li h2 {
+		font-size: 32px;
+	}
+
+	.lesson-upper {
+		display: block;
+	}
+
+	.lesson-upper .note-upper ul li h2 {
+		font-size: 30px;
+	}
+
+	.lesson-upper .note-upper ul li {
+		padding-right: 25px;
+	}
+
+	.lesson-upper .search-box input {
+		width: 235px;
+		margin-right: 0;
+		margin-left: 0;
+		margin-top: 20px;
+		width: 100%;
+	}
+
+	.student-rightprt {
+    	max-width: 100%;
+    	padding-left: 0px;
+    	margin-left: 0;
+    	padding-top: 50px;
+    }
+
+    .tls-part a {
+    	right: 0;
+    	bottom: -5px;
+    }
+
+    .student-leftprt .note-upper ul li {
+    	padding-right: 12px;
+    }
+
+    .student-leftprt .stdlft-upr ul {
+    	flex-wrap: wrap;
+    }
+
+    .student-leftprt .stdlft-upr ul li:first-child {
+    	width: 100%;
+    	margin-bottom: 12px;
+    }
+
+     .student-leftprt .stdlft-upr ul li {
+     	margin-bottom: 12px;
+    }
+
+
+}
+
+/*
+====================================
+Extra - Small Screen - Mobile
+====================================
+*/
+@media screen and (max-width: 575px) {
+	.login-main h2 {
+		font-size: 29px;
+		margin-bottom: 40px;
+	}
+
+	.login-main input {
+		padding: 18px 20px;
+		margin-bottom: 20px;
+		border-radius: 8px;
+	}
+
+	.login-main button {
+		width: 270px;
+		font-size: 25px;
+		margin-top: 70px;
+	}
+
+	.adduser-area {
+		padding: 50px 15px;
+	}
+
+	.adduser-main {
+		padding: 40px 0;
+	}
+
+	.adduser-title h2 {
+		font-size: 30px;
+	}
+
+	.adduser-item {
+		margin-bottom: 24px;
+	}
+
+	.adduser-item label {
+		font-size: 20px;
+		margin-right: 20px;
+	}
+
+	.adduser-item input {
+		padding: 18px 20px;
+		border-radius: 8px;
+	}
+
+	.adduser-item button {
+		width: 200px;
+		font-size: 25px;
+		margin-top: 60px;
+	}
+
+	.main-wrapper {
+	  	padding: 16px 15px 30px 15px;
+	}
+
+	.header-left h2 {
+		font-size: 24px;
+		padding: 8px 25px;
+		border-radius: 8px;
+	}
+
+	.header-right a {
+		padding: 8px 28px;
+	}
+
+	.header-middle p {
+		display: none;
+	}
+
+	.search-bar {
+	    padding-top: 20px;
+	}
+
+	.search-box input {
+		margin-right: auto;
+		margin-left: auto;
+	}
+
+	.menu-bar {
+		padding-left: 20px;
+	}
+
+	.main-part {
+		padding-left: 0;
+	}
+
+	.student-box a {
+        padding: 0px 8px;
+    }
+
+    .student-box span {
+        font-size: 14px;
+    }
+
+    .student-box span img {
+        max-width: 21px;
+    }
+
+    .student-box {
+        padding: 15px 15px 15px 10px;
+    }
+
+    .student-cnt p {
+        font-size: 15px;
+    }
+
+    .student-cnt p img {
+        max-width: 15px;
+        margin-right: 4px;
+    }
+
+    .student-box .calender-btn {
+        padding: 0 12px;
+    }
+
+    .header-addbtn {
+    	flex-direction: column-reverse;
+    	justify-content: center;
+    	align-items: center;
+    }
+
+    .header-addbtn .search-box input {
+    	width: 300px;
+    	margin-left: auto;
+    	margin-right: auto;
+    }
+
+    .header-addbtn form {
+    	margin-left: auto;
+    	margin-right: auto;
+    	margin-bottom: 10px;
+    }
+
+    .staff-area {
+		padding-left: 0px;
+		padding-right: 0px;
+	}
+
+	.staff-main {
+		display: block;
+	}
+
+	.staff-right {
+	    padding-left: 0;
+	}
+
+	.staff-box {
+		width: 100%;
+		margin-top: 25px;
+		padding: 20px 25px;
+	}
+
+	.note-wrapper {
+		padding: 24px 15px
+	}
+
+	.note-upper ul li {
+		padding-right: 30px;
+	}
+
+	.note-cnt {
+		padding: 25px 15px;
+		min-height: initial;
+	}
+
+	.note-upper ul li h2 {
+		font-size: 32px;
+	}
+
+	.note-upper ul {
+		flex-wrap: wrap;
+	}
+
+	.note-upper ul li:first-child {
+		width: 100%;
+		margin-bottom: 15px;
+	}
+
+	.lesson-table table tr td {
+		height: 120px;
+		padding: 12px 10px;
+		font-size: 12px;
+	}
+
+	.student-leftprt .note-upper ul li {
+    	padding-right: 10px;
+    	padding-bottom: 10px;
+    }
+
+    .tls-part table tr td {
+    	font-size: 12px;
+    	padding: 12px 5px 12px 8px;
+    }
+
+    .hour-part ul li h2 {
+    	font-size: 46px;
+    }
+
+    .hour-part ul li p {
+    	font-size: 14px;
+    }
+
+    .hour-links ul li {
+    	padding-right: 35px;
+    }
+
+    .hour-links ul li a {
+    	font-size: 21px;
+    }
+
+    .hour-box {
+    	padding: 24px 18px;
+    }
+
+    .hour-box {
+    	flex-wrap: wrap;
+    }
+
+    .hour-box p {
+    	width: 100%;
+    	margin-top: 12px;
+    }
+
+    .templt-wrap {
+	    padding-top: 5px;
+	}
+
+	.student-box span {
+		width: 72px;
+	}
+
+
+}
+

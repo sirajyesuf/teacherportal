@@ -1,0 +1,49 @@
+@extends('layouts.app')
+
+@section('title','Create User')
+
+@section('content')
+	<main class="adduser-area">
+		<div class="home-btn">
+	        <a href="{{ route('home') }}"><img src="images/home.svg" alt=""> Home</a>
+	    </div>
+	   	<div class="adduser-title">
+	    	<h2>Create Account</h2>	    	
+	       	<div class="adduser-main">
+	           	<form action="{{ route('user.add') }}" method="POST">
+	           		@csrf
+	               	<div class="adduser-item">
+	                    <label for="name">Name:</label>
+	                    <input type="text" id="name" name="name" placeholder="Enter Name" value="{{ old('name') }}">
+	                </div>
+                    @error('name')
+		                <span class="invalid-feedback" role="alert">
+		                    <strong>{{ $message }}</strong>
+		                </span>
+		            @enderror
+	                <div class="adduser-item">
+	                    <label for="email">Email:</label>
+	                    <input type="email" id="email" placeholder="Enter Email" name="email" value="{{ old('email') }}">
+	                </div>
+                    @error('email')
+		                <span class="invalid-feedback" role="alert">
+		                    <strong>{{ $message }}</strong>
+		                </span>
+		            @enderror
+	                <div class="adduser-item">
+	                    <label for="role">Role:</label>
+	                    <input type="text" id="role" placeholder="Enter Role" name="role" value="{{ old('role') }}">
+	                </div>
+                    @error('role')
+		                <span class="invalid-feedback" role="alert">
+		                    <strong>{{ $message }}</strong>
+		                </span>
+		            @enderror
+	                <div class="adduser-item">
+	                    <button type="Submit">Submit</button>
+	                </div>
+	            </form>
+	        </div>
+	    </div>
+	</main>
+@endsection
