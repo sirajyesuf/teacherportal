@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password','role','role_type',
     ];
 
     /**
@@ -36,4 +36,39 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Always hash the password when we save it to the database
+     */
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
+    }
+
+    public function scopeSearch($query, $search)
+    {
+        return $query->where('name', 'LIKE', "%$search%");
+    }
+
+    /**
+     * Scope to only include students.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeStudents($query)
+    {
+        return $query->where('role_type', 3);
+    }
+
+    /**
+     * Scope to only include staff users.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeStaff($query)
+    {
+        return $query->where('role_type', 2);
+    }
 }

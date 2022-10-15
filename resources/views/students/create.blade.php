@@ -19,7 +19,7 @@
 			  	</div>
 			@endif
 	       	<div class="adduser-main">
-	           	<form action="{{ route('user.add') }}" method="POST">
+	           	<form action="{{ route('student.add') }}" method="POST">
 	           		@csrf
 	               	<div class="adduser-item">
 	                    <label for="name">Name:</label>
@@ -57,15 +57,9 @@
 		                    <strong>{{ $message }}</strong>
 		                </span>
 		            @enderror
-	                <div class="adduser-item">
-	                    <label for="role">Role:</label>
-	                    <input type="text" id="role" placeholder="Enter Role" name="role" value="{{ old('role') }}">
-	                </div>
-                    @error('role')
-		                <span class="invalid-feedback" role="alert">
-		                    <strong>{{ $message }}</strong>
-		                </span>
-		            @enderror
+	                	                    
+	                <input type="hidden" id="role" name="role" value="student">                
+                    
 	                <div class="adduser-item">
 	                    <button type="Submit">Submit</button>
 	                </div>

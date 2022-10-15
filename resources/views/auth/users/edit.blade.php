@@ -19,11 +19,11 @@
 			  	</div>
 			@endif
 	       	<div class="adduser-main">
-	           	<form action="{{ route('user.add') }}" method="POST">
+	           	<form action="{{ route('user.update',$user->id) }}" method="POST">
 	           		@csrf
 	               	<div class="adduser-item">
 	                    <label for="name">Name:</label>
-	                    <input type="text" id="name" name="name" placeholder="Enter Name" value="{{ old('name') }}">
+	                    <input type="text" id="name" name="name" placeholder="Enter Name" value="{{ $user->name }}">
 	                </div>
                     @error('name')
 		                <span class="invalid-feedback" role="alert">
@@ -32,7 +32,7 @@
 		            @enderror
 	                <div class="adduser-item">
 	                    <label for="email">Email:</label>
-	                    <input type="email" id="email" placeholder="Enter Email" name="email" value="{{ old('email') }}">
+	                    <input type="email" id="email" placeholder="Enter Email" name="email" value="{{ $user->email }}">
 	                </div>
                     @error('email')
 		                <span class="invalid-feedback" role="alert">
@@ -41,7 +41,7 @@
 		            @enderror
 		            <div class="adduser-item">
 	                    <label for="password">Password:</label>
-	                    <input type="password" id="password" placeholder="Enter Password" name="password" value="{{ old('password') }}">
+	                    <input type="password" id="password" placeholder="Enter Password" name="password" value="">
 	                </div>
                     @error('password')
 		                <span class="invalid-feedback" role="alert">
@@ -50,7 +50,7 @@
 		            @enderror
 		            <div class="adduser-item">
 	                    <label for="password_confirmation">{{ __('Confirm Password') }}:</label>
-	                    <input type="password" id="password_confirmation" placeholder="Enter {{ __('Confirm Password') }}" name="password_confirmation" value="{{ old('password_confirmation') }}">
+	                    <input type="password" id="password_confirmation" placeholder="Enter {{ __('Confirm Password') }}" name="password_confirmation" value="">
 	                </div>
                     @error('password_confirmation')
 		                <span class="invalid-feedback" role="alert">
@@ -59,7 +59,7 @@
 		            @enderror
 	                <div class="adduser-item">
 	                    <label for="role">Role:</label>
-	                    <input type="text" id="role" placeholder="Enter Role" name="role" value="{{ old('role') }}">
+	                    <input type="text" id="role" placeholder="Enter Role" name="role" value="{{ $user->role }}">
 	                </div>
                     @error('role')
 		                <span class="invalid-feedback" role="alert">

@@ -157,6 +157,7 @@ ul {
     border: none;
     outline: none;
     border-radius: 12px;
+    margin-left: 10px;
 }
 
 .adduser-item input::placeholder {
@@ -262,7 +263,7 @@ ul {
     border: none;
     outline: none;
     border-radius: 8px;
-    background-image: url(images/search.svg);
+    background-image: url(../images/search.svg);
     background-repeat: no-repeat;
     background-position: 16px center;
     padding-left: 50px;
@@ -520,7 +521,8 @@ ul {
 
 .staff-main {
     display: flex;
-    align-items: center;
+    margin-bottom: 15px;
+    /*align-items: center;*/
 }
 
 .staff-box {
@@ -963,5 +965,17 @@ ul {
 }
 .invalid-feedback{
     display: block!important;
-    margin-left: 7rem;
+    margin-left: 8rem;
+}
+
+#login-form .invalid-feedback{
+    margin-left: 0rem;   
+}
+.page-item.active .page-link {
+    background-color: black;
+    border-color: black;
+}
+.page-link {    
+    line-height: 1.25;
+    color: black;    
 }

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\User;
 
-class UserController extends Controller
+class StudentController extends Controller
 {
     public function __construct()
     {
@@ -15,26 +15,27 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('auth.users.create');
+        return view('students.create');
     }
 
     public function add(Request $request)
     {
         $this->validator($request->all())->validate();
 
+        $request->request->add(['role' => 'student','role_type' => 3]);
+
         $user = User::create($request->all());
         
         if($user)
         {
-            toastr()->success('User created Successfully');
-            return redirect()->route('staff');
+            toastr()->success('Student created Successfully');
+            return redirect()->route('home');
         }
         else
         {
             toastr()->error('An error has occurred please try again later.');
             return back();
         }
-
     }
 
     protected function validator(array $data)
@@ -42,13 +43,7 @@ class UserController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'role' => ['required','string','max:100'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],            
         ]);
-    }
-
-    public function edit(User $user)
-    {
-        return view('auth.users.edit',compact('user'));
     }
 }

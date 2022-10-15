@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -21,8 +22,17 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('home');
+        $users = User::students()->search($request->q)->paginate(3);
+
+        $users->appends (array ('q' => $request->q));
+
+        $q = '';
+
+        if(isset($request->q))
+            $q = $request->q;           
+
+        return view('students.index', compact('users','q'));
     }
 }

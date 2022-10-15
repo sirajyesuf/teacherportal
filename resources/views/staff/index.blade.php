@@ -4,6 +4,21 @@
 
 @section('content')
 <main class="main-wrapper">
+    @if(session()->has('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Success: </strong>{{session()->get('success')}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>        
+    @elseif(session()->has('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error: </strong>{{session()->get('error')}}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>        
+    @endif
     <div class="header-area">
         <div class="header-left">
             <h2>Hello {{ auth()->user()->name}}!</h2>
@@ -20,12 +35,13 @@
         <p class="d-sm-none">Name List</p>
         <div class="header-addbtn">
             <ul>
-                <li><a href="#"><img src="images/add-circle-outline.svg" alt=""> Add Student</a></li>
+                <li><a href="{{ route('student.create') }}"><img src="images/add-circle-outline.svg" alt=""> Add Student</a></li>
                 <li><a href="{{ route('user.create') }}"><img src="images/add-circle-outline.svg" alt=""> Add User</a></li>
             </ul>
-            <form action="#" method="POST">
+            <form action="{{ route('staff.post') }}" method="POST">
+                @csrf
                 <div class="search-box">
-                    <input type="search" placeholder="">
+                    <input type="search" name="q" placeholder="" value="{{ $q }}">
                 </div>
             </form>
         </div>
@@ -42,70 +58,29 @@
     <div class="staff-area">
         <div class="staff-main">
             <div class="staff-left">
-                <div class="staff-box">
-                    <h4>Chris Tan</h4>
-                    <h4>Teacher</h4>
-                    <a href="#">Edit</a>
-                </div>
-                <div class="staff-box">
-                    <h4>Chris Tan</h4>
-                    <h4>Teacher</h4>
-                    <a href="#">Edit</a>
-                </div>
-                <div class="staff-box">
-                    <h4>Chris Tan</h4>
-                    <h4>Teacher</h4>
-                    <a href="#">Edit</a>
-                </div>
-                <div class="staff-box">
-                    <h4>Chris Tan</h4>
-                    <h4>Teacher</h4>
-                    <a href="#">Edit</a>
-                </div>
-                <div class="staff-box">
-                    <h4>Chris Tan</h4>
-                    <h4>Teacher</h4>
-                    <a href="#">Edit</a>
-                </div>
-                <div class="staff-box">
-                    <h4>Chris Tan</h4>
-                    <h4>Teacher</h4>
-                    <a href="#">Edit</a>
-                </div>
+                @foreach($users as $key => $user)
+                @if($key % 2 == 0)
+                    <div class="staff-box">
+                        <h4>{{ $user->name }}</h4>
+                        <h4>{{ $user->role }}</h4>
+                        <a href="{{ route('user.edit', $user->id) }}">Edit</a>
+                    </div>                
+                @endif
+                @endforeach
             </div>
             <div class="staff-right">
-                <div class="staff-box">
-                    <h4>Chris Tan</h4>
-                    <h4>Teacher</h4>
-                    <a href="#">Edit</a>
-                </div>
-                <div class="staff-box">
-                    <h4>Chris Tan</h4>
-                    <h4>Teacher</h4>
-                    <a href="#">Edit</a>
-                </div>
-                <div class="staff-box">
-                    <h4>Chris Tan</h4>
-                    <h4>Teacher</h4>
-                    <a href="#">Edit</a>
-                </div>
-                <div class="staff-box">
-                    <h4>Chris Tan</h4>
-                    <h4>Teacher</h4>
-                    <a href="#">Edit</a>
-                </div>
-                <div class="staff-box">
-                    <h4>Chris Tan</h4>
-                    <h4>Teacher</h4>
-                    <a href="#">Edit</a>
-                </div>
-                <div class="staff-box">
-                    <h4>Chris Tan</h4>
-                    <h4>Teacher</h4>
-                    <a href="#">Edit</a>
-                </div>
+                @foreach($users as $key => $user)
+                @if($key % 2 == 1)
+                    <div class="staff-box">
+                        <h4>{{ $user->name }}</h4>
+                        <h4>{{ $user->role }}</h4>
+                        <a href="{{ route('user.edit', $user->id) }}">Edit</a>
+                    </div>        
+                @endif
+                @endforeach
             </div>
         </div>
+    {{ $users->links() }}
     </div>            
 </main>
 @endsection

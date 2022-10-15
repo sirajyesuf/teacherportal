@@ -395,6 +395,12 @@ Small Screen - Mobile
      	margin-bottom: 12px;
     }
 
+    .invalid-feedback{
+	    display: block!important;
+	    margin-left: 6rem;
+	    width: inherit;
+	}
+
 
 }
 

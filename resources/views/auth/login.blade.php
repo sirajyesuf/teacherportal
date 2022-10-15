@@ -4,7 +4,7 @@
 
     <div class="login-main">
         <h2>Sign in to your Account</h2>
-        <form method="POST" action="{{ route('login') }}">
+        <form method="POST" action="{{ route('login') }}" id="login-form">
             @csrf
             <input id="email" name="email" type="email" placeholder="Email Address" class="@error('email') is-invalid @enderror" value="{{ old('email') }}" required autocomplete="email" autofocus>
             @error('email')
