@@ -47,8 +47,38 @@ class UserController extends Controller
         ]);
     }
 
+    protected function editValidator(array $data,$user)
+    {
+        return Validator::make($data, [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,NULL,'. $user->id . ',id'],
+            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+            'role' => ['required','string','max:100'],
+        ]);   
+    }
+
     public function edit(User $user)
     {
         return view('auth.users.edit',compact('user'));
     }
+
+    public function update(User $user,Request $request)
+    {
+        $this->editValidator($request->all(),$user)->validate();
+
+        $r = $user->update($request->all());
+
+        if($r)
+        {
+            toastr()->success('User upted Successfully');
+            return redirect()->route('staff');
+        }
+        else
+        {
+            toastr()->error('An error has occurred please try again later.');
+            return back();
+        }
+    }
+
+    
 }

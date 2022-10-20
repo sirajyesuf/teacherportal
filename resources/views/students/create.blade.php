@@ -40,6 +40,15 @@
 		                </span>
 		            @enderror
 		            <div class="adduser-item">
+	                    <label for="phone">Phone:</label>
+	                    <input type="phone" id="phone" placeholder="Enter Phone" name="phone" value="{{ old('phone') }}">
+	                </div>
+                    @error('phone')
+		                <span class="invalid-feedback" role="alert">
+		                    <strong>{{ $message }}</strong>
+		                </span>
+		            @enderror
+		            {{-- <div class="adduser-item">
 	                    <label for="password">Password:</label>
 	                    <input type="password" id="password" placeholder="Enter Password" name="password" value="{{ old('password') }}">
 	                </div>
@@ -56,9 +65,9 @@
 		                <span class="invalid-feedback" role="alert">
 		                    <strong>{{ $message }}</strong>
 		                </span>
-		            @enderror
+		            @enderror --}}
 	                	                    
-	                <input type="hidden" id="role" name="role" value="student">                
+	                {{-- <input type="hidden" id="role" name="role" value="student">                 --}}
                     
 	                <div class="adduser-item">
 	                    <button type="Submit">Submit</button>

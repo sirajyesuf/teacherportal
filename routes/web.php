@@ -34,4 +34,24 @@ Route::post('/user/{user}/update', 'UserController@update')->name('user.update')
 
 Route::get('/student/create', 'StudentController@create')->name('student.create');
 Route::post('/student/add', 'StudentController@add')->name('student.add');
+Route::post('/student/date/update', 'StudentController@dateUpdate')->name('appointment.update');
+Route::get('/student/profile/{student}', 'StudentController@profile')->name('student.profile');
+Route::post('/student/description/update', 'StudentController@descriptionUpdate')->name('student.description.update');
+
+Route::get('/lesson/{id}', 'LessonController@index')->name('lesson');
+Route::get('/select/template/{student}', 'LessonController@templateChoice')->name('select.template');
+Route::post('/lessons/create', 'LessonController@create')->name('lesson.create');
+Route::post('/lessons/update', 'LessonController@update')->name('lesson.update');
+
+Route::get('/casenotes/{id}', 'CaseNoteController@index')->name('casenotes');
+Route::post('/case-note/update', 'CaseNoteController@update')->name('casenote.update');
+
+Route::post('/lesson-hours/add', 'LessonLogController@add')->name('log.hours.add');
+
+Route::post('/log-hours/add', 'LogHourController@add')->name('lesson.hours.add');
+
+Route::post('/tls/add', 'TlsController@add')->name('tls.add');
+
+
+
 

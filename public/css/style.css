@@ -645,7 +645,8 @@ ul {
     background: #FFFFFF;
     border: 1px solid #000000;
     padding: 28px 30px;
-    min-height: 800px;
+    /*min-height: 800px;*/
+    min-height: auto;
 }
 
 .note-cnt h2 {
@@ -978,4 +979,103 @@ ul {
 .page-link {    
     line-height: 1.25;
     color: black;    
+}
+.home-picker{
+    background: inherit!important;
+    display: inline!important;
+    padding: 0px 0px!important;
+    font-weight: inherit !important;
+    font-size: inherit!important;
+    cursor: pointer;
+}
+.temp-ttl{
+    height: 100px;
+    align-items: center;   
+    display: flex;
+    justify-content: center;
+}
+
+.option .dot{
+  height: 20px;
+  width: 20px;
+  background: #d9d9d9;
+  border-radius: 50%;
+  position: relative;
+}
+.option .dot::before{
+  position: absolute;
+  content: "";
+  top: 4px;
+  left: 4px;
+  width: 12px;
+  height: 12px;
+  background: black;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(1.5);
+  transition: all 0.3s ease;
+}
+.option{
+  background: #fff;
+  height: 45px;
+  width: 145px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  /*margin: 0 10px;*/
+  border-radius: 5px;
+  cursor: pointer;
+  /*padding: 0 10px;*/
+  border: 2px solid lightgrey;
+  transition: all 0.3s ease;
+}
+input[type="radio"]{
+  display: none;
+}
+#template_1:checked:checked ~ .option-1,
+#template_2:checked:checked ~ .option-2{
+  border-color: black;
+  background: black;
+}
+#template_1:checked:checked ~ .option-1 .dot,
+#template_2:checked:checked ~ .option-2 .dot{
+  background: #fff;
+}
+#template_1:checked:checked ~ .option-1 .dot::before,
+#template_2:checked:checked ~ .option-2 .dot::before{
+  opacity: 1;
+  transform: scale(1);
+}
+.wrapper .option span{
+  font-size: 20px;
+  color: #808080;
+}
+#template_1:checked:checked ~ .option-1 span,
+#template_2:checked:checked ~ .option-2 span{
+  color: #fff;
+}
+
+li button{
+    font-weight: 700;
+    font-size: 13px;
+    color: #FFFFFF;
+    background: #000000;
+    display: inline-block;
+    padding: 8px 18px 7px 10px;
+    border-radius: 8px;
+    transition: 0.2s all ease;
+}
+
+.save-btn button{
+    font-weight: 700;
+    font-size: 13px;
+    color: #FFFFFF;
+    background: #000000;
+    display: inline-block;
+    padding: 5px 10px 5px 7px;
+    border-radius: 8px;
+    transition: 0.2s all ease;
+}
+.error{
+    color: red;
 }

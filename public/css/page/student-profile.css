@@ -1,0 +1,16 @@
+.home-picker-profile{
+    padding: 10px 7px!important;
+    cursor: pointer;
+}
+
+td input{
+    max-width: 100px;
+}
+
+.tls-part a{
+    bottom: 0px;
+}
+
+.border-none{
+    border: none!important;
+}

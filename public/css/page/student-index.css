@@ -1,0 +1,16 @@
+.student-cnt a{
+	font-family: 'Baloo Bhai 2', cursive;
+	font-weight: 700;
+    font-size: 16px;
+    margin-left: 8px;
+    margin-bottom: 8px;
+    line-height: 0px; 
+    color: black; 
+    background: none;
+    display: block; 
+    align-items: baseline; 
+    padding: 0px 0px; 
+    border: none; 
+   	height: 0px;
+   	display: contents;
+}

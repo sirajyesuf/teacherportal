@@ -21,7 +21,7 @@
 	       	<div class="adduser-main">
 	           	<form action="{{ route('user.update',$user->id) }}" method="POST">
 	           		@csrf
-	               	<div class="adduser-item">
+	           		<div class="adduser-item">
 	                    <label for="name">Name:</label>
 	                    <input type="text" id="name" name="name" placeholder="Enter Name" value="{{ $user->name }}">
 	                </div>
