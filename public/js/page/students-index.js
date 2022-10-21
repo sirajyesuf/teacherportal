@@ -55,10 +55,10 @@ jQuery.browser = {};
                                     // console.log(t);
                                     showMessage('success','Date update success');
                                     // $('.jq-toast-wrap').remove();
-                                    // setTimeout(function() {
-                                    //     // window.location.reload(true);                                
-                                    //     $('.jq-toast-wrap').remove();
-                                    // }, 2500);
+                                    setTimeout(function() {
+                                        window.location.reload(true);                                
+                                        // $('.jq-toast-wrap').remove();
+                                    }, 1500);
 
                                 } else {
 

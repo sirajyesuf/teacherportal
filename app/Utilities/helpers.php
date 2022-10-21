@@ -38,16 +38,28 @@ function normal_case($str)
 function colorOfDate($dt = '')
 {
 	$week = Carbon::now()->addWeek();
+	$week2 = Carbon::now()->addWeek(2);
+	$days3 = Carbon::now()->addDays(3);
 	if($dt)
 	{
 		$d = Carbon::parse($dt);
-		\Log::info('passed date: ');
-		\Log::info($d);
-		\Log::info('addWeek');
-		\Log::info($week);
-		if($dt > $week)
+		
+		if($dt > $week2)
 		{
-			\Log::info($week);
+			return 3;
+		}
+		else if($dt > $week && $dt < $week2)
+		{
+			return 2;
+		}
+		elseif ($dt > $days3 && $dt < $week) {
+			return 1;
+		}
+		else
+		{
+			return 1;
 		}
 	}
+	else
+		return 0;
 }

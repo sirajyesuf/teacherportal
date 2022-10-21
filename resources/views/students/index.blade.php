@@ -60,10 +60,20 @@
                                 <a href="{{route('student.profile',$user->id)}}}"><h4>{{ $user->name }}</h4></a>
                                 <p><img src="images/clock.svg" alt=""> 3h 15min</p>
                             </div>
-                            {{-- {{colorOfDate($user->appointment_date)}} --}}
+                            @php 
+                                $t = colorOfDate($user->appointment_date);
+                                if($t == 3)
+                                    $colClass = 'black';
+                                elseif($t == 2)
+                                    $colClass = 'yellow';
+                                elseif($t == 1)
+                                    $colClass = 'red'; 
+                                else
+                                    $colClass = 'puple'; 
+                            @endphp
                             <a href="{{ route('lesson',$user->id)}}" lession-id="{{ $user->id }}">Lesson</a>
                             <a href="{{ route('casenotes',$user->id) }}">Case Notes</a>
-                            <span class="puple"><input id="hiddenDate_{{$user->id}}" class="datePickerInput" type="hidden" /><a class="home-picker" data-id="{{ $user->id }}"><img src="{{ asset('images/alarm-3.svg')}}" alt=""> {{ shortDateFormat($user->appointment_date)}}</a></span>
+                            <span class="{{$colClass}}"><input id="hiddenDate_{{$user->id}}" class="datePickerInput" type="hidden" /><a class="home-picker" data-id="{{ $user->id }}"><img src="{{ asset('images/alarm-3.svg')}}" class="filter-{{$colClass}}" alt=""> {{ shortDateFormat($user->appointment_date)}}</a></span>
                         </div>                        
                     </div>
                     @endif
@@ -78,10 +88,21 @@
                                 <a href="{{route('student.profile',$user->id)}}}"><h4>{{ $user->name }}</h4></a>
                                 <p><img src="images/clock.svg" alt=""> 3h 15min</p>
                             </div>
+                            @php 
+                                $t = colorOfDate($user->appointment_date);
+                                if($t == 3)
+                                    $colClass = 'black';
+                                elseif($t == 2)
+                                    $colClass = 'yellow';
+                                elseif($t == 1)
+                                    $colClass = 'red'; 
+                                else
+                                    $colClass = 'puple';
+                            @endphp
                             <a href="{{ route('lesson',$user->id)}}" {{ $user->id }}>Lesson</a>
                             <a href="{{ route('casenotes',$user->id) }}">Case Notes</a>
                             {{-- <span class="puple"><img src="images/alarm-3.svg" alt=""> 14 Sept</span> --}}
-                            <span class="puple"><input id="hiddenDate_{{$user->id}}" class="datePickerInput" type="hidden" /><a class="home-picker" data-id="{{ $user->id }}"><img src="{{ asset('images/alarm-3.svg')}}" alt=""> {{ shortDateFormat($user->appointment_date)}}</a></span>
+                            <span class="{{$colClass}}"><input id="hiddenDate_{{$user->id}}" class="datePickerInput" type="hidden" /><a class="home-picker" data-id="{{ $user->id }}"><img src="{{ asset('images/alarm-3.svg')}}" class="filter-{{$colClass}}" alt=""> {{ shortDateFormat($user->appointment_date)}}</a></span>
                         </div>                        
                     </div>
                     @endif
@@ -96,10 +117,21 @@
                                 <a href="{{route('student.profile',$user->id)}}}"><h4>{{ $user->name }}</h4></a>
                                 <p><img src="images/clock.svg" alt=""> 3h 15min</p>
                             </div>
+                            @php 
+                                $t = colorOfDate($user->appointment_date);
+                                if($t == 3)
+                                    $colClass = 'black';
+                                elseif($t == 2)
+                                    $colClass = 'yellow';
+                                elseif($t == 1)
+                                    $colClass = 'red'; 
+                                else
+                                    $colClass = 'puple'; 
+                            @endphp
                             <a href="{{ route('lesson',$user->id)}}" {{ $user->id }}>Lesson</a>
                             <a href="{{ route('casenotes',$user->id) }}">Case Notes</a>
                             {{-- <span class="puple"><img src="images/alarm-3.svg" alt=""> 24 June</span> --}}
-                            <span class="puple"><input id="hiddenDate_{{$user->id}}" class="datePickerInput" type="hidden" /><a class="home-picker" data-id="{{ $user->id }}"><img src="{{ asset('images/alarm-3.svg')}}" alt=""> {{ shortDateFormat($user->appointment_date)}}</a></span>
+                            <span class="{{$colClass}}"><input id="hiddenDate_{{$user->id}}" class="datePickerInput" type="hidden" /><a class="home-picker" data-id="{{ $user->id }}"><img src="{{ asset('images/alarm-3.svg')}}" class="filter-{{$colClass}}" alt=""> {{ shortDateFormat($user->appointment_date)}}</a></span>
                         </div>
                     </div>
                     @endif
