@@ -892,7 +892,7 @@ ul {
     font-family: 'Baloo Bhai 2', cursive;
     font-weight: 700;
     font-size: 24px;
-    color: #000000;
+    /*color: #000000;*/
     display: inline-block;
     opacity: 0.4;
     transition: 0.2s all ease;
@@ -1078,4 +1078,7 @@ li button{
 }
 .error{
     color: red;
+}
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+    opacity: 1!important;
 }
