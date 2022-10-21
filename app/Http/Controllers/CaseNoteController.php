@@ -25,7 +25,7 @@ class CaseNoteController extends Controller
 
     public function update(Request $request)
     {
-        $casenote = CaseNote::where('student_id',$request->user_id)->where('deleted_at',null)->first();
+        $casenote = CaseNote::where('student_id',$request->student_id)->where('deleted_at',null)->first();
         
         if(!$casenote)
             $casenote = new CaseNote;

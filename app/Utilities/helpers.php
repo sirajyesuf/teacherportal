@@ -1,4 +1,5 @@
 <?php
+use Carbon\Carbon;
 
 function shortDateFormat($date='')
 {
@@ -32,4 +33,21 @@ function addPageJsLink($link){
 function normal_case($str)
 {
 	return implode(' ', array_map('ucfirst', explode('_', $str)));
+}
+
+function colorOfDate($dt = '')
+{
+	$week = Carbon::now()->addWeek();
+	if($dt)
+	{
+		$d = Carbon::parse($dt);
+		\Log::info('passed date: ');
+		\Log::info($d);
+		\Log::info('addWeek');
+		\Log::info($week);
+		if($dt > $week)
+		{
+			\Log::info($week);
+		}
+	}
 }
