@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Validator;
 use App\LogHour;
 use Auth;
+use DB;
+use App\Student;
 
 class LessonLogController extends Controller
 {
@@ -38,6 +40,26 @@ class LessonLogController extends Controller
                 $logHour->notes = $request->lesson_note;
                 $logHour->created_by = Auth::user()->id;
                 $r = $logHour->save();
+
+                $totalHours = DB::table('add_hour_logs')
+                       ->where('add_hour_logs.deleted_at',null)
+                       ->where('add_hour_logs.student_id',$request->add_lesson_log_id)
+                       ->sum('hours');
+
+                $finishedHours = DB::table('lesson_hour_logs')
+                               ->where('lesson_hour_logs.deleted_at',null)
+                               ->where('lesson_hour_logs.student_id',$request->add_lesson_log_id)
+                               ->sum('hours');
+
+                $hoursRemaining = $totalHours - $finishedHours;
+
+                if($hoursRemaining < 0)
+                    $hoursRemaining = 0;
+                
+                $student = Student::find($request->add_lesson_log_id);
+                $student->remaining_hours = $hoursRemaining;
+                $student->save();
+                
 
                 if($r)
                 {            

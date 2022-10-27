@@ -19,6 +19,20 @@ class StudentController extends Controller
         $this->middleware('lesson.template')->only('lesson');
     }
 
+    public function pastStudent(Request $request)
+    {
+        $users = Student::past()->search($request->q)->paginate(18);
+
+        $users->appends (array ('q' => $request->q));
+
+        $q = '';
+
+        if(isset($request->q))
+            $q = $request->q;           
+
+        return view('students.past-students', compact('users','q'));
+    }
+
     public function create()
     {
         return view('students.create');

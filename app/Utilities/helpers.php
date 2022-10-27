@@ -63,3 +63,23 @@ function colorOfDate($dt = '')
 	else
 		return 0;
 }
+
+function decimalToHHmm($time='')
+{
+	$str = '';
+	
+	if($time)
+	{
+		$whole = floor($time);
+		$fraction = $time - $whole;
+
+		$min = $fraction * 60;
+
+		if($min == 0)
+			$str = $whole.'h';
+		else
+			$str = $whole.'h '.$min.'min';
+	}
+
+	return $str;
+}

@@ -37,6 +37,9 @@ Route::post('/student/add', 'StudentController@add')->name('student.add');
 Route::post('/student/date/update', 'StudentController@dateUpdate')->name('appointment.update');
 Route::get('/student/profile/{student}', 'StudentController@profile')->name('student.profile');
 Route::post('/student/description/update', 'StudentController@descriptionUpdate')->name('student.description.update');
+Route::get('/student/past', 'StudentController@pastStudent')->name('student.past');
+Route::post('/student/past', 'StudentController@pastStudent')->name('student.past.post');
+
 
 Route::get('/lesson/{id}', 'LessonController@index')->name('lesson');
 Route::get('/select/template/{student}', 'LessonController@templateChoice')->name('select.template');

@@ -153,7 +153,7 @@
                 </div>
                 <div class="form-group">
                     <label for="message-text" class="col-form-label">Notes:</label>
-                    <input type="text" step="0.5" name="lesson_note" class="form-control" id="lesson_note">
+                    <input type="text" step="0.25" name="lesson_note" class="form-control" id="lesson_note">
                     <span class="error"></span>
                 </div>
             </div>
@@ -183,7 +183,7 @@
                 <input type="hidden" name="add_log_hours_id" value="{{ $student->id }}">
                 <div class="form-group">
                     <label for="add_log_hour" class="col-form-label">Hours to Add:</label>
-                    <input type="number" step="0.5" name="add_log_hour" class="form-control" id="add_log_hour">
+                    <input type="number" step="0.25" name="add_log_hour" class="form-control" id="add_log_hour">
                     <span class="error"></span>
                 </div>                
             </div>

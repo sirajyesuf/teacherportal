@@ -30,7 +30,7 @@
                         <li><a href="{{ route('user.create') }}"><img src="{{ asset('images/add-circle-outline.svg')}}" alt=""> Add User</a></li>
                     @endif
                 </ul>
-                <form action="{{ route('home.post') }}" method="POST">
+                <form action="{{ route('student.past.post') }}" method="POST">
                     @csrf
                     <div class="search-box">
                         <input type="search" name="q" placeholder="" value="{{ $q }}">
@@ -41,8 +41,8 @@
 
         <div class="menu-bar">
             <ul>
-                <li><a href="#" id="active">Students</a></li>
-                <li><a href="{{ route('student.past')}}">Past Students</a></li>
+                <li><a href="{{ route('home')}}">Students</a></li>
+                <li><a href="#" id="active">Past Students</a></li>
                 @if(auth()->user()->role_type == 1)
                     <li><a href="{{ route('staff') }}">Staff</a></li>
                 @endif
@@ -58,7 +58,7 @@
                         <div class="student-box">
                             <div class="student-cnt">
                                 <a href="{{route('student.profile',$user->id)}}}"><h4>{{ $user->name }}</h4></a>
-                                <p><img src="images/clock.svg" alt=""> {{ decimalToHHmm($user->remaining_hours) }}</p>
+                                <p><img src="{{ asset('images/clock.svg')}}" alt=""> {{ decimalToHHmm($user->remaining_hours) }}</p>
                             </div>
                             @php 
                                 $t = colorOfDate($user->appointment_date);

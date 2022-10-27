@@ -20,4 +20,26 @@ class Student extends Model
     {
         return $query->where('name', 'LIKE', "%$search%");
     }
+
+    /**
+     * Scope to only include current students.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeCurrent($query)
+    {
+        return $query->where('is_past', 0);
+    }
+
+    /**
+     * Scope to only include past students.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePast($query)
+    {
+        return $query->where('is_past', 1);
+    }
 }
