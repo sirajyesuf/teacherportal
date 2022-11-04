@@ -42,6 +42,7 @@ Route::post('/student/past', 'StudentController@pastStudent')->name('student.pas
 
 
 Route::get('/lesson/{id}', 'LessonController@index')->name('lesson');
+Route::post('/lesson', 'LessonController@index')->name('lesson.post');
 Route::get('/select/template/{student}', 'LessonController@templateChoice')->name('select.template');
 Route::post('/lessons/create', 'LessonController@create')->name('lesson.create');
 Route::post('/lessons/update', 'LessonController@update')->name('lesson.update');
@@ -54,6 +55,9 @@ Route::post('/lesson-hours/add', 'LessonLogController@add')->name('log.hours.add
 Route::post('/log-hours/add', 'LogHourController@add')->name('lesson.hours.add');
 
 Route::post('/tls/add', 'TlsController@add')->name('tls.add');
+Route::get('/tls/details', 'TlsController@details')->name('tls.details');
+Route::post('/tls/update', 'TlsController@update')->name('tls.update');
+Route::post('/tls/delete', 'TlsController@delete')->name('tls.delete');
 
 
 

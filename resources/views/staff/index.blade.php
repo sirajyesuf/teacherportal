@@ -50,12 +50,52 @@
     <div class="menu-bar">
         <ul>
             <li><a href="{{ route('home') }}">Students</a></li>
-            <li><a href="#">Past Students</a></li>
+            <li><a href="{{ route('student.past')}}">Past Students</a></li>
             <li><a href="#" id="active">Staff</a></li>
         </ul>
     </div>
 
-    <div class="staff-area">
+    <?php $count = count($users); ?>
+    <div class="main-part">
+        <div class="row">
+            <div class="col-xl-4 col-md-6">
+                @foreach($users as $key => $user)
+                @if($key % 3 == 0)
+                    <div class="staff-box">
+                        <h4>{{ $user->name }}</h4>
+                        <h4>{{ $user->role }}</h4>
+                        <a href="{{ route('user.edit', $user->id) }}">Edit</a>
+                    </div>
+                @endif
+                @endforeach
+            </div>
+            <div class="col-xl-4 col-md-6">
+                @foreach($users as $key => $user)
+                @if($key % 3 == 1)
+                    <div class="staff-box">
+                        <h4>{{ $user->name }}</h4>
+                        <h4>{{ $user->role }}</h4>
+                        <a href="{{ route('user.edit', $user->id) }}">Edit</a>
+                    </div>
+                @endif
+                @endforeach
+            </div>
+            <div class="col-xl-4 col-md-6">
+                @foreach($users as $key => $user)
+                @if($key % 3 == 2)
+                    <div class="staff-box">
+                        <h4>{{ $user->name }}</h4>
+                        <h4>{{ $user->role }}</h4>
+                        <a href="{{ route('user.edit', $user->id) }}">Edit</a>
+                    </div>
+                @endif
+                @endforeach
+            </div>
+        </div>
+        {{ $users->links() }}
+    </div>
+
+    {{-- <div class="staff-area">
         <div class="staff-main">
             <div class="staff-left">
                 @foreach($users as $key => $user)
@@ -81,6 +121,6 @@
             </div>
         </div>
     {{ $users->links() }}
-    </div>            
+    </div> --}}            
 </main>
 @endsection

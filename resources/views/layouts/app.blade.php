@@ -25,7 +25,9 @@
 
         <!-- Main StyleSheet -->
         <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
-        <link href="{{ asset('css/dcalendar.picker.css') }}" rel="stylesheet">       
+        <link href="{{ asset('css/dcalendar.picker.css') }}" rel="stylesheet">
+        <!-- DateTime Picker CSS -->
+        <link href="{{ asset('css/vendor/bootstrap-datetimepicker.css') }}" id="theme" rel="stylesheet">       
         
         <!-- Responsive CSS -->
         <link href="{{ asset('css/responsive.css') }}" rel="stylesheet"> 

@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Lesson;
 use App\Student;
+use App\LessonLog;
 use Auth;
+use DB;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Validator;
 
 class LessonController extends Controller
 {
@@ -18,11 +22,16 @@ class LessonController extends Controller
     public function index(Request $request)
     {
         $lessons = $user = '';
+
+        \Log::info($request->all());
+        $q = '';
+        if(isset($request->q))
+            $q = $request->q;
         
         if($request->id)
         {
             $user = Student::find($request->id);
-            $lessons = Lesson::where('student_id',$user->id)->where('deleted_at',null)->orderBy('created_at','desc')->get();
+            $lessons = Lesson::where('student_id',$user->id)->where('lesson_json','like','%'.$q.'%')->where('deleted_at',null)->orderBy('created_at','desc')->get();
         }
 
         if($lessons)
@@ -62,71 +71,74 @@ class LessonController extends Controller
                                             <input type="text" class="datepicker1" id="'.$tempName[1].'_'.$value->id.'" name="'.$tempName[1].'" placeholder="'.normal_case($tempName[1]).':" value="'.$tempValue[1].'">
                                            </span>
                                             <label class="font-weight-bold">'.normal_case($tempName[2]).':</label>
-                                            <input type="text" name="'.$tempName[2].'" placeholder="'.normal_case($tempName[2]).':" value="'.$tempValue[2].'">                                            
+                                            <input type="number" step="0.25" name="'.$tempName[2].'" placeholder="'.normal_case($tempName[2]).':" value="'.$tempValue[2].'" required>                                            
                                         </td>
                                         <td>
                                             <label class="font-weight-bold">'.normal_case($tempName[3]).':</label>
-                                            <input type="text" name="'.$tempName[3].'" placeholder="'.normal_case($tempName[3]).':" value="'.$tempValue[3].'">
+                                            <textarea name="'.$tempName[3].'" placeholder="'.normal_case($tempName[3]).'" rows="7" cols="5">'.$tempValue[3].'</textarea>
                                         </td>
                                         <td>
                                             <label class="font-weight-bold">'.normal_case($tempName[4]).':</label>
-                                            <input type="text" name="'.$tempName[4].'" placeholder="'.normal_case($tempName[4]).':" value="'.$tempValue[4].'">
+                                            <textarea name="'.$tempName[4].'" placeholder="'.normal_case($tempName[4]).'" rows="7" cols="5">'.$tempValue[4].'</textarea>
+                                            
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <label class="font-weight-bold">'.normal_case($tempName[5]).':</label>
-                                            <input type="text" name="'.$tempName[5].'" placeholder="'.normal_case($tempName[5]).':" value="'.$tempValue[5].'">
+                                            <textarea name="'.$tempName[5].'" placeholder="'.normal_case($tempName[5]).'" rows="5" cols="5">'.$tempValue[5].'</textarea>
                                         </td>
                                         <td>
                                             <label class="font-weight-bold">'.normal_case($tempName[6]).':</label>
-                                            <input type="text" name="'.$tempName[6].'" placeholder="'.normal_case($tempName[6]).':" value="'.$tempValue[6].'">
+                                            <textarea name="'.$tempName[6].'" placeholder="'.normal_case($tempName[6]).'" rows="5" cols="5">'.$tempValue[6].'</textarea>
+                                            
                                         </td>
                                         <td>
                                             <label class="font-weight-bold">'.normal_case($tempName[7]).':</label>
-                                            <input type="text" name="'.$tempName[7].'" placeholder="'.normal_case($tempName[7]).':" value="'.$tempValue[7].'">
+                                            <textarea name="'.$tempName[7].'" placeholder="'.normal_case($tempName[7]).'" rows="5" cols="5">'.$tempValue[7].'</textarea>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <label class="font-weight-bold">'.normal_case($tempName[8]).':</label>
-                                            <input type="text" name="'.$tempName[8].'" placeholder="'.normal_case($tempName[8]).':" value="'.$tempValue[8].'">
+                                            <textarea name="'.$tempName[8].'" placeholder="'.normal_case($tempName[8]).'" rows="5" cols="5">'.$tempValue[8].'</textarea>
                                         </td>
                                         <td>
                                             <label class="font-weight-bold">'.normal_case($tempName[9]).':</label>
-                                            <input type="text" name="'.$tempName[9].'" placeholder="'.normal_case($tempName[9]).':" value="'.$tempValue[9].'">
+                                            <textarea name="'.$tempName[9].'" placeholder="'.normal_case($tempName[9]).'" rows="5" cols="5">'.$tempValue[9].'</textarea>
                                         </td>
                                         <td>
                                         <label class="font-weight-bold">'.normal_case($tempName[10]).':</label>
-                                            <input type="text" name="'.$tempName[10].'" placeholder="'.normal_case($tempName[10]).':" value="'.$tempValue[10].'">
+                                            <textarea name="'.$tempName[10].'" placeholder="'.normal_case($tempName[10]).'" rows="5" cols="5">'.$tempValue[10].'</textarea>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <label class="font-weight-bold">'.normal_case($tempName[10]).':</label>
-                                            <input type="text" name="'.$tempName[10].'" placeholder="'.normal_case($tempName[10]).':" value="'.$tempValue[10].'">
-                                        </td>
-                                        <td>
                                             <label class="font-weight-bold">'.normal_case($tempName[11]).':</label>
-                                            <input type="text" name="'.$tempName[11].'" placeholder="'.normal_case($tempName[11]).':" value="'.$tempValue[11].'">
+                                            <textarea name="'.$tempName[11].'" placeholder="'.normal_case($tempName[11]).'" rows="5" cols="5">'.$tempValue[11].'</textarea>
+                                            
                                         </td>
                                         <td>
                                             <label class="font-weight-bold">'.normal_case($tempName[12]).':</label>
-                                            <input type="text" name="'.$tempName[12].'" placeholder="'.normal_case($tempName[12]).':" value="'.$tempValue[12].'">
+                                            <textarea name="'.$tempName[12].'" placeholder="'.normal_case($tempName[12]).'" rows="5" cols="5">'.$tempValue[12].'</textarea>
+                                        </td>
+                                        <td>
+                                            <label class="font-weight-bold">'.normal_case($tempName[13]).':</label>
+                                            <textarea name="'.$tempName[13].'" placeholder="'.normal_case($tempName[13]).'" rows="5" cols="5">'.$tempValue[13].'</textarea>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <label class="font-weight-bold">'.normal_case($tempName[13]).':</label>
-                                            <input type="text" name="'.$tempName[13].'" placeholder="'.normal_case($tempName[13]).':" value="'.$tempValue[13].'">
-                                        </td>
-                                        <td>
                                             <label class="font-weight-bold">'.normal_case($tempName[14]).':</label>
-                                            <input type="text" name="'.$tempName[14].'" placeholder="'.normal_case($tempName[14]).':" value="'.$tempValue[14].'">
+                                            <textarea name="'.$tempName[14].'" placeholder="'.normal_case($tempName[14]).'" rows="5" cols="5">'.$tempValue[14].'</textarea>
                                         </td>
                                         <td>
                                             <label class="font-weight-bold">'.normal_case($tempName[15]).':</label>
-                                            <input type="text" name="'.$tempName[15].'" placeholder="'.normal_case($tempName[15]).':" value="'.$tempValue[15].'">
+                                            <textarea name="'.$tempName[15].'" placeholder="'.normal_case($tempName[15]).'" rows="5" cols="5">'.$tempValue[15].'</textarea>
+                                        </td>
+                                        <td>
+                                            <label class="font-weight-bold">'.normal_case($tempName[16]).':</label>
+                                            <textarea name="'.$tempName[16].'" placeholder="'.normal_case($tempName[16]).'" rows="5" cols="5">'.$tempValue[16].'</textarea>
                                         </td>
                                     </tr>
                                 </table>
@@ -140,7 +152,7 @@ class LessonController extends Controller
             }
         }
 
-        return view('lessons.index',compact('user','lessons','html'));
+        return view('lessons.index',compact('user','lessons','html','q'));
     }
 
     public function templateChoice(Student $student)
@@ -176,8 +188,8 @@ class LessonController extends Controller
         {            
             $template = [
 
-                "trainer" => "",
-                "date" => "",
+                "trainer" => Auth::user()->name,
+                "date" => Carbon::now()->format('d-m-Y'),
                 "lesson_length" => "",
                 "objective_of_lesson" => "",
                 "message" => "",
@@ -199,8 +211,8 @@ class LessonController extends Controller
         {
             $template = [
 
-                "trainer" => "",
-                "date" => "",
+                "trainer" => Auth::user()->name,
+                "date" => Carbon::now()->format('d-m-Y'),
                 "lesson_length" => "",
                 "objective_of_lesson" => "",
                 "message" => "",
@@ -224,6 +236,8 @@ class LessonController extends Controller
 
     public function update(Request $request)
     {
+        $this->validator($request->all())->validate();
+
         $data = $request->all();
             
         if(isset($request->student_id) && isset($request->update_id))
@@ -241,23 +255,69 @@ class LessonController extends Controller
                     }                    
                 }
             }            
-
+            \Log::info('as');
             
             $lesson->lesson_json = json_encode($temps);
             $lesson->updated_by = Auth::user()->id;
             $r = $lesson->save();
 
-            if($r)
+            // lesson log entry : starts
+            $lessonLog = LessonLog::where('student_id',$request->student_id)->where('lesson_id',$request->update_id)->where('deleted_at',null)->first();
+            if(!$lessonLog)
+            {
+                $lessonLog = new LessonLog;
+            }
+            $lessonLog->student_id = $request->student_id;
+            $lessonLog->hours = $request->lesson_length;
+            $lessonLog->created_by = Auth::user()->id;
+            $lessonLog->lesson_id = $lesson->id;
+            $lessonLog->save();
+            $rl = $lessonLog->save();
+
+            $totalHours = DB::table('add_hour_logs')
+                   ->where('add_hour_logs.deleted_at',null)
+                   ->where('add_hour_logs.student_id',$request->student_id)
+                   ->sum('hours');
+
+            $finishedHours = DB::table('lesson_hour_logs')
+                           ->where('lesson_hour_logs.deleted_at',null)
+                           ->where('lesson_hour_logs.student_id',$request->student_id)
+                           ->sum('hours');
+
+            $hoursRemaining = $totalHours - $finishedHours;
+
+            if($hoursRemaining < 0)
+                $hoursRemaining = 0;
+
+            $student = Student::find($request->student_id);
+
+            if($hoursRemaining == 0)
+            {
+                $student->is_past = 1;                    
+            }
+            $student->remaining_hours = $hoursRemaining;
+            $student->save();
+
+            // lesson log entry : Ends
+            
+            if($rl)
             {            
-                toastr()->success('Lesson updated Successfully');
-                return redirect()->back();
+                return redirect()->route('lesson',$request->student_id);
             }
             else
             {
                 toastr()->error('An error has occurred please try again later.');
-                return back();
+                return redirect()->route('lesson',$request->student_id);
+                // return back();
             }
 
         }
+    }
+
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'lesson_length' => ['required', 'numeric'],                        
+        ]);
     }
 }

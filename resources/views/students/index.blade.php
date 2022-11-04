@@ -69,7 +69,10 @@
                                 elseif($t == 1)
                                     $colClass = 'red'; 
                                 else
+                                {
+                                    $user->appointment_date = '';
                                     $colClass = 'puple'; 
+                                }
                             @endphp
                             <a href="{{ route('lesson',$user->id)}}" lession-id="{{ $user->id }}">Lesson</a>
                             <a href="{{ route('casenotes',$user->id) }}">Case Notes</a>
@@ -97,7 +100,10 @@
                                 elseif($t == 1)
                                     $colClass = 'red'; 
                                 else
-                                    $colClass = 'puple';
+                                {
+                                    $user->appointment_date = '';
+                                    $colClass = 'puple'; 
+                                }
                             @endphp
                             <a href="{{ route('lesson',$user->id)}}" {{ $user->id }}>Lesson</a>
                             <a href="{{ route('casenotes',$user->id) }}">Case Notes</a>
@@ -126,7 +132,10 @@
                                 elseif($t == 1)
                                     $colClass = 'red'; 
                                 else
+                                {
+                                    $user->appointment_date = '';
                                     $colClass = 'puple'; 
+                                } 
                             @endphp
                             <a href="{{ route('lesson',$user->id)}}" {{ $user->id }}>Lesson</a>
                             <a href="{{ route('casenotes',$user->id) }}">Case Notes</a>

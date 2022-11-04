@@ -42,30 +42,35 @@
                             <div class="tls-part">
                                 <h2>TLS</h2>
                                 <form action="{{ route('tls.add') }}" method="post">
-                                @csrf
-                                <input type="hidden" name="tpl_student_id" value="{{ $student->id}}">
-                                <table id="tls_table">
-                                    <tr>
-                                        <td>Date</td>
-                                        <td>Program</td>
-                                        <td>Music Day</td>
-                                        <td>Music Prog</td>
-                                        <td>Duration</td>
-                                    </tr>
-                                    @if($tlss)
-                                    @foreach($tlss as $ke => $tls)
-                                    <tr>
-                                        <td>{{longDateFormat($tls->date)}}</td>
-                                        <td>{{ $tls->program}}</td>
-                                        <td>{{ $tls->music_day}}</td>
-                                        <td>{{ $tls->music_prog}}</td>
-                                        <td>{{ $tls->duration}} Hrs</td>                                        
-                                    </tr>
-                                    @endforeach
-                                    @endif
-                                    
-                                </table>
-                            </form>
+                                    @csrf
+                                    <input type="hidden" name="tpl_student_id" value="{{ $student->id}}">
+                                    <table id="tls_table">
+                                        <tr>
+                                            <td>Date</td>
+                                            <td>Program</td>
+                                            <td>Music Day</td>
+                                            <td>Music Prog</td>
+                                            <td>Duration</td>
+                                            <td>Action</td>
+                                        </tr>
+                                        @if($tlss)
+                                        @foreach($tlss as $ke => $tls)
+                                        <tr>
+                                            <td>{{longDateFormat($tls->date)}}</td>
+                                            <td>{{ $tls->program}}</td>
+                                            <td>{{ $tls->music_day}}</td>
+                                            <td>{{ $tls->music_prog}}</td>
+                                            <td>{{ $tls->duration}} Hrs</td>  
+                                            <td class="d-flex-action">
+                                                <a href="javascript:void(0)" class="edit_tls" data-id="{{$tls->id}}"><img src="{{ asset('images/edit.svg')}}" alt="" height="18"></a>
+                                                <a href="javascript:void(0)" class="delete_tls" data-id="{{$tls->id}}"><img src="{{ asset('images/delete.svg')}}" alt=""></a>                          
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                        @endif
+                                        
+                                    </table>
+                                </form>
                                <a href="javascript:void(0)" id="add_tls"><img src="{{ asset('images/plus.svg')}}" alt=""></a>
                             </div>
                         </div>
@@ -73,7 +78,7 @@
                     <div class="col-lg-6">
                         <div class="student-rightprt">
                             <div class="hour-part">
-                                <a id="add_hour_button" href="javascript:void(0)" data-toggle="modal" data-target="#add_hour_modal"><img src="{{ asset('images/add-circle-outline.svg')}}" alt=""> Add Hours</a>
+                                <a id="add_hour_button" href="javascript:void(0)" data-toggle="modal" data-target="#add_lesson_log_modal"><img src="{{ asset('images/add-circle-outline.svg')}}" alt=""> Add Hours</a>
                                 <ul>
                                     <li>
                                         <h2>{{ $hoursRemaining }}</h2>
@@ -195,7 +200,56 @@
         </form>
     </div>
 </div>
+{{-- Ends : for Add lesson log hours --}}
 
+{{-- Start : Edit Tls --}}
+<div class="modal" tabindex="-1" role="dialog" id="edit_tls_modal">
+    <div class="modal-dialog" role="document">
+        <form action="{{ route('tls.update') }}" method="post" id="edit_tls_form">
+        @csrf
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit TLS</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">                
+                <input type="hidden" name="update_id" id="update_id" value="">
+                <div class="form-group">
+                    <label for="date" class="col-form-label">Date:</label>
+                    <input type="text" name="date" class="form-control datePicker" id="date">
+                    <span class="error"></span>
+                </div>
+                <div class="form-group">
+                    <label for="program" class="col-form-label">Program:</label>
+                    <input type="text" name="program" class="form-control" id="program">
+                    <span class="error"></span>
+                </div>
+                <div class="form-group">
+                    <label for="music_day" class="col-form-label">Music Day:</label>
+                    <input type="text" name="music_day" class="form-control" id="music_day">
+                    <span class="error"></span>
+                </div>
+                <div class="form-group">
+                    <label for="music_prog" class="col-form-label">Music Prog:</label>
+                    <input type="text" name="music_prog" class="form-control" id="music_prog">
+                    <span class="error"></span>
+                </div>
+                <div class="form-group">
+                    <label for="duration" class="col-form-label">Duration:</label>
+                    <input type="number" step="0.5" name="duration" class="form-control" id="duration">
+                    <span class="error"></span>
+                </div>                
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
 {{-- Ends : for Add lesson log hours --}}
 
 @endsection
@@ -219,5 +273,10 @@
 @endsection
 
 @section('pagejs')
+    <script type="text/javascript">
+        var tlsDetailUrl = "{{ route('tls.details')}}";
+        var tlsUpdateUrl = "{{ route('tls.update')}}";
+        var tlsDeleteUrl = "{{ route('tls.delete')}}";
+    </script>
     <script src="{{addPageJsLink('student-profile.js')}}"></script>
 @endsection

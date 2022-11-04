@@ -5,4 +5,5 @@ $( document ).ready(function() {
                     changeMonth: 'true',
                     dateFormat: 'dd-mm-yy',
         });
+    showMessage('error',errorLesson)
 });

@@ -7,6 +7,11 @@
 @endsection
 
 @section('content')
+@if($errors->has('lesson_length'))
+    <script>
+        var errorLesson = "{{ $errors->first('lesson_length') }}";        
+    </script>    
+@endif
 <main class="note-wrapper">
             <div class="home-btn">
                 <a href="{{ route('home')}}"><img src="{{ asset('images/home.svg') }}" alt=""> Home</a>
@@ -22,9 +27,11 @@
                             @endif
                         </ul>
                     </div>
-                    <form action="#" method="POST">
+                    <form action="{{ route('lesson.post')}}" method="POST">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $user->id}}">
                         <div class="search-box">
-                            <input type="search" placeholder="">
+                            <input type="search" name="q" placeholder="" value="{{ $q }}">
                         </div>
                     </form>
                 </div>
