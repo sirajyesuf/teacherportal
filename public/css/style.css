@@ -1123,3 +1123,15 @@ li button{
     flex-direction: row;
     align-items: center;
 }
+
+.btn-save{
+    color: white;
+    background: black;
+    border-radius: 3px;
+    padding: 0.375rem 0.75rem;
+}
+
+.btn-save:hover{
+    background: #454545;
+    color: white;   
+}
