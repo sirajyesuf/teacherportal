@@ -109,7 +109,7 @@
                                         <div class="hour-box">
                                             <h4>{{ $ch->name }}</h4>
                                             <span><img src="{{ asset('images/clock.svg')}}" alt=""> {{ $ch->hours}} hr</span>
-                                            <span><img src="{{ asset('images/alarm-black.svg')}}" alt=""> {{ profileDateFormate($ch->created_at) }}</span>
+                                            <span><img src="{{ asset('images/alarm-black.svg')}}" alt=""> {{ profileDateFormate($ch->lesson_date) }}</span>
                                         </div>
                                         @endforeach
                                         {{ $completeHours->links() }}

@@ -526,7 +526,8 @@ ul {
 }
 
 .staff-box {
-    width: 484px;
+    /*width: 484px;*/
+    width: auto;
     background: #F5F5F7;
     display: flex;
     align-items: center;
@@ -682,6 +683,7 @@ ul {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding-left: 50px; /*added*/
 }
 
 .lesson-upper .search-box input {
@@ -690,6 +692,10 @@ ul {
 
 .lesson-table {
     margin-top: 45px;
+    /*added*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .save-btn a {
@@ -778,7 +784,8 @@ ul {
 }
 
 .student-leftprt .note-upper ul li {
-    padding-right: 30px;
+    /*padding-right: 30px;*/
+    padding-right: 16px;
 }
 
 .tls-part {
@@ -895,7 +902,7 @@ ul {
     font-family: 'Baloo Bhai 2', cursive;
     font-weight: 700;
     font-size: 24px;
-    /*color: #000000;*/
+    color: #000000;
     display: inline-block;
     opacity: 0.4;
     transition: 0.2s all ease;
@@ -947,7 +954,8 @@ ul {
 }
 
 .hour-box p {
-    width: 50%;
+    width: auto;
+    /*width: 50%;*/
     margin: 0;
     font-weight: 400;
     font-size: 15px;
@@ -1036,16 +1044,19 @@ input[type="radio"]{
   display: none;
 }
 #template_1:checked:checked ~ .option-1,
-#template_2:checked:checked ~ .option-2{
+#template_2:checked:checked ~ .option-2,
+#template_3:checked:checked ~ .option-3{
   border-color: black;
   background: black;
 }
 #template_1:checked:checked ~ .option-1 .dot,
-#template_2:checked:checked ~ .option-2 .dot{
+#template_2:checked:checked ~ .option-2 .dot,
+#template_3:checked:checked ~ .option-3 .dot{
   background: #fff;
 }
 #template_1:checked:checked ~ .option-1 .dot::before,
-#template_2:checked:checked ~ .option-2 .dot::before{
+#template_2:checked:checked ~ .option-2 .dot::before,
+#template_3:checked:checked ~ .option-3 .dot::before{
   opacity: 1;
   transform: scale(1);
 }
@@ -1054,7 +1065,8 @@ input[type="radio"]{
   color: #808080;
 }
 #template_1:checked:checked ~ .option-1 span,
-#template_2:checked:checked ~ .option-2 span{
+#template_2:checked:checked ~ .option-2 span,
+#template_3:checked:checked ~ .option-3 span{
   color: #fff;
 }
 
@@ -1084,6 +1096,7 @@ li button{
 }
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
     opacity: 1!important;
+    color: black; /*added*/
 }
 .student-box .red {
     color: red!important;
@@ -1134,4 +1147,35 @@ li button{
 .btn-save:hover{
     background: #454545;
     color: white;   
+}
+
+/*added for lesson template*/
+.bt-lang tr td{
+    height: 48px!important;
+}
+
+.first-col{
+    border-top: none!important;
+    max-width: 143px!important;
+    width: 15%!important;
+}
+.second-col{
+    width: 46.5%!important;
+    max-width: 150px!important;
+    border-top: none!important;
+}
+.third-col{
+    border-top: none!important;
+}
+
+.bt-lang{
+    width: 75%!important;
+}
+
+.im tr td{
+    height: 48px!important;
+}
+
+.bt-none td{
+    border-top: none!important;
 }

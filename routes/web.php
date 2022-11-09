@@ -43,9 +43,20 @@ Route::post('/student/past', 'StudentController@pastStudent')->name('student.pas
 
 Route::get('/lesson/{id}', 'LessonController@index')->name('lesson');
 Route::post('/lesson', 'LessonController@index')->name('lesson.post');
+
+Route::get('/lesson-bt/{id}', 'LessonController@btIndex')->name('lesson-bt');
+Route::post('/lesson-bt', 'LessonController@btIndex')->name('lesson-bt.post');
+
+Route::get('/lesson-im/{id}', 'LessonController@imIndex')->name('lesson-im');
+Route::post('/lesson-im', 'LessonController@imIndex')->name('lesson-im.post');
+
+
 Route::get('/select/template/{student}', 'LessonController@templateChoice')->name('select.template');
 Route::post('/lessons/create', 'LessonController@create')->name('lesson.create');
+
 Route::post('/lessons/update', 'LessonController@update')->name('lesson.update');
+Route::post('/lessons-bt/update', 'LessonController@btUpdate')->name('lesson-bt.update');
+Route::post('/lessons-im/update', 'LessonController@imUpdate')->name('lesson-im.update');
 
 Route::get('/casenotes/{id}', 'CaseNoteController@index')->name('casenotes');
 Route::post('/case-note/update', 'CaseNoteController@update')->name('casenote.update');

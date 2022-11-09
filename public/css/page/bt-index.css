@@ -2,12 +2,8 @@
   opacity: 0.5!important; /* Firefox */
 }
 
-/*update 3*/
-
-@media screen and (min-width: 1354px) and (max-width: 1388px) {
-    .student-leftprt .note-upper ul li {
-        padding-right: 16px;
-    }
+.lesson-table table {
+    width: 100%!important;
 }
 
 .lesson-table input {

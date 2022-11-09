@@ -3,7 +3,7 @@
 @section('title','Lesson - Index')
 
 @section('css')
-    <link href="{{ asset('css/page/casenotes-index.css') }}?{{time()}}" rel="stylesheet">
+    <link href="{{ asset('css/page/bt-index.css') }}?{{time()}}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -55,7 +55,7 @@
                     @endif
                 </ul>
             </div>
-            <form action="{{ route('lesson.post')}}" method="POST">
+            <form action="{{ route('lesson-bt.post')}}" method="POST">
                 @csrf
                 <input type="hidden" name="id" value="{{ $user->id}}">
                 <div class="search-box">
@@ -66,8 +66,8 @@
 
         <div class="menu-bar">
             <ul>
-                <li><a href="#" id="active">SI/FT</a></li>
-                <li><a href="{{ route('lesson-bt',$user->id)}}">BT/Lang</a></li>
+                <li><a href="{{ route('lesson',$user->id)}}">SI/FT</a></li>
+                <li><a href="#" id="active">BT/Lang</a></li>
                 <li><a href="{{ route('lesson-im',$user->id) }}">IM</a></li>
                 
             </ul>

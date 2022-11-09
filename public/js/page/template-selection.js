@@ -13,7 +13,12 @@ $("input[type='radio']").click(function(){
         dataType: 'json',
         success: function (result) {
             if (result.status) {
-                window.location.href = lessonUrl;
+                if(id == 1)
+                    window.location.href = lessonUrl;
+                else if(id == 2)
+                    window.location.href = lessonBtUrl;
+                else if(id == 3)
+                    window.location.href = lessonImUrl;
             } else {
                 
             }

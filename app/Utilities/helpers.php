@@ -23,7 +23,7 @@ function profileDateFormate($dt = '')
 	{
 		return date("d/m/Y", strtotime($dt));
 	}
-	return 0;
+	return '';
 }
 
 function addPageJsLink($link){
@@ -32,7 +32,18 @@ function addPageJsLink($link){
 
 function normal_case($str)
 {
-	return implode(' ', array_map('ucfirst', explode('_', $str)));
+	if($str == 'vp')
+		return 'VP/AP';
+	else if($str == 'tactile')
+		return 'Tactile/Oral';
+	else if($str == 'ep')
+		return 'EP';
+	else if($str == 'ft')
+		return 'FT';
+	else if($str == 'notes')
+		return 'Notes/ Observations';
+	else
+		return implode(' ', array_map('ucfirst', explode('_', $str)));
 }
 
 function colorOfDate($dt = '')
@@ -40,20 +51,21 @@ function colorOfDate($dt = '')
 	$week = Carbon::now()->addWeek();
 	$week2 = Carbon::now()->addWeek(2);
 	$days3 = Carbon::now()->addDays(3);
+	$days7 = Carbon::now()->addDays(7);
 	$now = Carbon::now();
 	if($dt)
 	{
 		$d = Carbon::parse($dt);
 		
-		if($dt > $week2)
+		if($dt > $days7)
 		{
 			return 3;
 		}
-		else if($dt > $week && $dt < $week2)
+		else if($dt > $days3 && $dt < $days7)
 		{
 			return 2;
 		}
-		elseif ($dt > $days3 && $dt < $week) {
+		elseif ($dt > $now && $dt < $days3) {
 			return 1;
 		}
 		elseif($dt < $now)

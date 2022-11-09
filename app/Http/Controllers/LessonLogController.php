@@ -58,6 +58,7 @@ class LessonLogController extends Controller
                 
                 $student = Student::find($request->add_lesson_log_id);
                 $student->remaining_hours = $hoursRemaining;
+                $student->is_past = ($hoursRemaining) ? 0 : 1;
                 $student->save();
                 
 

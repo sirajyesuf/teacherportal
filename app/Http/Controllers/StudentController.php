@@ -108,7 +108,8 @@ class StudentController extends Controller
                        ->leftjoin('users','lesson_hour_logs.created_by','users.id')
                        ->where('lesson_hour_logs.deleted_at',null)
                        ->where('lesson_hour_logs.student_id',$student->id)
-                       ->select('lesson_hour_logs.hours','lesson_hour_logs.created_at','users.name')
+                       ->select('lesson_hour_logs.hours','lesson_hour_logs.created_at','lesson_hour_logs.lesson_date','users.name')
+                       ->orderBy('lesson_hour_logs.created_at','desc')
                        ->paginate(5,['*'], 'complete');
 
         $addedHours = DB::table('add_hour_logs')
@@ -116,6 +117,7 @@ class StudentController extends Controller
                        ->where('add_hour_logs.deleted_at',null)
                        ->where('add_hour_logs.student_id',$student->id)
                        ->select('add_hour_logs.hours','add_hour_logs.created_at','add_hour_logs.notes','students.name')
+                       ->orderBy('add_hour_logs.created_at','desc')
                        ->paginate(5,['*'], 'added');        
 
         $totalHours = DB::table('add_hour_logs')
