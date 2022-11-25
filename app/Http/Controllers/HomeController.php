@@ -26,7 +26,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {       
         
-        $users = Student::current()->search($request->q)->paginate(18);
+        $users = Student::current()->orderBy('name','ASC')->search($request->q)->paginate(18);
 
         $users->appends (array ('q' => $request->q));
 

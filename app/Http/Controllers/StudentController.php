@@ -21,7 +21,7 @@ class StudentController extends Controller
 
     public function pastStudent(Request $request)
     {
-        $users = Student::past()->search($request->q)->paginate(18);
+        $users = Student::past()->orderBy('name','ASC')->search($request->q)->paginate(18);
 
         $users->appends (array ('q' => $request->q));
 
@@ -62,7 +62,7 @@ class StudentController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
+            // 'email' => ['required', 'string', 'email', 'max:255'],
             // 'password' => ['required', 'string', 'min:8', 'confirmed'],            
         ]);
     }

@@ -15,7 +15,7 @@ class StaffController extends Controller
     
     public function index(Request $request)
     {
-        $users = User::staff()->search($request->q)->paginate(10);
+        $users = User::staff()->orderBy('name','ASC')->search($request->q)->paginate(10);
 
         $users->appends (array ('q' => $request->q));
 

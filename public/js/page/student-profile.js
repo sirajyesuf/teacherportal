@@ -154,7 +154,11 @@ $( document ).ready(function() {
     var count = 0;
     $('#add_tls').on('click',function(e){
         if(count >= 1)
+        {
+            alert('Save existing tls first!');
             return;
+        }
+        $('#tls_form').attr('action',tlsAddUrl);
         tlsHtml = '';        
         tlsHtml += '<tr>';
         tlsHtml += '<td><input type="date" placeholder="date" name="date"></td>';
@@ -168,6 +172,154 @@ $( document ).ready(function() {
         count++;
     });
 
+    $('#add_tls_13').on('click',function(e){
+        if(count >= 1)
+        {
+            alert('Save existing tls first!');
+            return;
+        }
+        $('#tls_form').attr('action',tlsMultiAddUrl);
+        tlsHtml = '';        
+        tlsHtml += '<tr>';
+        tlsHtml += '<td><input type="date" placeholder="date" id="date_1" name="date[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Program" id="program_1" name="program[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Day" id="music_day_1" name="music_day[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Program" name="music_prog[]"></td>';
+        tlsHtml += '<td><input type="number" step="0.5" placeholder="Duration" id="duration_1" name="duration[]"></td>';
+        tlsHtml += '<td></td></tr>';
+        tlsHtml += '<tr>';
+        tlsHtml += '<td><input type="date" placeholder="date" id="date_2" name="date[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Program" id="program_2" name="program[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Day" id="music_day_2" name="music_day[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Program" name="music_prog[]"></td>';
+        tlsHtml += '<td><input type="number" step="0.5" placeholder="Duration" id="duration_2" name="duration[]"></td>';
+        tlsHtml += '<td></td></tr>';
+        tlsHtml += '<tr>';
+        tlsHtml += '<td><input type="date" placeholder="date" id="date_3" name="date[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Program" id="program_3" name="program[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Day" id="music_day_3" name="music_day[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Program" name="music_prog[]"></td>';
+        tlsHtml += '<td><input type="number" step="0.5" placeholder="Duration" id="duration_3" name="duration[]"></td>';
+        tlsHtml += '<td></td></tr>';
+        tlsHtml += '<tr>';
+        tlsHtml += '<td><input type="date" placeholder="date" id="date_4" name="date[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Program" id="program_4" name="program[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Day" id="music_day_4" name="music_day[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Program" name="music_prog[]"></td>';
+        tlsHtml += '<td><input type="number" step="0.5" placeholder="Duration" id="duration_4" name="duration[]"></td>';
+        tlsHtml += '<td></td></tr>';
+        tlsHtml += '<tr>';
+        tlsHtml += '<td><input type="date" placeholder="date" id="date_5" name="date[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Program" id="program_5" name="program[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Day" id="music_day_5" name="music_day[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Program" name="music_prog[]"></td>';
+        tlsHtml += '<td><input type="number" step="0.5" placeholder="Duration" id="duration_5" name="duration[]"></td>';
+        tlsHtml += '<td></td></tr>';
+        tlsHtml += '<tr>';
+        tlsHtml += '<td><input type="date" placeholder="date" id="date_6" name="date[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Program" id="program_6" name="program[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Day" id="music_day_6" name="music_day[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Program" name="music_prog[]"></td>';
+        tlsHtml += '<td><input type="number" step="0.5" placeholder="Duration" id="duration_6" name="duration[]"></td>';
+        tlsHtml += '<td></td></tr>';
+        tlsHtml += '<tr>';
+        tlsHtml += '<td><input type="date" placeholder="date" id="date_7" name="date[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Program" id="program_7" name="program[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Day" id="music_day_7" name="music_day[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Program" name="music_prog[]"></td>';
+        tlsHtml += '<td><input type="number" step="0.5" placeholder="Duration" id="duration_7" name="duration[]"></td>';
+        tlsHtml += '<td></td></tr>';
+        tlsHtml += '<tr>';
+        tlsHtml += '<td><input type="date" placeholder="date" id="date_8"name="date[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Program" id="program_8" name="program[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Day" id="music_day_8" name="music_day[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Program" name="music_prog[]"></td>';
+        tlsHtml += '<td><input type="number" step="0.5" placeholder="Duration" id="duration_8" name="duration[]"></td>';
+        tlsHtml += '<td></td></tr>';
+        tlsHtml += '<tr>';
+        tlsHtml += '<td><input type="date" placeholder="date" id="date_9" name="date[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Program" id="program_9" name="program[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Day" id="music_day_9" name="music_day[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Program" name="music_prog[]"></td>';
+        tlsHtml += '<td><input type="number" step="0.5" placeholder="Duration" id="duration_9" name="duration[]"></td>';
+        tlsHtml += '<td></td></tr>';
+        tlsHtml += '<tr>';
+        tlsHtml += '<td><input type="date" placeholder="date" id="date_10" name="date[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Program" id="program_10" name="program[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Day" id="music_day_10" name="music_day[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Program" name="music_prog[]"></td>';
+        tlsHtml += '<td><input type="number" step="0.5" placeholder="Duration" id="duration_10" name="duration[]"></td>';
+        tlsHtml += '<td></td></tr>';
+        tlsHtml += '<tr>';
+        tlsHtml += '<td><input type="date" placeholder="date" id="date_11" name="date[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Program" id="program_11" name="program[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Day" id="music_day_11" name="music_day[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Program" name="music_prog[]"></td>';
+        tlsHtml += '<td><input type="number" step="0.5" placeholder="Duration" id="duration_11" name="duration[]"></td>';
+        tlsHtml += '<td></td></tr>';
+        tlsHtml += '<tr>';
+        tlsHtml += '<td><input type="date" placeholder="date" id="date_12" name="date[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Program" id="program_12" name="program[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Day" id="music_day_12" name="music_day[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Program" name="music_prog[]"></td>';
+        tlsHtml += '<td><input type="number" step="0.5" placeholder="Duration" id="duration_12" name="duration[]"></td>';
+        tlsHtml += '<td></td></tr>';
+        tlsHtml += '<tr>';
+        tlsHtml += '<td><input type="date" placeholder="date" id="date_13" name="date[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Program" id="program_13" name="program[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Day" id="music_day_13" name="music_day[]"></td>';
+        tlsHtml += '<td><input type="text" placeholder="Music Program" name="music_prog[]"></td>';
+        tlsHtml += '<td><input type="number" step="0.5" placeholder="Duration" id="duration_13" name="duration[]"></td>';
+        tlsHtml += '<td></td></tr>';
+        tlsHtml += '<tr><td class="border-none save-btn pl-0 text-left" colspan="6"><button type="submit">Save</button></td><tr>';        
+        $('#tls_table').append(tlsHtml);
+        count++;
+    });
+
+    $(document).on('change','#date_1',function(e){
+        e.preventDefault();
+        var newDate = $(this).val();
+
+        for (let i = 2; i < 14; i++) {  
+            var date = new Date(newDate);
+
+            date.setDate(date.getDate() + 1);
+            convertedDate = moment(date,'ddd MMM DD YYYY HH:mm:ss Z').format('YYYY-MM-DD');
+            $('#date_'+i).val(convertedDate);
+
+            newDate = date;
+        }
+    });
+
+    $(document).on('change','#music_day_1',function(e){
+        e.preventDefault();
+        var musicDay = $('#music_day_1').val();
+        
+        for (let i = 2; i < 14; i++) {  
+            musicDay = parseInt(musicDay) + 1;            
+            $('#music_day_'+i).val(musicDay);            
+
+        }
+    });
+
+    $(document).on('change','#duration_1',function(e){
+        e.preventDefault();
+        var duration = $('#duration_1').val();
+        
+        for (let i = 2; i < 14; i++) {              
+            $('#duration_'+i).val(duration);
+        }
+    });
+
+    $(document).on('change','#program_1',function(e){
+        e.preventDefault();
+        var program = $('#program_1').val();
+        
+        for (let i = 2; i < 14; i++) {              
+            $('#program_'+i).val(program);
+        }
+    });
+
     $('body').on('click','.delete_tls',function(event) {
         var id = $(this).attr('data-id');
         var $this = $(this);
@@ -178,10 +330,13 @@ $( document ).ready(function() {
                 type: 'POST',
                 data: { id:id,_token: $('meta[name=csrf-token]').attr('content')},
                 dataType: 'json',
-                success: function(result) {
-                    console.log($this.closest("tr"));
+                success: function(result) {                    
                     $this.closest("tr").remove();                    
-                    showMessage('success',result.message)
+                    showMessage('success',result.message);
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1500);
+
 
                 }
             });    

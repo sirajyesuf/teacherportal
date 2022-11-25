@@ -30,7 +30,7 @@
 		                    <strong>{{ $message }}</strong>
 		                </span>
 		            @enderror
-	                <div class="adduser-item">
+	                {{-- <div class="adduser-item">
 	                    <label for="email">Email:</label>
 	                    <input type="email" id="email" placeholder="Enter Email" name="email" value="{{ old('email') }}">
 	                </div>
@@ -47,7 +47,7 @@
 		                <span class="invalid-feedback" role="alert">
 		                    <strong>{{ $message }}</strong>
 		                </span>
-		            @enderror
+		            @enderror --}}
 		            {{-- <div class="adduser-item">
 	                    <label for="password">Password:</label>
 	                    <input type="password" id="password" placeholder="Enter Password" name="password" value="{{ old('password') }}">

@@ -100,6 +100,8 @@ class TlsController extends Controller
     public function delete(Request $request)
     {
         $model = Tls::find($request->id);
+
+        $tls = Tls::where('id','>',$request->id)->decrement('music_day',1);        
                 
         if($model->delete()){
             $result = ['status' => true, 'message' => 'Delete successfully'];
@@ -107,5 +109,50 @@ class TlsController extends Controller
             $result = ['status' => false, 'message' => 'Delete fail'];
         }
         return response()->json($result);
+    }
+
+    public function multiAdd(Request $request)
+    {
+        // echo "<pre>";
+        // print_r($request->all());
+        // die;
+        if($request->tpl_student_id)
+        {
+            if(is_array($request->date))
+            {
+                $dates = $request->date;
+                foreach($dates as $key => $date)
+                {
+                    $tls = new Tls;
+                    $tls->student_id = $request->tpl_student_id;
+                    $tls->date = $date;
+                    $tls->program = $request->program[$key];
+                    $tls->music_day = $request->music_day[$key];
+                    $tls->music_prog = $request->music_prog[$key];
+                    $tls->duration = $request->duration[$key];
+                    $tls->created_by = Auth::user()->id;
+                    $r = $tls->save();                    
+                }
+
+            }
+
+            if($r)
+            {            
+                $request->session()->flash('message.level', 'success');
+                $request->session()->flash('message.content', 'TLS data saved Successfully!');
+                return redirect()->back();
+            }
+            else
+            {
+                $request->session()->flash('message.level', 'error');
+                $request->session()->flash('message.content', 'An error has occurred please try again later.');
+                return redirect()->back();   
+            }
+        }
+        else{
+            $request->session()->flash('message.level', 'error');
+            $request->session()->flash('message.content', 'An error has occurred please try again later.');
+            return redirect()->back();
+        }
     }
 }
