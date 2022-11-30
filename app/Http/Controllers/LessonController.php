@@ -31,7 +31,7 @@ class LessonController extends Controller
         if($request->id)
         {
             $user = Student::find($request->id);
-            $lessons = Lesson::where('student_id',$user->id)->where('template_id',1)->where('lesson_json','like','%'.$q.'%')->where('deleted_at',null)->orderBy('created_at','desc')->get();
+            $lessons = Lesson::where('student_id',$user->id)->where('template_id',1)->where('lesson_json','like','%'.$q.'%')->where('deleted_at',null)->orderBy('lesson_date','desc')->get();
         }
 
         if($lessons)
@@ -157,7 +157,7 @@ class LessonController extends Controller
         if($request->id)
         {
             $user = Student::find($request->id);
-            $lessons = Lesson::where('student_id',$user->id)->where('template_id',2)->where('lesson_json','like','%'.$q.'%')->where('deleted_at',null)->orderBy('created_at','desc')->get();
+            $lessons = Lesson::where('student_id',$user->id)->where('template_id',2)->where('lesson_json','like','%'.$q.'%')->where('deleted_at',null)->orderBy('lesson_date','desc')->get();
         }
 
         if($lessons)
@@ -280,7 +280,7 @@ class LessonController extends Controller
         if($request->id)
         {
             $user = Student::find($request->id);
-            $lessons = Lesson::where('student_id',$user->id)->where('template_id',3)->where('lesson_json','like','%'.$q.'%')->where('deleted_at',null)->orderBy('created_at','desc')->get();
+            $lessons = Lesson::where('student_id',$user->id)->where('template_id',3)->where('lesson_json','like','%'.$q.'%')->where('deleted_at',null)->orderBy('lesson_date','desc')->get();
         }
 
         if($lessons)
@@ -609,6 +609,7 @@ class LessonController extends Controller
                 }
             }            
             
+            $lesson->lesson_date = $dt;
             $lesson->lesson_json = json_encode($temps);
             $lesson->updated_by = Auth::user()->id;
             $r = $lesson->save();

@@ -109,7 +109,7 @@ class StudentController extends Controller
                        ->where('lesson_hour_logs.deleted_at',null)
                        ->where('lesson_hour_logs.student_id',$student->id)
                        ->select('lesson_hour_logs.hours','lesson_hour_logs.created_at','lesson_hour_logs.lesson_date','users.name')
-                       ->orderBy('lesson_hour_logs.created_at','desc')
+                       ->orderBy('lesson_hour_logs.lesson_date','desc')
                        ->paginate(5,['*'], 'complete');
 
         $addedHours = DB::table('add_hour_logs')

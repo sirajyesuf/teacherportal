@@ -26,6 +26,15 @@ function profileDateFormate($dt = '')
 	return '';
 }
 
+function dbDateFormate($dt = '')
+{
+	if($dt)
+	{		
+		return date("Y-m-d", strtotime($dt) );
+	}
+	return '';
+}
+
 function addPageJsLink($link){
     return asset('js/page')."/".$link.'?'.time();
 }
