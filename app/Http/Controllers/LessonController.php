@@ -609,7 +609,7 @@ class LessonController extends Controller
                 }
             }            
             
-            $lesson->lesson_date = $dt;
+            $lesson->lesson_date = Carbon::parse($dt)->format('Y-m-d');
             $lesson->lesson_json = json_encode($temps);
             $lesson->updated_by = Auth::user()->id;
             $r = $lesson->save();
@@ -695,6 +695,7 @@ class LessonController extends Controller
                 }
             }
             
+            $lesson->lesson_date = Carbon::parse($dt)->format('Y-m-d');
             $lesson->lesson_json = json_encode($temps);
             $lesson->updated_by = Auth::user()->id;
             $r = $lesson->save();
@@ -780,6 +781,7 @@ class LessonController extends Controller
                 }
             }
             
+            $lesson->lesson_date = Carbon::parse($dt)->format('Y-m-d');
             $lesson->lesson_json = json_encode($temps);
             $lesson->updated_by = Auth::user()->id;
             $r = $lesson->save();
