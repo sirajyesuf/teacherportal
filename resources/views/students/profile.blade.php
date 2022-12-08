@@ -54,7 +54,7 @@
                                     <td>{{ $tls->program}}</td>
                                     <td>{{ $tls->music_day}}</td>
                                     <td>{{ $tls->music_prog}}</td>
-                                    <td>{{ $tls->duration}} Hrs</td>  
+                                    <td>{{ $tls->duration}} Mins</td>  
                                     <td class="d-flex-action">
                                         <a href="javascript:void(0)" class="edit_tls" data-id="{{$tls->id}}"><img src="{{ asset('images/edit.svg')}}" alt="" height="18"></a>
                                         <a href="javascript:void(0)" class="delete_tls" data-id="{{$tls->id}}"><img src="{{ asset('images/delete.svg')}}" alt=""></a>                          
