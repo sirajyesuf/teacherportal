@@ -58,6 +58,19 @@ class StudentController extends Controller
         }
     }
 
+    public function delete(Request $request)
+    {
+        $model = Student::find($request->id);                
+        $model->updated_by = Auth::user()->id;
+        $model->deleted_at = Carbon::now();
+        if($model->save()){
+            $result = ['status' => true, 'message' => 'Delete successfully'];
+        }else{
+            $result = ['status' => false, 'message' => 'Delete fail'];
+        }
+        return response()->json($result);
+    }
+
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -108,7 +121,7 @@ class StudentController extends Controller
                        ->leftjoin('users','lesson_hour_logs.created_by','users.id')
                        ->where('lesson_hour_logs.deleted_at',null)
                        ->where('lesson_hour_logs.student_id',$student->id)
-                       ->select('lesson_hour_logs.hours','lesson_hour_logs.created_at','lesson_hour_logs.lesson_date','users.name')
+                       ->select('lesson_hour_logs.hours','lesson_hour_logs.created_at','lesson_hour_logs.lesson_date','users.first_name')
                        ->orderBy('lesson_hour_logs.lesson_date','desc')
                        ->paginate(5,['*'], 'complete');
 
@@ -130,6 +143,13 @@ class StudentController extends Controller
                        ->where('lesson_hour_logs.student_id',$student->id)
                        ->sum('hours');
 
+        // for blue background of tls
+        $lesson_date_array = DB::table('lesson_hour_logs')
+                        ->where('student_id',$student->id)
+                        ->where('deleted_at',null)
+                        ->pluck('lesson_date')
+                        ->toArray();
+
         $hoursRemaining = $totalHours - $finishedHours;
 
         $tlss = DB::table('tls')
@@ -142,7 +162,7 @@ class StudentController extends Controller
         if($hoursRemaining < 0)
             $hoursRemaining = 0;                       
 
-        return view('students.profile',compact('student','completeHours','addedHours','hoursRemaining','finishedHours','tlss'));
+        return view('students.profile',compact('student','completeHours','addedHours','hoursRemaining','finishedHours','tlss','lesson_date_array'));
     }
 
     public function descriptionUpdate(Request $request)

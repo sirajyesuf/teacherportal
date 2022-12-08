@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','role','role_type','phone',
+        'first_name', 'last_name', 'email', 'password','role','role_type','phone',
     ];
 
     /**
@@ -47,7 +47,7 @@ class User extends Authenticatable
 
     public function scopeSearch($query, $search)
     {
-        return $query->where('name', 'LIKE', "%$search%");
+        return $query->where('first_name', 'LIKE', "%$search%");
     }
 
     /**

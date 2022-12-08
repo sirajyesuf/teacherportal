@@ -13,13 +13,14 @@
     </div>
     <div class="note-main">
         <div class="row">
-            <div class="col-lg-6">
+            <div class="col-lg-7">
                 <div class="student-leftprt">
                 <form action="{{ route('student.description.update')}}" method="post">
                     @csrf
                     <input type="hidden" name="student_id" value="{{ $student->id}}">
                     <div class="note-upper">
                         <ul>
+                            <li><a href="javascript:void(0)" class="delete-student"><img class="delete-img" src="{{ asset('images/delete-button.svg') }}" width="28" /></a></li>
                             <li><h2>{{$student->name}}</h2></li>
                             <li><button type="submit"><img src="{{ asset('images/download.svg')}}" alt=""> Save</button></li>
                             <li><a href="{{ route('casenotes',$student->id) }}"><img src="{{ asset('images/folder-shared.svg')}}" alt=""> View case notes</a></li>
@@ -49,17 +50,31 @@
                                 </tr>
                                 @if($tlss)
                                 @foreach($tlss as $ke => $tls)
-                                <tr>
-                                    <td>{{longDateFormat($tls->date)}}</td>
-                                    <td>{{ $tls->program}}</td>
-                                    <td>{{ $tls->music_day}}</td>
-                                    <td>{{ $tls->music_prog}}</td>
-                                    <td>{{ $tls->duration}} Mins</td>  
-                                    <td class="d-flex-action">
-                                        <a href="javascript:void(0)" class="edit_tls" data-id="{{$tls->id}}"><img src="{{ asset('images/edit.svg')}}" alt="" height="18"></a>
-                                        <a href="javascript:void(0)" class="delete_tls" data-id="{{$tls->id}}"><img src="{{ asset('images/delete.svg')}}" alt=""></a>                          
-                                    </td>
-                                </tr>
+                                    @if(in_array($tls->date, $lesson_date_array))
+                                        <tr>
+                                            <td class="b-blue">{{longDateFormat($tls->date)}}</td>
+                                            <td class="b-blue">{{ $tls->program}}</td>
+                                            <td class="b-blue">{{ $tls->music_day}}</td>
+                                            <td class="b-blue">{{ $tls->music_prog}}</td>
+                                            <td class="b-blue">{{ $tls->duration}} Mins</td>  
+                                            <td class="d-flex-action b-blue">
+                                                <a href="javascript:void(0)" class="edit_tls" data-id="{{$tls->id}}"><img src="{{ asset('images/edit.svg')}}" alt="" height="18"></a>
+                                                <a href="javascript:void(0)" class="delete_tls" data-id="{{$tls->id}}"><img src="{{ asset('images/delete.svg')}}" alt=""></a>                          
+                                            </td>
+                                        </tr>
+                                    @else
+                                        <tr>
+                                            <td>{{longDateFormat($tls->date)}}</td>
+                                            <td>{{ $tls->program}}</td>
+                                            <td>{{ $tls->music_day}}</td>
+                                            <td>{{ $tls->music_prog}}</td>
+                                            <td>{{ $tls->duration}} Mins</td>  
+                                            <td class="d-flex-action">
+                                                <a href="javascript:void(0)" class="edit_tls" data-id="{{$tls->id}}"><img src="{{ asset('images/edit.svg')}}" alt="" height="18"></a>
+                                                <a href="javascript:void(0)" class="delete_tls" data-id="{{$tls->id}}"><img src="{{ asset('images/delete.svg')}}" alt=""></a>                          
+                                            </td>
+                                        </tr>
+                                    @endif
                                 @endforeach
                                 @endif
                                 
@@ -75,7 +90,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-5">
                 <div class="student-rightprt">
                     <div class="hour-part">
                         <a id="add_hour_button" href="javascript:void(0)" data-toggle="modal" data-target="#add_lesson_log_modal"><img src="{{ asset('images/add-circle-outline.svg')}}" alt=""> Add Hours</a>
@@ -107,7 +122,7 @@
                             @if($completeHours)
                                 @foreach($completeHours as $k => $ch)
                                 <div class="hour-box">
-                                    <h4>{{ $ch->name }}</h4>
+                                    <h4>{{ $ch->first_name }}</h4>
                                     <span><img src="{{ asset('images/clock.svg')}}" alt=""> {{ $ch->hours}} hr</span>
                                     <span><img src="{{ asset('images/alarm-black.svg')}}" alt=""> {{ profileDateFormate($ch->lesson_date) }}</span>
                                 </div>
@@ -137,6 +152,31 @@
     </div>            
 </main>
 
+{{-- Start : Delete Confirmation Modal --}}
+<div class="modal" tabindex="-1" role="dialog" id="delete_modal">
+    <div class="modal-dialog" role="document">        
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Student</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">                
+                <input type="hidden" id="delete_id" value="{{ $student->id }}">
+                <div class="form-group">
+                    <label for="add_lesson_hour" class="col-form-label">Are you Sure you want to delete this item?</label>
+                </div>                
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-save del-student">Delete</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>        
+    </div>
+</div>
+{{-- Ends : Delete Confirmation Modal --}}
+
 {{-- Start : for Add log hours --}}
 <div class="modal" tabindex="-1" role="dialog" id="add_lesson_log_modal">
     <div class="modal-dialog" role="document">
@@ -163,7 +203,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-save">Save</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -193,7 +233,7 @@
                 </div>                
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary">Save</button>
+                <button type="submit" class="btn btn-save">Save</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -279,6 +319,8 @@
         var tlsDeleteUrl = "{{ route('tls.delete')}}";
         var tlsAddUrl = $('tls_form').attr('action');
         var tlsMultiAddUrl = "{{ route('tls.multiAdd') }}";
+        var deleteUrl = "{{ route('student.delete') }}";
+        var homeUrl = "{{ route('home') }}";
     </script>
     <script src="{{addPageJsLink('student-profile.js')}}"></script>
 @endsection

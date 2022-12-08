@@ -59,6 +59,7 @@ class LessonController extends Controller
                 $html .= '<div class="lesson-table pr-lg-2">';
                 $html .= '<div class="save-btn">';
                 $html .= '<button type="submit"><img src="'.asset('images/download.svg').'" alt=""> Save</button>';
+                $html .= '<a href="javascript:void(0)" data-del-id="'.$value->id.'" class="del-lesson"><img src="'.asset('images/delete-button.svg').'" alt="" class="del-les-img"></a>';
                 $html .= '</div>';
                 $html .= '<table>
                             <tr>
@@ -74,27 +75,27 @@ class LessonController extends Controller
                                 </td>
                                 <td>
                                     <label class="font-weight-bold">'.normal_case($tempName[3]).':</label>
-                                    <textarea name="'.$tempName[3].'" placeholder="'.normal_case($tempName[3]).'" rows="7" cols="5">'.$tempValue[3].'</textarea>
+                                    <textarea name="'.$tempName[3].'" placeholder="'.normal_case($tempName[3]).'" rows="10" cols="5">'.$tempValue[3].'</textarea>
                                 </td>
                                 <td>
                                     <label class="font-weight-bold">'.normal_case($tempName[4]).':</label>
-                                    <textarea name="'.$tempName[4].'" placeholder="'.normal_case($tempName[4]).'" rows="7" cols="5">'.$tempValue[4].'</textarea>
+                                    <textarea name="'.$tempName[4].'" placeholder="'.normal_case($tempName[4]).'" rows="10" cols="5">'.$tempValue[4].'</textarea>
                                     
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="font-weight-bold">'.normal_case($tempName[5]).':</label>
-                                    <textarea name="'.$tempName[5].'" placeholder="'.normal_case($tempName[5]).'" rows="5" cols="5">'.$tempValue[5].'</textarea>
+                                    <textarea name="'.$tempName[5].'" placeholder="'.normal_case($tempName[5]).'" rows="10" cols="5">'.$tempValue[5].'</textarea>
                                 </td>
                                 <td>
                                     <label class="font-weight-bold">'.normal_case($tempName[6]).':</label>
-                                    <textarea name="'.$tempName[6].'" placeholder="'.normal_case($tempName[6]).'" rows="5" cols="5">'.$tempValue[6].'</textarea>
+                                    <textarea name="'.$tempName[6].'" placeholder="'.normal_case($tempName[6]).'" rows="10" cols="5">'.$tempValue[6].'</textarea>
                                     
                                 </td>
                                 <td>
                                     <label class="font-weight-bold">'.normal_case($tempName[7]).':</label>
-                                    <textarea name="'.$tempName[7].'" placeholder="'.normal_case($tempName[7]).'" rows="5" cols="5">'.$tempValue[7].'</textarea>
+                                    <textarea name="'.$tempName[7].'" placeholder="'.normal_case($tempName[7]).'" rows="10" cols="5">'.$tempValue[7].'</textarea>
                                 </td>
                             </tr>
                             <tr>
@@ -185,6 +186,7 @@ class LessonController extends Controller
                 $html .= '<div class="lesson-table pl-lg-2">';
                 $html .= '<div class="save-btn">';
                 $html .= '<button type="submit"><img src="'.asset('images/download.svg').'" alt=""> Save</button>';
+                $html .= '<a href="javascript:void(0)" data-del-id="'.$value->id.'" class="del-lesson"><img src="'.asset('images/delete-button.svg').'" alt="" class="del-les-img"></a>';
                 $html .= '</div>';
                 $html .= '<table class="bt-lang">
                             <tr>
@@ -204,58 +206,12 @@ class LessonController extends Controller
                             </tr>
                             </table>
                             <table class="bt-lang">
-                            <tr class="">
-                                <td class="first-col">
-                                    <input type="text" name="'.$tempName[3].'" value="'.$tempValue[3].'">
-                                </td>
-                                <td class="second-col">
-                                    <input type="text" name="'.$tempName[4].'" value="'.$tempValue[4].'">
-                                </td>
+                            <tr class="">                                
                                 <td class="third-col" rowspan="6">
-                                    <label class="font-weight-bold">'.normal_case($tempName[5]).':</label>
-                                    <textarea name="'.$tempName[5].'" placeholder="'.normal_case($tempName[5]).'" rows="6" cols="5">'.$tempValue[5].'</textarea>
+                                    <label class="font-weight-bold">'.normal_case($tempName[3]).':</label>
+                                    <textarea name="'.$tempName[3].'" placeholder="'.normal_case($tempName[3]).'" class="ckeditor">'.$tempValue[3].'</textarea>
                                 </td>
-                            </tr>
-                            <tr class="bt-lang">
-                                <td>
-                                    <input type="text" name="'.$tempName[6].'" value="'.$tempValue[6].'">
-                                </td>
-                                <td>
-                                    <input type="text" name="'.$tempName[7].'" value="'.$tempValue[7].'">
-                                </td>
-                            </tr>
-                            <tr class="bt-lang">
-                                <td>
-                                    <input type="text" name="'.$tempName[8].'" value="'.$tempValue[8].'">
-                                </td>
-                                <td>
-                                    <input type="text" name="'.$tempName[9].'" value="'.$tempValue[9].'">
-                                </td>
-                            </tr>
-                            <tr class="bt-lang">
-                                <td>
-                                    <input type="text" name="'.$tempName[10].'" value="'.$tempValue[10].'">
-                                </td>
-                                <td>
-                                    <input type="text" name="'.$tempName[11].'" value="'.$tempValue[11].'">
-                                </td>
-                            </tr>
-                            <tr class="bt-lang">
-                                <td>
-                                    <input type="text" name="'.$tempName[12].'" value="'.$tempValue[12].'">
-                                </td>
-                                <td>
-                                    <input type="text" name="'.$tempName[13].'" value="'.$tempValue[13].'">
-                                </td>
-                            </tr>
-                            <tr class="bt-lang">
-                                <td>
-                                    <input type="text" name="'.$tempName[14].'" value="'.$tempValue[14].'">
-                                </td>
-                                <td>
-                                    <input type="text" name="'.$tempName[15].'" value="'.$tempValue[15].'">
-                                </td>
-                            </tr>
+                            </tr>                            
                         </table>
                     </div>
                 </div>
@@ -308,6 +264,7 @@ class LessonController extends Controller
                 $html .= '<div class="lesson-table pl-lg-2">';
                 $html .= '<div class="save-btn">';
                 $html .= '<button type="submit"><img src="'.asset('images/download.svg').'" alt=""> Save</button>';
+                $html .= '<a href="javascript:void(0)" data-del-id="'.$value->id.'" class="del-lesson"><img src="'.asset('images/delete-button.svg').'" alt="" class="del-les-img"></a>';
                 $html .= '</div>';
                 $html .= '<table class="im">
                             <tr>
@@ -493,7 +450,7 @@ class LessonController extends Controller
             $template = [
 
                 "date" => Carbon::now()->format('d-m-Y'),
-                "trainer" => Auth::user()->name,
+                "trainer" => Auth::user()->first_name,
                 "duration" => "",
                 // "objective_of_lesson" => "",
                 "message" => "",
@@ -517,23 +474,9 @@ class LessonController extends Controller
             $template = [
 
                 "date" => Carbon::now()->format('d-m-Y'),
-                "trainer" => Auth::user()->name,
+                "trainer" => Auth::user()->first_name,
                 "duration" => "",
-                "bttd1" => "",
-                "bttd2" => "",
-                "notes" => "",
-                "bttd3" => "",
-                "bttd4" => "",
-                "bttd5" => "",
-                "bttd6" => "",
-                "bttd7" => "",
-                "bttd8" => "",
-                "bttd9" => "",
-                "bttd10" => "",
-                "bttd11" => "",
-                "bttd12" => "",
-                "bttd13" => "",
-                "bttd14" => "",
+                "description" => "",                
             ];
         }
         else{
@@ -846,5 +789,23 @@ class LessonController extends Controller
         return Validator::make($data, [
             'duration' => ['required', 'numeric'],                        
         ]);
+    }
+
+    public function delete(Request $request)
+    {
+        $model = Lesson::find($request->id);                
+        $model->updated_by = Auth::user()->id;
+        $model->deleted_at = Carbon::now();
+
+        // delete related lesson hours log
+        $lg = LessonLog::where('lesson_id',$request->id);
+        $lg->delete();
+
+        if($model->save()){
+            $result = ['status' => true, 'message' => 'Delete successfully'];
+        }else{
+            $result = ['status' => false, 'message' => 'Delete fail'];
+        }
+        return response()->json($result);
     }
 }

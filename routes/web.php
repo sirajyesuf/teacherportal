@@ -39,6 +39,7 @@ Route::get('/student/profile/{student}', 'StudentController@profile')->name('stu
 Route::post('/student/description/update', 'StudentController@descriptionUpdate')->name('student.description.update');
 Route::get('/student/past', 'StudentController@pastStudent')->name('student.past');
 Route::post('/student/past', 'StudentController@pastStudent')->name('student.past.post');
+Route::post('/student/delete', 'StudentController@delete')->name('student.delete');
 
 
 Route::get('/lesson/{id}', 'LessonController@index')->name('lesson');
@@ -57,6 +58,8 @@ Route::post('/lessons/create', 'LessonController@create')->name('lesson.create')
 Route::post('/lessons/update', 'LessonController@update')->name('lesson.update');
 Route::post('/lessons-bt/update', 'LessonController@btUpdate')->name('lesson-bt.update');
 Route::post('/lessons-im/update', 'LessonController@imUpdate')->name('lesson-im.update');
+
+Route::post('/lessons/delete', 'LessonController@delete')->name('lesson.delete');
 
 Route::get('/casenotes/{id}', 'CaseNoteController@index')->name('casenotes');
 Route::post('/case-note/update', 'CaseNoteController@update')->name('casenote.update');

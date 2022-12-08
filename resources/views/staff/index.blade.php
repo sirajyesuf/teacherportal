@@ -21,7 +21,7 @@
     @endif
     <div class="header-area">
         <div class="header-left">
-            <h2>Hello {{ auth()->user()->name}}!</h2>
+            <h2>Hello {{ auth()->user()->first_name}}!</h2>
         </div>
         <div class="header-middle">
             <p>Name List</p>
@@ -62,7 +62,7 @@
                 @foreach($users as $key => $user)
                 @if($key % 3 == 0)
                     <div class="staff-box">
-                        <h4>{{ $user->name }}</h4>
+                        <h4>{{ $user->first_name }}</h4>
                         <h4>{{ $user->role }}</h4>
                         <a href="{{ route('user.edit', $user->id) }}">Edit</a>
                     </div>
@@ -73,7 +73,7 @@
                 @foreach($users as $key => $user)
                 @if($key % 3 == 1)
                     <div class="staff-box">
-                        <h4>{{ $user->name }}</h4>
+                        <h4>{{ $user->first_name }}</h4>
                         <h4>{{ $user->role }}</h4>
                         <a href="{{ route('user.edit', $user->id) }}">Edit</a>
                     </div>
@@ -84,7 +84,7 @@
                 @foreach($users as $key => $user)
                 @if($key % 3 == 2)
                     <div class="staff-box">
-                        <h4>{{ $user->name }}</h4>
+                        <h4>{{ $user->first_name }}</h4>
                         <h4>{{ $user->role }}</h4>
                         <a href="{{ route('user.edit', $user->id) }}">Edit</a>
                     </div>

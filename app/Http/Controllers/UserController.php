@@ -40,7 +40,7 @@ class UserController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'role' => ['required','string','max:100'],
@@ -50,7 +50,7 @@ class UserController extends Controller
     protected function editValidator(array $data,$user)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,NULL,'. $user->id . ',id'],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
             'role' => ['required','string','max:100'],

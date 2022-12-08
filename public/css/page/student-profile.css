@@ -14,3 +14,15 @@ td input{
 .border-none{
     border: none!important;
 }
+
+.delete-student{
+    background: none!important;    
+}
+
+.delete-img{
+    max-width: 22px!important;
+}
+
+.b-blue{
+    background: #d9f5ff!important;
+}

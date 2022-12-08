@@ -8,6 +8,28 @@ $( document ).ready(function() {
         });
     }
     initDatePicker();
+
+    $('body').on('click','.delete-student',function(){
+        $('#delete_modal').modal('show');
+    });
+
+    $('body').on('click','.del-student',function(){
+        var delId = $('#delete_id').val();
+
+        $.ajax({
+            url: deleteUrl+'?id='+delId,
+            type: 'POST',
+            dataType: 'json',
+            success: function(result) {        
+                $('#delete_modal').modal('hide');
+                showMessage('success',result.message);
+                setTimeout(function() {                    
+                    window.location.href = homeUrl;                    
+                }, 1500);
+            }
+        });
+
+    });
     
     $('#appointment_date').datepicker({
         changeYear: 'true',

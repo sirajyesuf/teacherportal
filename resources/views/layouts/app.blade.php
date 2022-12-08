@@ -23,7 +23,7 @@
         <link href="{{ asset('css/vendor/jquery-ui.min.css') }}" rel="stylesheet">       
         <link href="{{ asset('css/vendor/jquery.toast.css') }}" rel="stylesheet">
 
-        <!-- Main StyleSheet -->
+        <!-- Main StyleSheet -->         
         <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
         <link href="{{ asset('css/dcalendar.picker.css') }}" rel="stylesheet">
         <!-- DateTime Picker CSS -->
@@ -35,12 +35,8 @@
         <!-- Page CSS -->
         @yield('css')
 
-        <script src="">
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': _token
-                }
-            });
+        <script>
+
         </script>
         
     </head>
@@ -79,6 +75,14 @@
                     stack: 6
                 })
             }
+
+            var _token = "{{ csrf_token() }}";            
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': _token
+                }
+            });
+            
         </script>        
         @yield('scripts')
         @yield('pagejs')

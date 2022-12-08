@@ -48,8 +48,8 @@
         <div class="lesson-upper">
             <div class="note-upper">
                 <ul>
-                    <li><h2>{{ (isset($user->name))?$user->name:'' }}</h2></li>
                     @if(isset($user->id))
+                    <li><h2><a href="{{route('student.profile',$user->id)}}" class="nobtn">{{ (isset($user->name))?$user->name:'' }}</a></h2></li>
                     <li><a href="{{ route('select.template',$user->id) }}"><img src="{{ asset('images/circle-2.svg')}}" alt=""> New Lesson</a></li>
                     <li><a href="{{ route('casenotes',$user->id) }}"><img src="{{ asset('images/folder-shared.svg')}}" alt=""> View case notes</a></li>
                     @endif
@@ -156,8 +156,36 @@
         </div>                             
     </div>            
 </main>
+
+{{-- Start : Delete Confirmation Modal --}}
+<div class="modal" tabindex="-1" role="dialog" id="delete_modal">
+    <div class="modal-dialog" role="document">        
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Lesson</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">                
+                <input type="hidden" id="delete_id">
+                <div class="form-group">
+                    <label for="add_lesson_hour" class="col-form-label">Are you Sure you want to delete this item?</label>
+                </div>                
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-save del-confirm">Delete</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>        
+    </div>
+</div>
+{{-- Ends : Delete Confirmation Modal --}}
 @endsection
 
 @section('pagejs')
+    <script type="text/javascript">        
+        var deleteUrl = "{{ route('lesson.delete') }}";        
+    </script>
     <script src="{{addPageJsLink('lessons-index.js')}}"></script>
 @endsection
