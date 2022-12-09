@@ -35,6 +35,7 @@ class HomeController extends Controller
                     ->where('notifications.user_id',Auth::user()->id)
                     ->where('deleted_at',null)
                     ->select('users.first_name','notifications.student_id','notifications.created_at')
+                    ->orderBy('notifications.created_at','desc')
                     ->get();        
 
         $users->appends (array ('q' => $request->q));
