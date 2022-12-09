@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Student;
+use App\Notification;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -28,6 +30,13 @@ class HomeController extends Controller
         
         $users = Student::current()->orderBy('name','ASC')->search($request->q)->paginate(18);
 
+        $notifications = Notification::query()
+                    ->leftjoin('users','notifications.updated_by','users.id')
+                    ->where('notifications.user_id',Auth::user()->id)
+                    ->where('deleted_at',null)
+                    ->select('users.first_name','notifications.student_id','notifications.created_at')
+                    ->get();        
+
         $users->appends (array ('q' => $request->q));
 
         $q = '';
@@ -35,6 +44,6 @@ class HomeController extends Controller
         if(isset($request->q))
             $q = $request->q;           
 
-        return view('students.index', compact('users','q'));
+        return view('students.index', compact('users','notifications','q'));
     }
 }

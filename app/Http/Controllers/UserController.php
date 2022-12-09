@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\User;
+use DB;
 
 class UserController extends Controller
 {
@@ -80,5 +81,24 @@ class UserController extends Controller
         }
     }
 
+    public function getlist(Request $request)
+    {
+        if($request->name)
+        {
+            $users = User::select(DB::raw("REPLACE(CONCAT(COALESCE(first_name,''),' ',COALESCE(last_name,'')),'  ',' ') as fullname"),'id')
+            ->where(DB::raw("REPLACE(CONCAT(COALESCE(first_name,''),' ',COALESCE(last_name,'')),'  ',' ')"),'like', '%' . $request->name . '%')
+            ->get();
+
+            $userArray = [];
+            foreach($users as $key => $user)
+            {
+                $userArray[$key]['id'] = $key + 1;
+                $userArray[$key]['userId'] = $user->id;
+                $userArray[$key]['name'] = $user->fullname;                
+            }
+
+            return json_encode($userArray);            
+        }
+    }
     
 }

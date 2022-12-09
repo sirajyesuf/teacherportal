@@ -14,3 +14,12 @@
    	height: 0px;
    	display: contents;
 }
+
+.time-ago{
+    opacity: 0.6;
+    font-size: 12px;
+}
+.bellcolor{
+    filter: brightness(0) invert(1);
+    margin-bottom: 3px;
+}
