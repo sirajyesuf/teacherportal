@@ -225,6 +225,7 @@
         var deleteCmmUrl = "{{ route('casenote.deleteCmm') }}";
         var deletePrsUrl = "{{ route('casenote.deletePrs') }}";
         var deleteComUrl = "{{ route('casenote.deleteCom') }}";
+        var url = "{{ url("/")}}"
 
     </script>
     <script src="{{addPageJsLink('caseNote.js')}}"></script>
