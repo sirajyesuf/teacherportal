@@ -647,7 +647,7 @@ ul {
     background: #FFFFFF;
     border: 1px solid #000000;
     padding: 28px 30px;
-    /*min-height: 800px;*/
+/*    min-height: 800px;*/
     min-height: auto;
 }
 
@@ -739,7 +739,7 @@ ul {
     overflow: hidden;
 }
 
-.lesson-table table tr td span {
+/*.lesson-table table tr td span {
     display: block;
     padding: 10px 0px;
     margin: 10px 0;
@@ -766,7 +766,7 @@ ul {
     position: absolute;
     bottom: 0;
     left: -14px;
-}   
+}  */ 
 
 /*=== student-profile page start ===*/
 .student-infobox {
@@ -1178,4 +1178,9 @@ li button{
 
 .bt-none td{
     border-top: none!important;
+}
+.nobtn{
+    background: none!important;
+    color: black!important;
+    font-size: unset!important;    
 }

@@ -22,10 +22,19 @@
 	           	<form action="{{ route('user.update',$user->id) }}" method="POST">
 	           		@csrf
 	           		<div class="adduser-item">
-	                    <label for="name">Name:</label>
-	                    <input type="text" id="name" name="name" placeholder="Enter Name" value="{{ $user->name }}">
+	                    <label for="first_name">First Name:</label>
+	                    <input type="text" id="first_name" name="first_name" placeholder="Enter First Name" value="{{ $user->first_name }}">
 	                </div>
-                    @error('name')
+                    @error('first_name')
+		                <span class="invalid-feedback" role="alert">
+		                    <strong>{{ $message }}</strong>
+		                </span>
+		            @enderror
+		            <div class="adduser-item">
+	                    <label for="last_name">Last Name:</label>
+	                    <input type="text" id="last_name" name="last_name" placeholder="Enter Last Name" value="{{ $user->last_name }}">
+	                </div>
+                    @error('last_name')
 		                <span class="invalid-feedback" role="alert">
 		                    <strong>{{ $message }}</strong>
 		                </span>

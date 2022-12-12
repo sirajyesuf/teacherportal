@@ -73,31 +73,9 @@
                                     </tr>
                                 </table>
                                 <table class="bt-lang">
-                                    <tr class="bt-lang">
-                                        <td class="first-col"></td>
-                                        <td class="second-col"></td>
-                                        <td class="third-col" rowspan="6">Notes/Observations:</td>
-                                    </tr>
-                                    <tr class="bt-lang">
-                                        <td></td>
-                                        <td></td>                                        
-                                    </tr>
-                                    <tr class="bt-lang">
-                                        <td></td>
-                                        <td></td>                                        
-                                    </tr>
-                                    <tr class="bt-lang">
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr class="bt-lang">
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr class="bt-lang">
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                    <tr class="bt-lang" style="height:225px">
+                                        <td class="first-col" rowspan="6" style="height:225px"></td>
+                                    </tr>                                    
                                 </table>
                             </div>
                             <div class="lesson-table pl-lg-2">

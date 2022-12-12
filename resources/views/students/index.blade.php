@@ -57,7 +57,7 @@
                     <div class="main-secleft">
                         <div class="student-box">
                             <div class="student-cnt">
-                                <a href="{{route('student.profile',$user->id)}}}"><h4>{{ $user->name }}</h4></a>
+                                <a href="{{route('student.profile',$user->id)}}"><h4>{{ $user->name }}</h4></a>
                                 <p><img src="images/clock.svg" alt=""> {{ decimalToHHmm($user->remaining_hours) }}</p>
                             </div>
                             @php 
