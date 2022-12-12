@@ -8,7 +8,7 @@ $(document).ready(function() {
     });
 
     CKEDITOR.config.mentions = [ { 
-        feed: '/users?name={encodedQuery}',        
+        feed: url+'/users?name={encodedQuery}',        
         minChars: 2,         
         outputTemplate: '<a href="{userId}">{name}</a>',
         
