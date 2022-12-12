@@ -47,7 +47,8 @@ textarea{
 .save-btn{
     margin-bottom: 5px;
     display: flex;
-    justify-content: space-between;    
+    justify-content: space-between;
+    align-items: flex-end;
 }
 
 .del-lesson{

@@ -646,7 +646,8 @@ ul {
 .note-cnt {
     background: #FFFFFF;
     border: 1px solid #000000;
-    padding: 28px 30px;
+/*    padding: 28px 30px;*/
+    padding: 5px 5px;
 /*    min-height: 800px;*/
     min-height: auto;
 }

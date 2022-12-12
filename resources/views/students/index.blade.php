@@ -12,6 +12,15 @@
         <div class="header-area">
             <div class="header-left">
                 <h2>Hello {{ auth()->user()->name}}!</h2>
+                <a class="btn-save" style="margin-left: 20px; border-radius: 10px" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" ria-haspopup="true" aria-expanded="false"><img src="{{ asset('images/bell.svg')}}" class="bellcolor" height="20" alt="" style=""> Notification</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    @if($notifications)
+                    @foreach($notifications as $notify)
+                        <a class="dropdown-item" href="{{route('casenotes',$notify->student_id)}}"><span class="font-weight-bold">{{$notify->first_name}}</span> has tagged you in a comment. <div class="time-ago">{{ getTimeAgo($notify->created_at)}}</div></a>                        
+                        <div class="dropdown-divider"></div>                    
+                    @endforeach
+                    @endif
+                </div>                
             </div>
             <div class="header-middle">
                 <p>Name List</p>

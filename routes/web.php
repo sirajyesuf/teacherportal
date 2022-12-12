@@ -31,6 +31,7 @@ Route::get('/user/create', 'UserController@create')->name('user.create');
 Route::post('/user/add', 'UserController@add')->name('user.add');
 Route::get('/user/{user}/edit', 'UserController@edit')->name('user.edit');
 Route::post('/user/{user}/update', 'UserController@update')->name('user.update');
+Route::get('/users', 'UserController@getlist')->name('user.getlist');
 
 Route::get('/student/create', 'StudentController@create')->name('student.create');
 Route::post('/student/add', 'StudentController@add')->name('student.add');
@@ -63,6 +64,17 @@ Route::post('/lessons/delete', 'LessonController@delete')->name('lesson.delete')
 
 Route::get('/casenotes/{id}', 'CaseNoteController@index')->name('casenotes');
 Route::post('/case-note/update', 'CaseNoteController@update')->name('casenote.update');
+Route::post('/case-note/addCmm', 'CaseNoteController@addCmm')->name('casenote.addCmm');
+Route::post('/case-note/addPrs', 'CaseNoteController@addPrs')->name('casenote.addPrs');
+Route::post('/case-note/addCom', 'CaseNoteController@addCom')->name('casenote.addCom');
+
+Route::post('/case-note/update/cmm', 'CaseNoteController@updateCmm')->name('casenote.updateCmm');
+Route::post('/case-note/update/prs', 'CaseNoteController@updatePrs')->name('casenote.updatePrs');
+Route::post('/case-note/update/com', 'CaseNoteController@updateCom')->name('casenote.updateCom');
+
+Route::post('/case-note/delete/cmm', 'CaseNoteController@deleteCmm')->name('casenote.deleteCmm');
+Route::post('/case-note/delete/prs', 'CaseNoteController@deletePrs')->name('casenote.deletePrs');
+Route::post('/case-note/delete/com', 'CaseNoteController@deleteCom')->name('casenote.deleteCom');
 
 Route::post('/lesson-hours/add', 'LessonLogController@add')->name('log.hours.add');
 

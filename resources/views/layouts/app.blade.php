@@ -30,7 +30,7 @@
         <link href="{{ asset('css/vendor/bootstrap-datetimepicker.css') }}" id="theme" rel="stylesheet">       
         
         <!-- Responsive CSS -->
-        <link href="{{ asset('css/responsive.css') }}" rel="stylesheet"> 
+        <link href="{{ asset('css/responsive.css') }}" rel="stylesheet">        
         
         <!-- Page CSS -->
         @yield('css')
@@ -47,9 +47,12 @@
         
         <!-- Main jQuery -->
         <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
-        <script src="{{ asset('js/vendor/jquery-ui.min.js') }}"></script>        
+        <script src="{{ asset('js/vendor/jquery-ui.min.js') }}"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
-        <script src="//cdn.ckeditor.com/4.20.0/standard/ckeditor.js"></script>
+        {{-- <script src="//cdn.ckeditor.com/4.20.0/standard/ckeditor.js"></script> --}}
+        <script src="{{ asset('js\vendor\ckeditor\ckeditor.js') }}"></script>        
+        <script src="{{ asset('js\vendor\ckeditor\config.js') }}"></script>        
+        <script src="{{ asset('js\vendor\ckeditor\styles.js') }}"></script>        
         
         <!-- Bootstrap Propper jQuery -->
         <script src="{{ asset('js/popper.js') }}"></script>

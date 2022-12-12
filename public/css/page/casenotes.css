@@ -1,3 +1,65 @@
 .cke_contents{
   min-height: 500px!important;
 }
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  opacity: 0.5!important; /* Firefox */
+}
+
+/*update 3*/
+
+@media screen and (min-width: 1354px) and (max-width: 1388px) {
+    .student-leftprt .note-upper ul li {
+        padding-right: 16px;
+    }
+}
+
+.lesson-table input {
+    font-family: 'Work Sans', sans-serif;
+    width: 100%;
+    display: block;
+    font-weight: 400;
+/*    font-size: 13px;*/
+    font-size: 12px;
+    color: #000000;
+    background: none;
+    border: none;
+    outline: none;
+}
+
+.lesson-table input::placeholder {
+    opacity: 1;
+    color: #000000;
+}
+
+textarea{
+    width: 100%;
+    border: none;
+    outline: none;
+    resize: none;
+}
+
+.menu-bar{
+    padding-left: 40px;
+    padding-top: 20px;
+}
+
+.lesson-table{
+    align-items: normal;
+}
+
+.save-btn{
+    margin-bottom: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.del-lesson{
+    background: none!important;
+    padding: 0!important;
+}
+
+img.del-les-img{
+    max-width: 25px!important;    
+}
