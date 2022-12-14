@@ -9,9 +9,33 @@
 @endsection
 
 @section('content')
+
+@if(session()->has('dataUpdated'))
+    
+    <script>
+        var successMsg = "{{ \Session::get('dataUpdated') }}";
+    </script>
+    <?php \Session::forget('dataUpdated') ?>
+@else
+    <script type="text/javascript">
+        var successMsg = '';
+    </script>
+@endif
+
+@if(session()->has('updateFail'))    
+    <script>
+        var updateFailed = "{{ \Session::get('updateFail') }}";;
+    </script>
+    <?php \Session::forget('updateFail') ?>
+@else
+    <script type="text/javascript">
+        var updateFailed = '';
+    </script>
+@endif
+
 <main class="note-wrapper">
     <div class="home-btn">
-        <a href="{{ route('home') }}"><img src="{{ asset('images/home.svg')}}" alt=""> Home</a>                
+        <a href="{{ route('home') }}"><img src="{{ asset('images/home.svg')}}" alt=""><span class="ml-1">Home</span></a>                
     </div>
     <div class="note-main">
         <div class="note-upper">        
@@ -21,7 +45,7 @@
                 <input type="hidden" id="student_id" value="{{$user->id}}">
                 <li><h2><a href="{{route('student.profile',$user->id)}}" class="nobtn">{{ (isset($user->name))?$user->name:'' }}</a></h2></li>
                 <input type="hidden" name="student_id" value="{{ $user->id }}">
-                <li><button type="submit"><img src="{{ asset('images/download.svg')}}" alt=""> Save</button> </li>
+                {{-- <li><button type="submit"><img src="{{ asset('images/download.svg')}}" alt=""> Save</button> </li> --}}
                 <li><a href="{{ route('lesson',$user->id) }}"><img src="{{ asset('images/description.svg')}}" alt=""> View Lesson</a></li>                        
                 @endif                       
                 <div class="hour-part">
@@ -51,7 +75,7 @@
 
                     @if($casemgmts)
                     @foreach($casemgmts as $caseMgmt)
-                    <form action="{{ route("casenote.updateCmm") }}" method="POST">
+                    <form action="{{ route("casenote.updateCmm") }}" class="cmmform" method="POST">
                         @csrf
                         <input type="hidden" name="student_id" value="{{ $user->id }}" />
                         <input type="hidden" name="update_id" value="{{ $caseMgmt->id }}" />

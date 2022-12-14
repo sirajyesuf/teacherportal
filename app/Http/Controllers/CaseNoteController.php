@@ -197,13 +197,16 @@ class CaseNoteController extends Controller
         }
 
         if($r)
-        {            
-            toastr()->success('Case Management Meeting saved');
+        {
+            session(['dataUpdated' => 'Case Management Meeting saved']);
             return back();
+
+            // toastr()->success('Case Management Meeting saved');
         }
         else
         {
-            toastr()->error('An error has occurred please try again later.');            
+            // toastr()->error('An error has occurred please try again later.');
+            session(['updateFail' => 'An error has occurred please try again later.']);
             return back();
         }
     }
@@ -263,14 +266,14 @@ class CaseNoteController extends Controller
         }
 
         if($r)
-        {            
-            toastr()->success('Parent Review Session saved');
+        {
+            session(['dataUpdated' => 'Parent Review Session saved']);
             return back();
         }
         else
         {
-            toastr()->error('An error has occurred please try again later.');            
-            return back();
+            session(['updateFail' => 'An error has occurred please try again later.']);
+            return back();            
         }
     }
 
@@ -289,13 +292,13 @@ class CaseNoteController extends Controller
         }
 
         if($r)
-        {            
-            toastr()->success('Comments saved');
+        {       
+            session(['dataUpdated' => 'Comments saved']);
             return back();
         }
         else
         {
-            toastr()->error('An error has occurred please try again later.');            
+            session(['updateFail' => 'An error has occurred please try again later.']);
             return back();
         }
     }
