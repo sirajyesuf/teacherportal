@@ -14,6 +14,15 @@ $(document).ready(function() {
         
     } ];
 
+    if(successMsg)
+    {
+        showMessage('success',successMsg);
+    }
+
+    if(updateFailed)
+    {
+        showMessage('error',updateFailed);
+    }
 
 	$('body').on('click','.add_cmm',function(e){
 		e.preventDefault();
