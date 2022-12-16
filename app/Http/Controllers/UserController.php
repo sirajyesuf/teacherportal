@@ -66,12 +66,19 @@ class UserController extends Controller
     public function update(User $user,Request $request)
     {
         $this->editValidator($request->all(),$user)->validate();
-
-        $r = $user->update($request->all());
+        if($request->password)
+        {            
+            $r = $user->update($request->all());
+        }
+        else
+        {            
+            $request->request->remove('password');
+            $r = $user->update($request->all());   
+        }        
 
         if($r)
         {
-            toastr()->success('User upted Successfully');
+            toastr()->success('User updated Successfully');
             return redirect()->route('staff');
         }
         else

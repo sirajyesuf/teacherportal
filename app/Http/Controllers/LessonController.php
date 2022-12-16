@@ -31,7 +31,7 @@ class LessonController extends Controller
         if($request->id)
         {
             $user = Student::find($request->id);
-            $lessons = Lesson::where('student_id',$user->id)->where('template_id',1)->where('lesson_json','like','%'.$q.'%')->where('deleted_at',null)->orderBy('lesson_date','desc')->get();
+            $lessons = Lesson::where('student_id',$user->id)->where('template_id',1)->where('lesson_json','like','%'.$q.'%')->where('deleted_at',null)->orderBy('lesson_date','desc')->orderBy('id','desc')->get();
         }
 
         if($lessons)
@@ -158,7 +158,7 @@ class LessonController extends Controller
         if($request->id)
         {
             $user = Student::find($request->id);
-            $lessons = Lesson::where('student_id',$user->id)->where('template_id',2)->where('lesson_json','like','%'.$q.'%')->where('deleted_at',null)->orderBy('lesson_date','desc')->get();
+            $lessons = Lesson::where('student_id',$user->id)->where('template_id',2)->where('lesson_json','like','%'.$q.'%')->where('deleted_at',null)->orderBy('lesson_date','desc')->orderBy('id','desc')->get();
         }
 
         if($lessons)
@@ -236,7 +236,7 @@ class LessonController extends Controller
         if($request->id)
         {
             $user = Student::find($request->id);
-            $lessons = Lesson::where('student_id',$user->id)->where('template_id',3)->where('lesson_json','like','%'.$q.'%')->where('deleted_at',null)->orderBy('lesson_date','desc')->get();
+            $lessons = Lesson::where('student_id',$user->id)->where('template_id',3)->where('lesson_json','like','%'.$q.'%')->where('deleted_at',null)->orderBy('lesson_date','desc')->orderBy('id','desc')->get();
         }
 
         if($lessons)
@@ -426,6 +426,7 @@ class LessonController extends Controller
         $lesson = new Lesson;
         $lesson->student_id = $request->student_id;
         $lesson->template_id = $request->id;
+        $lesson->lesson_date = Carbon::now()->format('Y-m-d');
         $lesson->lesson_json = $this->getLessonJson($request->id);
         $lesson->updated_by = $user->id;
         $r = $lesson->save();
@@ -453,16 +454,16 @@ class LessonController extends Controller
                 "trainer" => Auth::user()->first_name,
                 "duration" => "",
                 // "objective_of_lesson" => "",
-                "message" => "",
-                "emotions" => "",
                 "vestibular" => "",
                 "proprioception" => "",
-                "tactile" => "",
-                "reflex" => "",
-                // "oral" => "",
-                "kinestesia" => "",
                 "muscle_tone" => "",
+                "reflex" => "",
+                "kinestesia" => "",
+                "massage" => "",
+                "tactile" => "",
+                "emotions" => "",
                 "vp" => "",
+                // "oral" => "",
                 "ep" => "",
                 "others" => "",
                 "ft" => "",

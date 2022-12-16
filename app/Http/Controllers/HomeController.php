@@ -36,6 +36,7 @@ class HomeController extends Controller
                     ->where('deleted_at',null)
                     ->select('users.first_name','notifications.student_id','notifications.created_at')
                     ->orderBy('notifications.created_at','desc')
+                    ->limit(10)
                     ->get();        
 
         $users->appends (array ('q' => $request->q));
