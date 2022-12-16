@@ -3,6 +3,10 @@
 
 @section('title','Lesson - Select Template')
 
+@section('css')
+    <link href="{{ asset('css/page/lesson-template.css') }}?{{time()}}" rel="stylesheet">
+@endsection
+
 @section('content')
 <main class="note-wrapper templt-wrap">
             <div class="note-main">
@@ -26,25 +30,34 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            Date: 
+                                         <label>Date:</label>
+                                            <input type="text">
+                                           <span>
+                                                <label>Trainer:</label>
+                                                <input type="text">
+                                           </span>
+                                            <label>Duration:</label>
+                                            <input type="text">
+                                        
+                                            {{-- Date: 
                                             <span>Trainer:</span>
-                                            Duration: 
+                                            Duration:  --}}
                                         </td>
+                                        <td>Vestibular:</td>
+                                        <td>Proprioception:</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Muscle tone: </td>
+                                        <td>Reflex: </td>
+                                        <td>Kinestesia:</td>
+                                    </tr>
+                                    <tr>
                                         <td>Massage:</td>
+                                        <td>Tactile/oral: </td>
                                         <td>Emotions:</td>
                                     </tr>
                                     <tr>
-                                        <td>Vestibular: </td>
-                                        <td>Proprioception: </td>
-                                        <td>Tactile/oral:</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Reflex:</td>
-                                        <td>Kinestesia: </td>
-                                        <td>Muscle tone:</td>
-                                    </tr>
-                                    <tr>
-                                        <td>VP/AP:</td>
+                                        <td>VA/AP:</td>
                                         <td>EP:</td>
                                         <td>Others:</td>
                                     </tr>

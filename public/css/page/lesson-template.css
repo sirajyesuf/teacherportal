@@ -1,0 +1,13 @@
+td input {
+    font-family: 'Work Sans', sans-serif;
+    width: auto;
+    max-width: 85px;
+    display: block;
+    font-weight: 400;
+/*    font-size: 13px;*/
+    font-size: 12px;
+    color: #000000;
+    background: none;
+    border: none;
+    outline: none;
+}

@@ -40,9 +40,9 @@ class CaseNoteController extends Controller
                 $hoursRemaining = 0;
 
 
-            $casemgmts = CaseManagement::where('deleted_at',null)->where('student_id',$request->id)->get();
-            $parentreviews = ParentReview::where('deleted_at',null)->where('student_id',$request->id)->get();
-            $comments = Comment::where('deleted_at',null)->where('student_id',$request->id)->get();
+            $casemgmts = CaseManagement::where('deleted_at',null)->where('student_id',$request->id)->orderBy('date','desc')->orderBy('id','desc')->get();
+            $parentreviews = ParentReview::where('deleted_at',null)->where('student_id',$request->id)->orderBy('date','desc')->orderBy('id','desc')->get();
+            $comments = Comment::where('deleted_at',null)->where('student_id',$request->id)->orderBy('date','desc')->orderBy('id','desc')->get();
 
 
         }
@@ -289,6 +289,46 @@ class CaseNoteController extends Controller
             $comment->comments = $request->comments;
             $comment->updated_by = Auth::user()->id;
             $r = $comment->save();
+
+            if($request->comments)
+            {
+                $notIds = [];                
+                $str = $request->comments;
+                $count = 0;
+                $strCount = substr_count($str, 'href="');                
+
+                while($strCount > 0)
+                {                    
+                    $temp = preg_match('~href="\K\d+~', $str, $out) ? $out[0] : '';
+                    $notIds[$count] = $temp;
+                    
+                    $tempWord = 'href="'.$temp.'"';
+                    
+                    $str = str_ireplace($tempWord, 'asd', $str);
+                    
+                    $strCount--;
+                    $count++;
+                }
+
+                if(count($notIds))
+                {
+                    foreach($notIds as $uId)
+                    {                        
+                        $notification = Notification::where('student_id',$request->student_id)->where('user_id',$uId)->where('case_id',$request->update_id)->where('case_type',1)->where('updated_by',Auth::user()->id)->where('deleted_at',null)->first();
+
+                        if($notification)
+                            continue;                        
+
+                        $notification = new Notification;
+                        $notification->student_id = $request->student_id;
+                        $notification->user_id = $uId;
+                        $notification->case_id = $request->update_id;
+                        $notification->case_type = 3; // 1 : Case Management Meeting, 2: Parent Review Session, 3: Comments                        
+                        $notification->updated_by = Auth::user()->id;
+                        $notification->save();
+                    }
+                }
+            }
         }
 
         if($r)

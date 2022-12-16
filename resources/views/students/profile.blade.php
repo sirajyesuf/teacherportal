@@ -9,7 +9,7 @@
 @section('content')
 <main class="note-wrapper">
     <div class="home-btn">
-        <a href="{{route('home')}}"><img src="{{ asset('images/home.svg')}}" alt=""> Home</a>
+        <a href="{{route('home')}}"><img src="{{ asset('images/home.svg')}}" alt=""><span class="ml-1">Home</span></a>
     </div>
     <div class="note-main">
         <div class="row">

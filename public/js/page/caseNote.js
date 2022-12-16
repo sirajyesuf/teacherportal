@@ -5,7 +5,7 @@ $(document).ready(function() {
         changeYear: 'true',
         changeMonth: 'true',
         dateFormat: 'yy-mm-dd',
-    });
+    });    
 
     CKEDITOR.config.mentions = [ { 
         feed: url+'/users?name={encodedQuery}',        
@@ -13,6 +13,9 @@ $(document).ready(function() {
         outputTemplate: '<a href="{userId}">{name}</a>',
         
     } ];
+
+
+    
 
     if(successMsg)
     {
