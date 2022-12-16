@@ -5,7 +5,7 @@
 @section('content')
 	<main class="adduser-area">
 		<div class="home-btn">
-	        <a href="{{ route('home') }}"><img src="images/home.svg" alt=""> Home</a>
+	        <a href="{{ route('home')}}"><img src="{{ asset('images/home.svg') }}" alt=""><span class="ml-1">Home</span></a>
 	    </div>
 	   	<div class="adduser-title">
 	    	<h2>Create Account</h2>	    	

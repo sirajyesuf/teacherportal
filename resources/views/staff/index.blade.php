@@ -92,7 +92,9 @@
                 @endforeach
             </div>
         </div>
-        {{ $users->links() }}
+        <div class="mt-5">
+            {{ $users->links() }}            
+        </div>
     </div>
 
     {{-- <div class="staff-area">
