@@ -14,8 +14,7 @@ $(document).ready(function() {
         
     } ];
 
-
-    
+    CKEDITOR.replaceAll( 'comments');
 
     if(successMsg)
     {

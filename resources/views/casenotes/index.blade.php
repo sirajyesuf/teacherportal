@@ -199,7 +199,8 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <textarea name="comments" rows="45" id="comments" class="ckeditor">{{ $comment->comments }}</textarea>
+                                        {{-- <textarea name="comments" rows="45" id="comments" class="ckeditor">{{ $comment->comments }}</textarea> --}}
+                                        <textarea name="comments" rows="45" class="comments">{{ $comment->comments }}</textarea>
                                     </td>
                                 </tr>
                             </table>
