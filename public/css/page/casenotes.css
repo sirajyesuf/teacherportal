@@ -63,3 +63,8 @@ textarea{
 img.del-les-img{
     max-width: 25px!important;    
 }
+
+#cke_comments .cke_top
+{
+    display: none!important;
+}
