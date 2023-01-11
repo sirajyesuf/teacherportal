@@ -6,6 +6,26 @@ $( document ).ready(function() {
         dateFormat: 'dd-mm-yy',
     });
 
+    CKEDITOR.replaceAll('vestibular');
+    CKEDITOR.replaceAll('proprioception');
+    CKEDITOR.replaceAll('muscle_tone');
+    CKEDITOR.replaceAll('reflex');
+    CKEDITOR.replaceAll('kinestesia');
+    CKEDITOR.replaceAll('massage');
+    CKEDITOR.replaceAll('tactile');
+    CKEDITOR.replaceAll('emotions');
+    CKEDITOR.replaceAll('vp');
+    CKEDITOR.replaceAll('ep');
+    CKEDITOR.replaceAll('others');
+    CKEDITOR.replaceAll('ft');
+
+    CKEDITOR.config.mentions = [ { 
+        feed: url+'/users?name={encodedQuery}',        
+        minChars: 2,         
+        outputTemplate: '<a href="{userId}">{name}</a>',
+        
+    } ];    
+
     $('body').on('click','.del-lesson',function(e){
         e.preventDefault();
 

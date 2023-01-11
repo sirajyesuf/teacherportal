@@ -86,7 +86,23 @@ class TlsController extends Controller
                 $tls->created_by = Auth::user()->id;
                 $r = $tls->save();
 
-                if($r)
+                $more = Tls::where('student_id',$tls->student_id)->where('id','>',$tls->id)->orderBy('id','ASC')->get();
+                if($more->count())
+                {
+                    foreach($more as $key => $m)
+                    {
+                        if($key == 0)
+                        {
+                            $temp = $m->date = Carbon::parse($tls->date)->addDays('1')->format('Y-m-d');                            
+                        }
+                        else{                            
+                            $temp = $m->date = Carbon::parse($temp)->addDays('1')->format('Y-m-d');                            
+                        }
+                        $r1 = $m->save();
+                    }
+                }
+
+                if($r && $r1)
                 {
                     $result = ['status' => true, 'message' => 'TLS update successfully.', 'data' => []];
                 }else{

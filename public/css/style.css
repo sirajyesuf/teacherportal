@@ -861,7 +861,8 @@ ul {
     justify-content: center;
     text-align: left;
     background: #F5F5F7;
-    padding: 10px 15px;
+/*    padding: 10px 15px;*/
+    padding: 10px 2.5rem;
     border-radius: 14px;
 }
 

@@ -44,10 +44,13 @@ class CaseNoteController extends Controller
             $parentreviews = ParentReview::where('deleted_at',null)->where('student_id',$request->id)->orderBy('date','desc')->orderBy('id','desc')->get();
             $comments = Comment::where('deleted_at',null)->where('student_id',$request->id)->orderBy('date','desc')->orderBy('id','desc')->get();
 
+            $data = $casemgmts->concat($parentreviews);
+            $data = $data->concat($comments);
+            $data = $data->sortByDesc('date');
 
         }
 
-        return view('casenotes.index',compact('user','caseNote','finishedHours','hoursRemaining','casemgmts','parentreviews','comments'));
+        return view('casenotes.index',compact('data','user','caseNote','finishedHours','hoursRemaining','casemgmts','parentreviews','comments'));
     }
 
     public function update(Request $request)
@@ -257,7 +260,7 @@ class CaseNoteController extends Controller
                         $notification->student_id = $request->student_id;
                         $notification->user_id = $uId;
                         $notification->case_id = $request->update_id;
-                        $notification->case_type = 1; // 1 : Case Management Meeting, 2: Parent Review Session                        
+                        $notification->case_type = 2; // 1 : Case Management Meeting, 2: Parent Review Session                        
                         $notification->updated_by = Auth::user()->id;
                         $notification->save();
                     }
@@ -387,5 +390,22 @@ class CaseNoteController extends Controller
             $result = ['status' => false, 'message' => 'Delete fail'];
         }
         return response()->json($result);
+    }
+
+    public function test()
+    {
+        $casenote = CaseManagement::all();
+        $parentReview = ParentReview::all();
+        $comment = Comment::all();
+
+        $data = $casenote->concat($parentReview);
+        $data = $data->concat($comment);        
+        $data = $data->sortByDesc('date');
+
+        return view('data',compact('data'));
+
+        echo "<pre>";
+        print_r($data);
+        die;
     }
 }

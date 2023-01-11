@@ -17,6 +17,32 @@ jQuery.browser = {};
                 userId = id;                    
                 $('#hiddenDate_'+id).datepicker("show");                
             });
+
+            $(document).on('click','#navbarDropdown', function(e){
+                e.preventDefault();
+
+                $.ajax({
+                    url: readNotiUrl,
+                    type: 'GET',                            
+                    // data: { id:userId, date:selectedDate, _token: $('meta[name=csrf-token]').attr('content')},
+                    // dataType: 'json',
+                    success: function(result) {
+                        if (result.status == true) {
+                            console.log('clear');
+                            // setTimeout(function() {                               
+                                
+                            // }, 500);
+
+                        } else {
+
+                        }
+                    },
+                    error: function(error) {
+                        alert('Something went wrong!', 'error');                            
+                    }
+                }); // Ajax ends
+            });
+
         });
 
         function destroyDatepicker(){

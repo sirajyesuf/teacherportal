@@ -186,7 +186,8 @@
 
 @section('pagejs')
     <script type="text/javascript">        
-        var deleteUrl = "{{ route('lesson.delete') }}";        
+        var deleteUrl = "{{ route('lesson.delete') }}";     
+        var url = "{{ url("/")}}";   
     </script>
     <script src="{{addPageJsLink('lessons-index.js')}}"></script>
 @endsection

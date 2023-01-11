@@ -38,6 +38,18 @@ class UserController extends Controller
 
     }
 
+    public function delete(Request $request)
+    {
+        $model = User::find($request->id);
+        
+        if($model->delete()){
+            $result = ['status' => true, 'message' => 'Delete successfully'];
+        }else{
+            $result = ['status' => false, 'message' => 'Delete fail'];
+        }
+        return response()->json($result);
+    }
+
     protected function validator(array $data)
     {
         return Validator::make($data, [
