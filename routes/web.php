@@ -32,6 +32,7 @@ Route::post('/user/add', 'UserController@add')->name('user.add');
 Route::get('/user/{user}/edit', 'UserController@edit')->name('user.edit');
 Route::post('/user/{user}/update', 'UserController@update')->name('user.update');
 Route::get('/users', 'UserController@getlist')->name('user.getlist');
+Route::post('/user/delete', 'UserController@delete')->name('user.delete');
 
 Route::get('/student/create', 'StudentController@create')->name('student.create');
 Route::post('/student/add', 'StudentController@add')->name('student.add');
@@ -85,6 +86,10 @@ Route::get('/tls/details', 'TlsController@details')->name('tls.details');
 Route::post('/tls/update', 'TlsController@update')->name('tls.update');
 Route::post('/tls/delete', 'TlsController@delete')->name('tls.delete');
 Route::post('/tls/multiAdd', 'TlsController@multiAdd')->name('tls.multiAdd');
+
+Route::get('/notification/read', 'NotificationController@readNotification')->name('notification.read');
+
+Route::get('/test', 'CaseNoteController@test')->name('test');
 
 
 

@@ -68,3 +68,15 @@ img.del-les-img{
 {
     display: none!important;
 }
+
+.dp-down{
+    background-color: white!important;
+    color: black!important;
+}
+.dropdown-menu.show {
+    width: min-content;
+}
+
+.dropdown-item:hover, .dropdown-item:focus {    
+    background-color: #e9ecef!important;
+}

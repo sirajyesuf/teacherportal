@@ -7,6 +7,7 @@ use App\User;
 use App\Lesson;
 use App\Student;
 use App\LessonLog;
+use App\Notification;
 use Auth;
 use DB;
 use Carbon\Carbon;
@@ -56,7 +57,7 @@ class LessonController extends Controller
                 $html .= '<input type="hidden" name="_token" value="' . csrf_token() . '">';
                 $html .= '<input type="hidden" name="student_id" value="'.$request->id.'" />';
                 $html .= '<input type="hidden" name="update_id" value="'.$value->id.'" />';
-                $html .= '<div class="lesson-table pr-lg-2">';
+                $html .= '<div class="lesson-table pr-lg-2" id="sift'.$value->id.'">';
                 $html .= '<div class="save-btn">';
                 $html .= '<button type="submit"><img src="'.asset('images/download.svg').'" alt=""> Save</button>';
                 $html .= '<a href="javascript:void(0)" data-del-id="'.$value->id.'" class="del-lesson"><img src="'.asset('images/delete-button.svg').'" alt="" class="del-les-img"></a>';
@@ -75,62 +76,62 @@ class LessonController extends Controller
                                 </td>
                                 <td>
                                     <label class="font-weight-bold">'.normal_case($tempName[3]).':</label>
-                                    <textarea name="'.$tempName[3].'" placeholder="'.normal_case($tempName[3]).'" rows="10" cols="5">'.$tempValue[3].'</textarea>
+                                    <textarea name="'.$tempName[3].'" placeholder="'.normal_case($tempName[3]).'" rows="10" cols="5" class="vestibular">'.$tempValue[3].'</textarea>
                                 </td>
                                 <td>
                                     <label class="font-weight-bold">'.normal_case($tempName[4]).':</label>
-                                    <textarea name="'.$tempName[4].'" placeholder="'.normal_case($tempName[4]).'" rows="10" cols="5">'.$tempValue[4].'</textarea>
+                                    <textarea name="'.$tempName[4].'" placeholder="'.normal_case($tempName[4]).'" rows="10" cols="5" class="proprioception">'.$tempValue[4].'</textarea>
                                     
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="font-weight-bold">'.normal_case($tempName[5]).':</label>
-                                    <textarea name="'.$tempName[5].'" placeholder="'.normal_case($tempName[5]).'" rows="10" cols="5">'.$tempValue[5].'</textarea>
+                                    <textarea name="'.$tempName[5].'" placeholder="'.normal_case($tempName[5]).'" rows="10" cols="5" class="muscle_tone">'.$tempValue[5].'</textarea>
                                 </td>
                                 <td>
                                     <label class="font-weight-bold">'.normal_case($tempName[6]).':</label>
-                                    <textarea name="'.$tempName[6].'" placeholder="'.normal_case($tempName[6]).'" rows="10" cols="5">'.$tempValue[6].'</textarea>
+                                    <textarea name="'.$tempName[6].'" placeholder="'.normal_case($tempName[6]).'" rows="10" cols="5" class="reflex">'.$tempValue[6].'</textarea>
                                     
                                 </td>
                                 <td>
                                     <label class="font-weight-bold">'.normal_case($tempName[7]).':</label>
-                                    <textarea name="'.$tempName[7].'" placeholder="'.normal_case($tempName[7]).'" rows="10" cols="5">'.$tempValue[7].'</textarea>
+                                    <textarea name="'.$tempName[7].'" placeholder="'.normal_case($tempName[7]).'" rows="10" cols="5" class="kinestesia">'.$tempValue[7].'</textarea>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="font-weight-bold">'.normal_case($tempName[8]).':</label>
-                                    <textarea name="'.$tempName[8].'" placeholder="'.normal_case($tempName[8]).'" rows="5" cols="5">'.$tempValue[8].'</textarea>
+                                    <textarea name="'.$tempName[8].'" placeholder="'.normal_case($tempName[8]).'" rows="5" cols="5" class="massage">'.$tempValue[8].'</textarea>
                                 </td>
                                 <td>
                                     <label class="font-weight-bold">'.normal_case($tempName[9]).':</label>
-                                    <textarea name="'.$tempName[9].'" placeholder="'.normal_case($tempName[9]).'" rows="5" cols="5">'.$tempValue[9].'</textarea>
+                                    <textarea name="'.$tempName[9].'" placeholder="'.normal_case($tempName[9]).'" rows="5" cols="5" class="tactile">'.$tempValue[9].'</textarea>
                                 </td>
                                 <td>
                                 <label class="font-weight-bold">'.normal_case($tempName[10]).':</label>
-                                    <textarea name="'.$tempName[10].'" placeholder="'.normal_case($tempName[10]).'" rows="5" cols="5">'.$tempValue[10].'</textarea>
+                                    <textarea name="'.$tempName[10].'" placeholder="'.normal_case($tempName[10]).'" rows="5" cols="5" class="emotions">'.$tempValue[10].'</textarea>
                                 </td>
                             </tr>
                             <tr>
                                 <td>
                                     <label class="font-weight-bold">'.normal_case($tempName[11]).':</label>
-                                    <textarea name="'.$tempName[11].'" placeholder="'.normal_case($tempName[11]).'" rows="5" cols="5">'.$tempValue[11].'</textarea>
+                                    <textarea name="'.$tempName[11].'" placeholder="'.normal_case($tempName[11]).'" rows="5" cols="5" class="vp">'.$tempValue[11].'</textarea>
                                     
                                 </td>
                                 <td>
                                     <label class="font-weight-bold">'.normal_case($tempName[12]).':</label>
-                                    <textarea name="'.$tempName[12].'" placeholder="'.normal_case($tempName[12]).'" rows="5" cols="5">'.$tempValue[12].'</textarea>
+                                    <textarea name="'.$tempName[12].'" placeholder="'.normal_case($tempName[12]).'" rows="5" cols="5" class="ep">'.$tempValue[12].'</textarea>
                                 </td>
                                 <td>
                                     <label class="font-weight-bold">'.normal_case($tempName[13]).':</label>
-                                    <textarea name="'.$tempName[13].'" placeholder="'.normal_case($tempName[13]).'" rows="5" cols="5">'.$tempValue[13].'</textarea>
+                                    <textarea name="'.$tempName[13].'" placeholder="'.normal_case($tempName[13]).'" rows="5" cols="5" class="others">'.$tempValue[13].'</textarea>
                                 </td>
                             </tr>
                             <tr>
                                 <td rowspan="3" colspan="3">
                                     <label class="font-weight-bold">'.normal_case($tempName[14]).':</label>
-                                    <textarea name="'.$tempName[14].'" placeholder="'.normal_case($tempName[14]).'" rows="5" cols="5">'.$tempValue[14].'</textarea>
+                                    <textarea name="'.$tempName[14].'" placeholder="'.normal_case($tempName[14]).'" rows="5" cols="5" class="ft">'.$tempValue[14].'</textarea>
                                 </td>                                
                             </tr>
                         </table>
@@ -183,7 +184,7 @@ class LessonController extends Controller
                 $html .= '<input type="hidden" name="_token" value="' . csrf_token() . '">';
                 $html .= '<input type="hidden" name="student_id" value="'.$request->id.'" />';
                 $html .= '<input type="hidden" name="update_id" value="'.$value->id.'" />';
-                $html .= '<div class="lesson-table pl-lg-2">';
+                $html .= '<div class="lesson-table pl-lg-2" id="btlang'.$value->id.'">';
                 $html .= '<div class="save-btn">';
                 $html .= '<button type="submit"><img src="'.asset('images/download.svg').'" alt=""> Save</button>';
                 $html .= '<a href="javascript:void(0)" data-del-id="'.$value->id.'" class="del-lesson"><img src="'.asset('images/delete-button.svg').'" alt="" class="del-les-img"></a>';
@@ -544,10 +545,49 @@ class LessonController extends Controller
                 foreach ($data as $key => $value) {
                     if($k == $key)
                     {
-                        $temps[$k] = $value;                        
+                        $temps[$k] = $value;
+                        if($value)
+                        {
+                            $notIds = [];                
+                            $str = $value;
+                            $count = 0;
+                            $strCount = substr_count($str, 'href="');                
+
+                            while($strCount > 0)
+                            {                    
+                                $temp = preg_match('~href="\K\d+~', $str, $out) ? $out[0] : '';
+                                $notIds[$count] = $temp;
+                                
+                                $tempWord = 'href="'.$temp.'"';
+                                
+                                $str = str_ireplace($tempWord, 'asd', $str);
+                                
+                                $strCount--;
+                                $count++;
+                            }
+
+                            if(count($notIds))
+                            {
+                                foreach($notIds as $uId)
+                                {                        
+                                    $notification = Notification::where('student_id',$request->student_id)->where('user_id',$uId)->where('case_id',$request->update_id)->where('case_type',4)->where('updated_by',Auth::user()->id)->where('deleted_at',null)->first();
+
+                                    if($notification)
+                                        continue;                        
+
+                                    $notification = new Notification;
+                                    $notification->student_id = $request->student_id;
+                                    $notification->user_id = $uId;
+                                    $notification->case_id = $request->update_id;
+                                    $notification->case_type = 4; // 1 : Case Management Meeting, 2: Parent Review Session, 3: comments, 4: SI/FT
+                                    $notification->updated_by = Auth::user()->id;
+                                    $notification->save();
+                                }
+                            }
+                        }                            
                     }
                     if($key == 'date')
-                    {
+                    {                                            
                         $dt = $value;
                     }                 
                 }
@@ -630,7 +670,46 @@ class LessonController extends Controller
                 foreach ($data as $key => $value) {
                     if($k == $key)
                     {
-                        $temps[$k] = $value;                        
+                        $temps[$k] = $value;
+                        if($value)
+                        {
+                            $notIds = [];                
+                            $str = $value;
+                            $count = 0;
+                            $strCount = substr_count($str, 'href="');                
+
+                            while($strCount > 0)
+                            {                    
+                                $temp = preg_match('~href="\K\d+~', $str, $out) ? $out[0] : '';
+                                $notIds[$count] = $temp;
+                                
+                                $tempWord = 'href="'.$temp.'"';
+                                
+                                $str = str_ireplace($tempWord, 'asd', $str);
+                                
+                                $strCount--;
+                                $count++;
+                            }
+
+                            if(count($notIds))
+                            {
+                                foreach($notIds as $uId)
+                                {                        
+                                    $notification = Notification::where('student_id',$request->student_id)->where('user_id',$uId)->where('case_id',$request->update_id)->where('case_type',5)->where('updated_by',Auth::user()->id)->where('deleted_at',null)->first();
+
+                                    if($notification)
+                                        continue;                        
+
+                                    $notification = new Notification;
+                                    $notification->student_id = $request->student_id;
+                                    $notification->user_id = $uId;
+                                    $notification->case_id = $request->update_id;
+                                    $notification->case_type = 5; // 1 : Case Management Meeting, 2: Parent Review Session, 3: comments, 4: SI/FT, 5: BT/Lang
+                                    $notification->updated_by = Auth::user()->id;
+                                    $notification->save();
+                                }
+                            }
+                        }                        
                     }
                     if($key == 'date')
                     {

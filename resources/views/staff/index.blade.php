@@ -65,6 +65,8 @@
                         <h4>{{ $user->first_name }}</h4>
                         <h4>{{ $user->role }}</h4>
                         <a href="{{ route('user.edit', $user->id) }}">Edit</a>
+                        <a href="javascriot:void(0)" data-id="{{$user->id}}" class="delUser">Delete</a>
+                        {{-- <button href="javascript:void(0)" class="delete_usr" data-id="{{$user->id}}"><img src="http://teacherportal.test/images/delete.svg" alt=""></button> --}}
                     </div>
                 @endif
                 @endforeach
@@ -76,6 +78,7 @@
                         <h4>{{ $user->first_name }}</h4>
                         <h4>{{ $user->role }}</h4>
                         <a href="{{ route('user.edit', $user->id) }}">Edit</a>
+                        <a href="javascriot:void(0)" data-id="{{$user->id}}" class="delUser">Delete</a>
                     </div>
                 @endif
                 @endforeach
@@ -87,6 +90,7 @@
                         <h4>{{ $user->first_name }}</h4>
                         <h4>{{ $user->role }}</h4>
                         <a href="{{ route('user.edit', $user->id) }}">Edit</a>
+                        <a href="javascriot:void(0)" data-id="{{$user->id}}" class="delUser">Delete</a>
                     </div>
                 @endif
                 @endforeach
@@ -125,4 +129,36 @@
     {{ $users->links() }}
     </div> --}}            
 </main>
+
+{{-- Start : Delete Confirmation Modal --}}
+<div class="modal" tabindex="-1" role="dialog" id="delete_modal">
+    <div class="modal-dialog" role="document">        
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete User</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">                
+                <input type="hidden" id="delete_id">
+                <div class="form-group">
+                    <label for="add_lesson_hour" class="col-form-label">Are you Sure you want to delete this user?</label>
+                </div>                
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-save del-confirm">Delete</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>        
+    </div>
+</div>
+{{-- Ends : Delete Confirmation Modal --}}
+@endsection
+
+@section('pagejs')
+    <script type="text/javascript">
+        var deleteUrl = "{{ route('user.delete') }}";        
+    </script>
+    <script src="{{addPageJsLink('staff-index.js')}}"></script>
 @endsection

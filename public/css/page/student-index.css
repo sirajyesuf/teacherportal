@@ -23,3 +23,23 @@
     filter: brightness(0) invert(1);
     margin-bottom: 3px;
 }
+.dropdown-item-unread {
+    display: block;
+    width: 100%;
+    padding: 0rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: #fceed3;
+    border: 0;
+}
+.dropdown-item {    
+    padding: 0rem 1.5rem;        
+}
+
+.dropdown-divider { 
+    margin: 0rem 0; 
+    border-top: 1px solid #A9A9A9;
+}
