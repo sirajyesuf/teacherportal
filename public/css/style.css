@@ -311,13 +311,15 @@ ul {
 }
 
 .student-box {
-    display: flex;
+/*    display: flex;*/
+    display: grid; /* added */
     align-items: center;
-    justify-content: space-between;
+/*    justify-content: space-between;*/
     padding: 15px 20px 15px 15px;
     background: #F5F5F7;
     border-radius: 14px;
     margin-bottom: 15px;
+    min-height: 100px; /* added */
 }
 
 .student-cnt h4 {
@@ -529,9 +531,9 @@ ul {
     /*width: 484px;*/
     width: auto;
     background: #F5F5F7;
-    display: flex;
+    display: grid;
     align-items: center;
-    justify-content: space-between;
+/*    justify-content: space-between;*/
     padding: 20px 30px;
     border-radius: 14px;
     margin-top: 30px;
@@ -552,7 +554,7 @@ ul {
     color: #FFFFFF;
     background: #000000;
     display: inline-block;
-    padding: 10px 25px;
+    padding: 10px 18px;  /* 10px 25px*/
     border-radius: 8px;
     transition: 0.2s all ease;
 }

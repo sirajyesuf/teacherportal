@@ -28,7 +28,7 @@ class HomeController extends Controller
     public function index(Request $request)
     {       
         
-        $users = Student::current()->orderBy('name','ASC')->search($request->q)->paginate(18);
+        $users = Student::current()->orderBy('name','ASC')->search($request->q)->paginate(20000);
 
         $notifications = Notification::query()
                     ->leftjoin('users','notifications.updated_by','users.id')

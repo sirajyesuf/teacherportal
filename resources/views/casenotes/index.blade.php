@@ -90,12 +90,16 @@
                                 <table class="im">
                                     <tr>
                                         <td>
-                                            <label class="font-weight-bold">Date:</label>
-                                            <input type="text" class="datepicker" id="date_cmm_{{ $obj->id }}" name="date" placeholder="Date:" value="{{ $obj->date }}">
+                                            <div class="d-flex">
+                                                <label class="font-weight-bold mb-0 mr-1">Date:</label>
+                                                <input type="text" class="datepicker" id="date_cmm_{{ $obj->id }}" name="date" placeholder="Date:" value="{{ $obj->date }}">
+                                            </div>
                                         </td>
                                         <td>
-                                            <label class="font-weight-bold">Trainer:</label>
-                                            <input type="text" name="trainer" placeholder="Trainer:" value="{{ $obj->trainer }}">
+                                            <div class="d-flex">
+                                                <label class="font-weight-bold mb-0 mr-1">Trainer:</label>
+                                                <input type="text" name="trainer" placeholder="Trainer:" value="{{ $obj->trainer }}">
+                                            </div>
                                         </td>
                                         <td>
                                             <label class="font-weight-bold">Package:</label>
@@ -107,8 +111,10 @@
                                             </select>                                                                        
                                         </td>
                                         <td>
-                                            <label class="font-weight-bold">Num:</label>
-                                            <input type="number" step="1" min="0" name="num" placeholder="Num:" value="{{ $obj->num }}" required>
+                                            <div class="d-flex">
+                                                <label class="font-weight-bold mb-0 mr-1">Num:</label>
+                                                <input type="number" step="1" min="0" name="num" placeholder="Num:" value="{{ $obj->num }}" required>
+                                            </div>
                                         </td>
                                         <td>
                                             <span>Case Management Meeting</span>
@@ -136,12 +142,16 @@
                                 <table class="im">
                                     <tr>
                                         <td>
-                                            <label class="font-weight-bold">Date:</label>
-                                            <input type="text" class="datepicker" id="date_prs_{{ $obj->id }}" name="date" placeholder="Date:" value="{{ $obj->date }}">
+                                            <div class="d-flex">
+                                                <label class="font-weight-bold mb-0 mr-1">Date:</label>
+                                                <input type="text" class="datepicker" id="date_prs_{{ $obj->id }}" name="date" placeholder="Date:" value="{{ $obj->date }}">
+                                            </div>
                                         </td>
                                         <td>
-                                            <label class="font-weight-bold">Trainer:</label>
-                                            <input type="text" class="" name="trainer" placeholder="Trainer:" value="{{ $obj->trainer }}">
+                                            <div class="d-flex">
+                                                <label class="font-weight-bold mb-0 mr-1">Trainer:</label>
+                                                <input type="text" class="" name="trainer" placeholder="Trainer:" value="{{ $obj->trainer }}">
+                                            </div>
                                         </td>
                                         <td>
                                             <span>Parent Review Session</span>
@@ -169,12 +179,16 @@
                                 <table class="im">
                                     <tr>
                                         <td>
-                                            <label class="font-weight-bold">Date:</label>
-                                            <input type="text" class="datepicker" id="date_com_{{ $obj->id }}" name="date" placeholder="Date:" value="{{ $obj->date }}">
+                                            <div class="d-flex">
+                                                <label class="font-weight-bold mb-0 mr-1">Date:</label>
+                                                <input type="text" class="datepicker" id="date_com_{{ $obj->id }}" name="date" placeholder="Date:" value="{{ $obj->date }}">
+                                            </div>
                                         </td>
                                         <td>
-                                            <label class="font-weight-bold">Trainer:</label>
-                                            <input type="text" class="" name="trainer" placeholder="Trainer:" value="{{ $obj->trainer }}">
+                                            <div class="d-flex">
+                                                <label class="font-weight-bold mb-0 mr-1">Trainer:</label>
+                                                <input type="text" class="" name="trainer" placeholder="Trainer:" value="{{ $obj->trainer }}">
+                                            </div>
                                         </td>     
                                         <td>
                                             <span>Comments</span>
@@ -184,7 +198,7 @@
                                     <tr>
                                         <td colspan="3">
                                             {{-- <textarea name="comments" rows="45" id="comments" class="ckeditor">{{ $comment->comments }}</textarea> --}}
-                                            <textarea name="comments" rows="45" class="comments">{{ $obj->comments }}</textarea>
+                                            <textarea name="comments" rows="15" class="comments">{{ $obj->comments }}</textarea>
                                         </td>
                                     </tr>
                                 </table>

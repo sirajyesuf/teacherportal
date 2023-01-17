@@ -62,11 +62,19 @@
                 @foreach($users as $key => $user)
                 @if($key % 3 == 0)
                     <div class="staff-box">
-                        <h4>{{ $user->first_name }}</h4>
-                        <h4>{{ $user->role }}</h4>
-                        <a href="{{ route('user.edit', $user->id) }}">Edit</a>
-                        <a href="javascriot:void(0)" data-id="{{$user->id}}" class="delUser">Delete</a>
-                        {{-- <button href="javascript:void(0)" class="delete_usr" data-id="{{$user->id}}"><img src="http://teacherportal.test/images/delete.svg" alt=""></button> --}}
+                        <div class="row">
+                            <div class="col-md-4 d-flex align-items-center">                                
+                                <h4 class="mb-0 mt-0">{{ $user->first_name }}</h4>
+                            </div>
+                            <div class="col-md-3 d-flex align-items-center">
+                                <h4 class="mb-0 mt-0">{{ $user->role }}</h4>
+                            </div>
+                            <div class="col-md-5 d-flex align-items-center">
+                                <a href="{{ route('user.edit', $user->id) }}">Edit</a>
+                                <a href="javascriot:void(0)" data-id="{{$user->id}}" class="ml-1 delUser">Delete</a>
+                            </div>
+                            {{-- <button href="javascript:void(0)" class="delete_usr" data-id="{{$user->id}}"><img src="http://teacherportal.test/images/delete.svg" alt=""></button> --}}
+                        </div>
                     </div>
                 @endif
                 @endforeach
@@ -75,10 +83,18 @@
                 @foreach($users as $key => $user)
                 @if($key % 3 == 1)
                     <div class="staff-box">
-                        <h4>{{ $user->first_name }}</h4>
-                        <h4>{{ $user->role }}</h4>
-                        <a href="{{ route('user.edit', $user->id) }}">Edit</a>
-                        <a href="javascriot:void(0)" data-id="{{$user->id}}" class="delUser">Delete</a>
+                        <div class="row">
+                            <div class="col-md-4 d-flex align-items-center">
+                                <h4 class="mb-0 mt-0">{{ $user->first_name }}</h4>
+                            </div>
+                            <div class="col-md-3 d-flex align-items-center">
+                                <h4 class="mb-0 mt-0">{{ $user->role }}</h4>
+                            </div>
+                            <div class="col-md-5 d-flex align-items-center justify-content-end">
+                                <a href="{{ route('user.edit', $user->id) }}">Edit</a>
+                                <a href="javascriot:void(0)" data-id="{{$user->id}}" class="ml-1 delUser">Delete</a>
+                            </div>
+                        </div>
                     </div>
                 @endif
                 @endforeach
@@ -87,17 +103,25 @@
                 @foreach($users as $key => $user)
                 @if($key % 3 == 2)
                     <div class="staff-box">
-                        <h4>{{ $user->first_name }}</h4>
-                        <h4>{{ $user->role }}</h4>
-                        <a href="{{ route('user.edit', $user->id) }}">Edit</a>
-                        <a href="javascriot:void(0)" data-id="{{$user->id}}" class="delUser">Delete</a>
+                        <div class="row">
+                            <div class="col-md-4 d-flex align-items-center">
+                                <h4 class="mb-0 mt-0">{{ $user->first_name }}</h4>
+                            </div>
+                            <div class="col-md-3 d-flex align-items-center">
+                                <h4 class="mb-0 mt-0">{{ $user->role }}</h4>
+                            </div>
+                            <div class="col-md-5 d-flex align-items-center justify-content-end">
+                                <a href="{{ route('user.edit', $user->id) }}">Edit</a>
+                                <a href="javascriot:void(0)" data-id="{{$user->id}}" class="ml-1 delUser">Delete</a>
+                            </div>
+                        </div>
                     </div>
                 @endif
                 @endforeach
             </div>
         </div>
         <div class="mt-5">
-            {{ $users->links() }}            
+            {{-- {{ $users->links() }}             --}}
         </div>
     </div>
 
