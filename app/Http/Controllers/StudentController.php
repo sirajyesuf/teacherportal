@@ -21,7 +21,7 @@ class StudentController extends Controller
 
     public function pastStudent(Request $request)
     {
-        $users = Student::past()->orderBy('name','ASC')->search($request->q)->paginate(18);
+        $users = Student::past()->orderBy('name','ASC')->search($request->q)->paginate(20000);
 
         $users->appends (array ('q' => $request->q));
 
@@ -48,7 +48,8 @@ class StudentController extends Controller
         
         if($user)
         {
-            toastr()->success('Student created Successfully');
+            // toastr()->success('Student created Successfully');
+            session(['successMsg' => 'Student created Successfully']);
             return redirect()->route('home');
         }
         else

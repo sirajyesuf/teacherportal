@@ -40,13 +40,13 @@ class CaseNoteController extends Controller
                 $hoursRemaining = 0;
 
 
-            $casemgmts = CaseManagement::where('deleted_at',null)->where('student_id',$request->id)->orderBy('date','desc')->orderBy('id','desc')->get();
-            $parentreviews = ParentReview::where('deleted_at',null)->where('student_id',$request->id)->orderBy('date','desc')->orderBy('id','desc')->get();
-            $comments = Comment::where('deleted_at',null)->where('student_id',$request->id)->orderBy('date','desc')->orderBy('id','desc')->get();
+            $casemgmts = CaseManagement::where('deleted_at',null)->where('student_id',$request->id)->orderBy('date','desc')->orderBy('created_at','desc')->get();
+            $parentreviews = ParentReview::where('deleted_at',null)->where('student_id',$request->id)->orderBy('date','desc')->orderBy('created_at','desc')->get();
+            $comments = Comment::where('deleted_at',null)->where('student_id',$request->id)->orderBy('date','desc')->orderBy('created_at','desc')->get();
 
             $data = $casemgmts->concat($parentreviews);
             $data = $data->concat($comments);
-            $data = $data->sortByDesc('date');
+            $data = $data->sortByDesc('created_at')->sortByDesc('date');
 
         }
 

@@ -80,3 +80,10 @@ img.del-les-img{
 .dropdown-item:hover, .dropdown-item:focus {    
     background-color: #e9ecef!important;
 }
+#cke_comments, #cke_comments .cke_contents,#cke_comments .cke_reset {
+    max-height: 100px!important;
+}
+
+#cke_description, #cke_description .cke_contents,#cke_description .cke_reset {
+    max-height: 250px!important;
+}

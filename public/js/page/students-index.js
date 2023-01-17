@@ -9,6 +9,11 @@ jQuery.browser = {};
             }
         })();
 
+        if(studentCreated)
+        {
+            showMessage('success',studentCreated);
+        }
+
         $(document).ready(function(){    
             initDatePicker();        
 
