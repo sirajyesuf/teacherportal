@@ -17,21 +17,21 @@
         <!-- Fav Icon -->
         <link rel="icon" href="{{ asset('images/favicon.ico') }}" />   
 
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/app.css') }}?{{time()}}" rel="stylesheet">
         <!-- Include Bootstrap -->
         <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet">
         <link href="{{ asset('css/vendor/jquery-ui.min.css') }}" rel="stylesheet">       
         <link href="{{ asset('css/vendor/jquery.toast.css') }}" rel="stylesheet">
 
         <!-- Main StyleSheet -->         
-        <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+        <link rel="stylesheet" href="{{ asset('css/style.css') }}?{{time()}}" />
         <link href="{{ asset('css/dcalendar.picker.css') }}" rel="stylesheet">
         <!-- DateTime Picker CSS -->
         <link href="{{ asset('css/vendor/bootstrap-datetimepicker.css') }}" id="theme" rel="stylesheet">   
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.0/css/all.min.css" integrity="sha512-ykRBEJhyZ+B/BIJcBuOyUoIxh0OfdICfHPnPfBy7eIiyJv536ojTCsgX8aqrLQ9VJZHGz4tvYyzOM0lkgmQZGw==" crossorigin="anonymous" referrerpolicy="no-referrer" />   
         
         <!-- Responsive CSS -->
-        <link href="{{ asset('css/responsive.css') }}" rel="stylesheet">        
+        <link href="{{ asset('css/responsive.css') }}?{{time()}}" rel="stylesheet">        
         
         <!-- Page CSS -->
         @yield('css')
