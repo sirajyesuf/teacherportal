@@ -123,16 +123,18 @@
                                 </div>
                                 @php 
                                     $t = colorOfDate($user->appointment_date);
-                                    if($t == 3)
-                                        $colClass = 'black';
+                                    if($user->is_appointment_done)                                    
+                                        $colClass = 'newgreen';
+                                    elseif($t == 3)
+                                        $colClass = 'newblue';
                                     elseif($t == 2)
-                                        $colClass = 'yellow';
-                                    elseif($t == 1)
-                                        $colClass = 'red'; 
+                                        $colClass = 'newyellow';
+                                    elseif($t == 4)
+                                        $colClass = 'newred'; 
                                     else
                                     {
                                         $user->appointment_date = '';
-                                        $colClass = 'puple'; 
+                                        $colClass = 'grey'; 
                                     } 
                                 @endphp
                                 <div class="col-md-5 d-flex align-items-center">
@@ -141,6 +143,9 @@
                                 </div>
                                 <div class="col-md-3 d-flex pl-0 align-items-center">
                                     <span class="{{$colClass}}"><input id="hiddenDate_{{$user->id}}" class="datePickerInput" type="hidden" /><a class="home-picker" data-id="{{ $user->id }}"><img src="{{ asset('images/alarm-3.svg')}}" class="filter-{{$colClass}}" alt=""> {{ shortDateFormat($user->appointment_date)}}</a></span>
+                                    @if($user->appointment_date && !$user->is_appointment_done)
+                                    <a href="javascript:void(0)" data-check-id="{{$user->id}}" class="bg-none black checked"><i class="fa fa-check"></i></a>
+                                    @endif
                                 </div>
                             </div>
                         </div>                        
@@ -162,16 +167,18 @@
                                 </div>
                                 @php 
                                     $t = colorOfDate($user->appointment_date);
-                                    if($t == 3)
-                                        $colClass = 'black';
+                                    if($user->is_appointment_done)                                    
+                                        $colClass = 'newgreen';
+                                    elseif($t == 3)
+                                        $colClass = 'newblue';
                                     elseif($t == 2)
-                                        $colClass = 'yellow';
-                                    elseif($t == 1)
-                                        $colClass = 'red'; 
+                                        $colClass = 'newyellow';
+                                    elseif($t == 4)
+                                        $colClass = 'newred'; 
                                     else
                                     {
                                         $user->appointment_date = '';
-                                        $colClass = 'puple'; 
+                                        $colClass = 'grey'; 
                                     }
                                 @endphp
                                 <div class="col-md-5 d-flex align-items-center">
@@ -181,6 +188,9 @@
                                 <div class="col-md-3 d-flex pl-0 align-items-center">
                                     {{-- <span class="puple"><img src="images/alarm-3.svg" alt=""> 14 Sept</span> --}}
                                     <span class="{{$colClass}}"><input id="hiddenDate_{{$user->id}}" class="datePickerInput" type="hidden" /><a class="home-picker" data-id="{{ $user->id }}"><img src="{{ asset('images/alarm-3.svg')}}" class="filter-{{$colClass}}" alt=""> {{ shortDateFormat($user->appointment_date)}}</a></span>
+                                    @if($user->appointment_date && !$user->is_appointment_done)
+                                    <a href="javascript:void(0)" data-check-id="{{$user->id}}" class="bg-none black checked"><i class="fa fa-check"></i></a>
+                                    @endif
                                 </div>
                             </div>
                         </div>                        
@@ -202,16 +212,18 @@
                                 </div>
                                 @php 
                                     $t = colorOfDate($user->appointment_date);
-                                    if($t == 3)
-                                        $colClass = 'black';
+                                    if($user->is_appointment_done)                                    
+                                        $colClass = 'newgreen';
+                                    elseif($t == 3)
+                                        $colClass = 'newblue';
                                     elseif($t == 2)
-                                        $colClass = 'yellow';
-                                    elseif($t == 1)
-                                        $colClass = 'red'; 
+                                        $colClass = 'newyellow';
+                                    elseif($t == 4)
+                                        $colClass = 'newred'; 
                                     else
                                     {
                                         $user->appointment_date = '';
-                                        $colClass = 'puple'; 
+                                        $colClass = 'grey'; 
                                     }
                                 @endphp
                                 <div class="col-md-5 d-flex align-items-center">
@@ -221,6 +233,9 @@
                                 {{-- <span class="puple"><img src="images/alarm-3.svg" alt=""> 24 June</span> --}}
                                 <div class="col-md-3 d-flex pl-0 align-items-center">
                                     <span class="{{$colClass}}"><input id="hiddenDate_{{$user->id}}" class="datePickerInput" type="hidden" /><a class="home-picker" data-id="{{ $user->id }}"><img src="{{ asset('images/alarm-3.svg')}}" class="filter-{{$colClass}}" alt=""> {{ shortDateFormat($user->appointment_date)}}</a></span>
+                                    @if($user->appointment_date && !$user->is_appointment_done)
+                                    <a href="javascript:void(0)" data-check-id="{{$user->id}}" class="bg-none black checked"><i class="fa fa-check"></i></a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -240,6 +255,7 @@
         var changeDateUrl = "{{ route('appointment.update') }}";   
         var assetClock = "{{ asset("images/alarm-3.svg")}}";   
         var readNotiUrl = "{{ route('notification.read') }}";  
+        var checkDateUrl = "{{ route('appointment.check') }}";  
     </script>
 @endsection
 

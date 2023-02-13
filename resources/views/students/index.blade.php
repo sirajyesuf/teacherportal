@@ -144,7 +144,7 @@
                                 <div class="col-md-3 d-flex pl-0 align-items-center">
                                     <span class="{{$colClass}}"><input id="hiddenDate_{{$user->id}}" class="datePickerInput" type="hidden" /><a class="home-picker" data-id="{{ $user->id }}"><img src="{{ asset('images/alarm-3.svg')}}" class="filter-{{$colClass}}" alt=""> {{ shortDateFormat($user->appointment_date)}}</a></span>
                                     @if($user->appointment_date && !$user->is_appointment_done)
-                                    <a href="javascript:void(0)" data-id="{{$user->id}}" class="bg-none black checked"><i class="fa fa-check"></i></a>
+                                    <a href="javascript:void(0)" data-check-id="{{$user->id}}" class="bg-none black checked"><i class="fa fa-check"></i></a>
                                     @endif
                                 </div>
                             </div>
@@ -168,13 +168,13 @@
                                 @php 
                                     $t = colorOfDate($user->appointment_date);
                                     if($user->is_appointment_done)                                    
-                                        $colClass = 'newgreen';                                    
+                                        $colClass = 'newgreen';
                                     elseif($t == 3)
                                         $colClass = 'newblue';
                                     elseif($t == 2)
                                         $colClass = 'newyellow';
                                     elseif($t == 4)
-                                        $colClass = 'red';                                     
+                                        $colClass = 'newred'; 
                                     else
                                     {
                                         $user->appointment_date = '';
@@ -189,7 +189,7 @@
                                 <div class="col-md-3 d-flex pl-0 align-items-center">
                                     <span class="{{$colClass}}"><input id="hiddenDate_{{$user->id}}" class="datePickerInput" type="hidden" /><a class="home-picker" data-id="{{ $user->id }}"><img src="{{ asset('images/alarm-3.svg')}}" class="filter-{{$colClass}}" alt=""> {{ shortDateFormat($user->appointment_date)}}</a></span>
                                     @if($user->appointment_date && !$user->is_appointment_done)
-                                    <a href="javascript:void(0)" data-id="{{$user->id}}" class="bg-none black checked"><i class="fa fa-check"></i></a>
+                                    <a href="javascript:void(0)" data-check-id="{{$user->id}}" class="bg-none black checked"><i class="fa fa-check"></i></a>
                                     @endif
                                 </div>
                             </div>
@@ -219,12 +219,12 @@
                                     elseif($t == 2)
                                         $colClass = 'newyellow';
                                     elseif($t == 4)
-                                        $colClass = 'red'; 
+                                        $colClass = 'newred'; 
                                     else
                                     {
                                         $user->appointment_date = '';
                                         $colClass = 'grey'; 
-                                    } 
+                                    }
                                 @endphp
                                 <div class="col-md-5 d-flex align-items-center">
                                     <a class="dark-blue" href="{{ route('lesson',$user->id)}}" {{ $user->id }}>Lesson</a>
@@ -234,7 +234,7 @@
                                 <div class="col-md-3 d-flex pl-0 align-items-center">
                                     <span class="{{$colClass}}"><input id="hiddenDate_{{$user->id}}" class="datePickerInput" type="hidden" /><a class="home-picker" data-id="{{ $user->id }}"><img src="{{ asset('images/alarm-3.svg')}}" class="filter-{{$colClass}}" alt=""> {{ shortDateFormat($user->appointment_date)}}</a></span>
                                     @if($user->appointment_date && !$user->is_appointment_done)
-                                    <a href="javascript:void(0)" data-id="{{$user->id}}" class="bg-none black checked"><i class="fa fa-check"></i></a>
+                                    <a href="javascript:void(0)" data-check-id="{{$user->id}}" class="bg-none black checked"><i class="fa fa-check"></i></a>
                                     @endif
                                 </div>
                             </div>
