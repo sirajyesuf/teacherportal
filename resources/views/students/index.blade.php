@@ -256,7 +256,6 @@
         var checkDateUrl = "{{ route('appointment.check') }}";   
         var assetClock = "{{ asset("images/alarm-3.svg")}}";     
         var readNotiUrl = "{{ route('notification.read') }}";
-        var readNotiUrl = "{{ route('notification.read') }}";
     </script>
 @endsection
 

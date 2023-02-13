@@ -7,6 +7,17 @@
 @endsection
 
 @section('content')
+
+@if(session()->has('successMsg'))
+    <?php \Session::forget('successMsg') ?>
+    <script>
+        var studentCreated = "Student created Successfully";
+    </script>
+@else
+    <script type="text/javascript">
+        var studentCreated = '';
+    </script>
+@endif
 <!-- main-wrapper start -->
     <main class="main-wrapper">
         <div class="header-area">
@@ -227,7 +238,8 @@
 @section('scripts')
     <script type="text/javascript">
         var changeDateUrl = "{{ route('appointment.update') }}";   
-        var assetClock = "{{ asset("images/alarm-3.svg")}}";     
+        var assetClock = "{{ asset("images/alarm-3.svg")}}";   
+        var readNotiUrl = "{{ route('notification.read') }}";  
     </script>
 @endsection
 
