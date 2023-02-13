@@ -44,9 +44,9 @@ jQuery.browser = {};
                     });    
                 }
 
-            })
+            });
 
-            $(document).on('click','#navbarDropdown', function(e){
+            $(document).on('click','#navbarDropdown', function(e){                
                 e.preventDefault();
 
                 $.ajax({
