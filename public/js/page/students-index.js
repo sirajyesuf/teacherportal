@@ -24,7 +24,7 @@ jQuery.browser = {};
             });
 
             $(document).on('click','.checked', function(){
-                var checkId = $(this).attr('data-id');
+                var checkId = $(this).attr('data-check-id');
 
                 if(confirm('Are you sure ?')){
                     $.ajax({
