@@ -13,6 +13,33 @@ $( document ).ready(function() {
         $('#delete_modal').modal('show');
     });
 
+    $(document).on('click','.edit_add_hour',function(){
+        
+        var dataId = $(this).attr('data-id');
+        $('#edit_log_hour_id').val(dataId);
+
+        $.ajax({
+            url: logHourDetailUrl+'?id='+dataId,
+            type: 'GET',
+            dataType: 'json',
+            success: function(result) {
+                if(result.status){                            
+                    $('#edit_lesson_hour').val(result.detail.hours)
+                    $('#edit_lesson_note').val(result.detail.notes)
+
+                    $('#edit_lesson_log_modal').modal('show');
+
+                }else{                    
+                    showMessage('error',result.message);
+                    setTimeout(function() {
+                        $('#edit_lesson_log_modal').modal('hide');
+                    }, 1500);
+                    $('.error').html("");
+                }
+            }
+        });
+    })
+
     $('body').on('click','.del-student',function(){
         var delId = $('#delete_id').val();
 
@@ -56,10 +83,10 @@ $( document ).ready(function() {
                             // console.log(t);
                             showMessage('success','Date update success');
                             // $('.jq-toast-wrap').remove();
-                            // setTimeout(function() {
-                            //     // window.location.reload(true);                                
-                            //     $('.jq-toast-wrap').remove();
-                            // }, 2500);
+                            setTimeout(function() {
+                                window.location.reload(true);                                
+                                
+                            }, 1500);
 
                         } else {
 
@@ -120,6 +147,49 @@ $( document ).ready(function() {
                         $('#'+key).closest('.form-group').find('.error').html(result.message[key]);
                     });
                     $('#log-hours-add-form').find("#"+first_input).focus();
+                }
+            },
+            error: function(error) {
+                $($this).find('button[type="submit"]').prop('disabled', false);
+                alert('Something went wrong!', 'error');
+                // location.reload();
+            }
+        });
+    });
+
+    // update hours form submit
+    $('#log-hours-update-form').submit(function(event) {
+        event.preventDefault();        
+        var $this = $(this);
+        $.ajax({
+            url: updateLogHoursUrl,
+            type: 'POST',
+            data: $('#log-hours-update-form').serialize(),
+            dataType: 'json',
+            beforeSend: function() {
+                $($this).find('button[type="submit"]').prop('disabled', true);
+            },
+            success: function(result) {
+                $($this).find('button[type="submit"]').prop('disabled', false);
+                if (result.status == true) {
+                    $this[0].reset();
+                    showMessage('success',result.message);
+                    $('#edit_lesson_log_modal').modal('hide');
+                    setTimeout(function() {
+                        // show_toast(result.message, 'success');
+                        location.reload();
+                    }, 2500);
+
+                    $('.error').html("");                        
+
+                } else {
+                    first_input = "";
+                    $('.error').html("");
+                    $.each(result.message, function(key) {
+                        if(first_input=="") first_input=key;
+                        $('#'+key).closest('.form-group').find('.error').html(result.message[key]);
+                    });
+                    $('#log-hours-update-form').find("#"+first_input).focus();
                 }
             },
             error: function(error) {

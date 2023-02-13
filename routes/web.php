@@ -37,6 +37,7 @@ Route::post('/user/delete', 'UserController@delete')->name('user.delete');
 Route::get('/student/create', 'StudentController@create')->name('student.create');
 Route::post('/student/add', 'StudentController@add')->name('student.add');
 Route::post('/student/date/update', 'StudentController@dateUpdate')->name('appointment.update');
+Route::post('/student/date/check', 'StudentController@dateCheck')->name('appointment.check');
 Route::get('/student/profile/{student}', 'StudentController@profile')->name('student.profile');
 Route::post('/student/description/update', 'StudentController@descriptionUpdate')->name('student.description.update');
 Route::get('/student/past', 'StudentController@pastStudent')->name('student.past');
@@ -78,6 +79,9 @@ Route::post('/case-note/delete/prs', 'CaseNoteController@deletePrs')->name('case
 Route::post('/case-note/delete/com', 'CaseNoteController@deleteCom')->name('casenote.deleteCom');
 
 Route::post('/lesson-hours/add', 'LessonLogController@add')->name('log.hours.add');
+Route::post('/lesson-hours/update', 'LessonLogController@update')->name('log.hours.update');
+Route::get('/lesson-hours/details', 'LessonLogController@details')->name('logHour.details');
+
 
 Route::post('/log-hours/add', 'LogHourController@add')->name('lesson.hours.add');
 

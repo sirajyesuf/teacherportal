@@ -45,7 +45,7 @@
                 <input type="hidden" id="student_id" value="{{$user->id}}">
                 <li><h2><a href="{{route('student.profile',$user->id)}}" class="nobtn">{{ (isset($user->name))?$user->name:'' }}</a></h2></li>
                 <input type="hidden" name="student_id" value="{{ $user->id }}">
-                <li><a class="btn-save" style="margin-left: 20px; border-radius: 10px" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="http://teacherportal.test/images/add-circle-outline.svg" alt=""> New Note </a>
+                <li><a class="btn-save dark-blue" style="margin-left: 20px; border-radius: 10px" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ asset('images/circle-2.svg')}}" alt=""> New Note </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item pt-2 pb-2 dp-down add_cmm" href="javascript:void(0)">Case Management Notes</a>
                     <a class="dropdown-item pt-2 pb-2 dp-down add_prs" href="javascript:void(0)">Parent Review Session</a>
@@ -53,7 +53,7 @@
                 </div>
                 </li>
                 {{-- <li><button type="submit"><img src="{{ asset('images/download.svg')}}" alt=""> Save</button> </li> --}}
-                <li><a href="{{ route('lesson',$user->id) }}"><img src="{{ asset('images/description.svg')}}" alt=""> View Lesson</a></li>                        
+                <li><a href="{{ route('lesson',$user->id) }}" class="dark-blue"><img src="{{ asset('images/description.svg')}}" alt=""> View Lesson</a></li>                        
                 @endif                       
                 <div class="hour-part">
                     <ul>
@@ -84,11 +84,11 @@
                             
                             <div class="lesson-table pl-lg-2" id="{{"casemg".$obj->id}}">
                                 <div class="save-btn">
-                                    <button type="submit"><img src="{{ asset('images/download.svg') }}" alt=""> Save</button>
+                                    <button type="submit" class="orange-bg"><img src="{{ asset('images/download2.png')}}" height="20"> Save</button>
                                     <a href="javascript:void(0)" data-del-id="{{ $obj->id }}" class="del-lesson del-cmm"><img src="{{ asset('images/delete-button.svg') }}" alt="" class="del-les-img"></a>
                                 </div>
                                 <table class="im">
-                                    <tr>
+                                    <tr class="lightgrey-bg">
                                         <td>
                                             <div class="d-flex">
                                                 <label class="font-weight-bold mb-0 mr-1">Date:</label>
@@ -98,7 +98,8 @@
                                         <td>
                                             <div class="d-flex">
                                                 <label class="font-weight-bold mb-0 mr-1">Trainer:</label>
-                                                <input type="text" name="trainer" placeholder="Trainer:" value="{{ $obj->trainer }}">
+                                                {{-- <input type="text" name="trainer" placeholder="Trainer:" value="{{ $obj->user->first_name ?? ''}}" style="background: {{ $obj->user->color }};" readonly> --}}
+                                                <span style="background:{{ $obj->user->color ?? ''}};">{{ $obj->user->first_name ?? '' }}</span>
                                             </div>
                                         </td>
                                         <td>
@@ -116,7 +117,7 @@
                                                 <input type="number" step="1" min="0" name="num" placeholder="Num:" value="{{ $obj->num }}" required>
                                             </div>
                                         </td>
-                                        <td>
+                                        <td class="blue-bg">
                                             <span>Case Management Meeting</span>
                                         </td>
                                     </tr>
@@ -136,11 +137,11 @@
                             
                             <div class="lesson-table pl-lg-2" id="{{"parentreview".$obj->id}}">
                                 <div class="save-btn">
-                                    <button type="submit"><img src="{{ asset('images/download.svg') }}" alt=""> Save</button>
+                                    <button type="submit" class="orange-bg"><img src="{{ asset('images/download2.png')}}" height="20"> Save</button>
                                     <a href="javascript:void(0)" data-del-id="{{ $obj->id }}" class="del-lesson del-prs"><img src="{{ asset('images/delete-button.svg') }}" alt="" class="del-les-img"></a>
                                 </div>
                                 <table class="im">
-                                    <tr>
+                                    <tr class="lightgrey-bg">
                                         <td>
                                             <div class="d-flex">
                                                 <label class="font-weight-bold mb-0 mr-1">Date:</label>
@@ -150,10 +151,11 @@
                                         <td>
                                             <div class="d-flex">
                                                 <label class="font-weight-bold mb-0 mr-1">Trainer:</label>
-                                                <input type="text" class="" name="trainer" placeholder="Trainer:" value="{{ $obj->trainer }}">
+                                                {{-- <input type="text" class="" name="trainer" placeholder="Trainer:" value="{{ $obj->user->first_name ?? ''}}" style="background: {{ $obj->user->color }};" readonly> --}}
+                                                <span style="background:{{ $obj->user->color ?? ''}};">{{ $obj->user->first_name ?? '' }}</span>
                                             </div>
                                         </td>
-                                        <td>
+                                        <td class="addhour-bg">
                                             <span>Parent Review Session</span>
                                         </td>                                
                                     </tr>
@@ -173,11 +175,11 @@
                             
                             <div class="lesson-table pl-lg-2" id="{{"comm".$obj->id}}">
                                 <div class="save-btn">
-                                    <button type="submit"><img src="{{ asset('images/download.svg') }}" alt=""> Save</button>
+                                    <button type="submit" class="orange-bg"><img src="{{ asset('images/download2.png')}}" height="20"> Save</button>
                                     <a href="javascript:void(0)" data-del-id="{{ $obj->id }}" class="del-lesson del-com"><img src="{{ asset('images/delete-button.svg') }}" alt="" class="del-les-img"></a>
                                 </div>
                                 <table class="im">
-                                    <tr>
+                                    <tr class="lightgrey-bg">
                                         <td>
                                             <div class="d-flex">
                                                 <label class="font-weight-bold mb-0 mr-1">Date:</label>
@@ -187,10 +189,11 @@
                                         <td>
                                             <div class="d-flex">
                                                 <label class="font-weight-bold mb-0 mr-1">Trainer:</label>
-                                                <input type="text" class="" name="trainer" placeholder="Trainer:" value="{{ $obj->trainer }}">
+                                                {{-- <input type="text" class="" name="trainer" placeholder="Trainer:" value="{{ $obj->user->first_name ?? '' }}" style="background: {{ $obj->user->color }};" readonly> --}}
+                                                <span style="background:{{ $obj->user->color ?? ''}};">{{ $obj->user->first_name ?? '' }}</span>
                                             </div>
                                         </td>     
-                                        <td>
+                                        <td class="lightgrey-bg">
                                             <span>Comments</span>
                                         </td>                           
                                     </tr>

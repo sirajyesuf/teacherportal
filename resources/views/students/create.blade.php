@@ -70,7 +70,7 @@
 	                {{-- <input type="hidden" id="role" name="role" value="student">                 --}}
                     
 	                <div class="adduser-item">
-	                    <button type="Submit">Submit</button>
+	                    <button type="Submit" class="orange-bg">Submit</button>
 	                </div>
 	            </form>
 	        </div>
