@@ -184,7 +184,6 @@ ul {
     padding: 8px 20px;
     border-radius: 8px;
     /*margin-top: 80px;*/
-    margin-top: 40px;
     transition: 0.2s all ease;
 }
 
@@ -862,7 +861,8 @@ ul {
     align-items: center;
     justify-content: center;
     text-align: left;
-    background: #F5F5F7;
+/*    background: #F5F5F7;*/
+    background: #f9f7ed;
 /*    padding: 10px 15px;*/
     padding: 10px 2.5rem;
     border-radius: 14px;
@@ -919,7 +919,8 @@ ul {
 }
 
 .hour-box {
-    background: #F5F5F7;
+/*    background: #F5F5F7;*/
+    background: #f9f7ed;
     padding: 25px 24px;
     display: flex;
     align-items: center;
@@ -940,6 +941,8 @@ ul {
     font-weight: 400;
     font-size: 16px;
     color: #000000;
+    display: flex;
+    justify-content: center;
 }
 
 .hour-box span img {
@@ -1013,7 +1016,8 @@ ul {
 .option .dot{
   height: 20px;
   width: 20px;
-  background: #d9d9d9;
+/*  background: #d9d9d9;*/
+  background: white;
   border-radius: 50%;
   position: relative;
 }
@@ -1111,6 +1115,22 @@ li button{
 .student-box .yellow {
     color: orange!important;
 }
+.student-box .grey {
+    color: #7e878d!important;
+}
+.student-box .newblue {
+    color: #35aae0!important;
+}
+.student-box .newyellow {
+    color: #f4b355!important;
+}
+.student-box .newred {
+    color: #e5383b!important;
+}
+.student-box .newgreen {
+    color: #329b73!important;
+}
+
 .filter-green{
     filter: invert(48%) sepia(79%) saturate(2476%) hue-rotate(86deg) brightness(118%) contrast(119%);
 }
@@ -1121,7 +1141,22 @@ li button{
     filter: invert(0%) sepia(79%) saturate(7460%) hue-rotate(58deg) brightness(87%) contrast(93%);
 }
 .filter-red{
-    filter: invert(35%) sepia(96%) saturate(7429%) hue-rotate(355deg) brightness(103%) contrast(121%);
+    filter: brightness(0) saturate(100%) invert(29%) sepia(31%) saturate(2483%) hue-rotate(323deg) brightness(115%) contrast(110%);
+}
+.filter-newblue{
+    filter: invert(54%) sepia(95%) saturate(583%) hue-rotate(168deg) brightness(93%) contrast(87%);    
+}
+.filter-grey{
+    filter: invert(55%) sepia(14%) saturate(193%) hue-rotate(161deg) brightness(93%) contrast(94%);
+}
+.filter-newyellow{
+    filter: brightness(0) saturate(100%) invert(85%) sepia(36%) saturate(1400%) hue-rotate(320deg) brightness(105%) contrast(91%);
+}
+.filter-newred{
+    filter: invert(31%) sepia(64%) saturate(4366%) hue-rotate(341deg) brightness(95%) contrast(89%);
+}
+.filter-newgreen{
+    filter: invert(50%) sepia(47%) saturate(479%) hue-rotate(105deg) brightness(93%) contrast(99%);
 }
 
 .edit_tls{
@@ -1187,4 +1222,46 @@ li button{
     background: none!important;
     color: black!important;
     font-size: unset!important;    
+}
+.dark-blue{
+    background: darkblue!important;
+}
+.grey-bg {
+    background: #7e878d!important;
+}
+.newblue-bg{
+    background: #35aae0!important;
+}
+.newyellow-bg{
+    background: #f4b355!important;
+}
+.newred-bg{
+    background: #e5383b!important;
+}
+.orange-bg{
+    background: orange!important;
+    border-color: orange!important;
+}
+.newgreen-bg{
+    background: #329b73!important;
+}
+.addhour-bg{
+    background: #fbe4d5!important;
+    padding-left: 0px;
+}
+.blue-bg{
+    background: #d9e2f3!important;
+}
+.lightgrey-bg{
+    background: #f2f2f2!important;
+}
+.bold-white{
+    color: white;
+    font-weight: 500;
+}
+.fa-edit:before{
+    color: black;
+}
+.bg-none{
+    background: none!important;
 }

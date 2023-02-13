@@ -21,7 +21,57 @@
     @endif
     <div class="header-area">
         <div class="header-left">
-            <h2>Hello {{ auth()->user()->first_name}}!</h2>
+            {{-- <h2>Hello {{ auth()->user()->first_name}}!</h2> --}}
+            <img src="{{ asset('images/logo.png')}}" width="182" height="89">
+                
+                <a class="btn-save {{($unReadNotificationCount)?"bg-danger":"bg-secondary"}}" style="margin-left: 20px; border-radius: 10px" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" ria-haspopup="true" aria-expanded="false"><img src="{{ asset('images/bell.svg')}}" class="bellcolor" height="20" alt="" style=""> Notification <span class="badge badge-light nCount">@if($unReadNotificationCount){{$unReadNotificationCount}}@endif</span></a>
+
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    @if($notifications)
+                    @foreach($notifications as $key => $notify)
+                    @if($key == 0)
+
+                    @else
+                        <div class="dropdown-divider"></div>
+                    @endif
+                        <?php
+                            if($notify->case_type == 1)
+                            {
+                                $route = route('casenotes',$notify->student_id)."#casemg".$notify->case_id;   
+                            }
+                            elseif($notify->case_type == 2)
+                            {
+                                $route = route('casenotes',$notify->student_id)."#parentreview".$notify->case_id;
+                            }
+                            elseif($notify->case_type == 3)
+                            {
+                                $route = route('casenotes',$notify->student_id)."#comm".$notify->case_id;
+                            }
+                            elseif($notify->case_type == 4)
+                            {
+                                $route = route('lesson',$notify->student_id)."#sift".$notify->case_id;
+                            }
+                            elseif($notify->case_type == 5)
+                            {
+                                $route = route('lesson-bt',$notify->student_id)."#btlang".$notify->case_id;
+                            }                            
+                        ?>
+                        @if($notify->is_read)
+                            @if($notify->case_type > 3)
+                                <a class="dropdown-item pt-2 pb-2" href="{{$route}}"><span class="font-weight-bold">{{$notify->first_name}}</span> has tagged you in a comment under <span class="font-weight-bold">{{$notify->name}}</span>'s lesson notes. <div class="time-ago">{{ getTimeAgo($notify->created_at)}}</div></a>    
+                            @else
+                                <a class="dropdown-item pt-2 pb-2" href="{{$route}}"><span class="font-weight-bold">{{$notify->first_name}}</span> has tagged you in a comment under <span class="font-weight-bold">{{$notify->name}}</span>'s case notes. <div class="time-ago">{{ getTimeAgo($notify->created_at)}}</div></a>
+                            @endif
+                        @else
+                            @if($notify->case_type > 3)
+                                <a class="dropdown-item-unread pt-2 pb-2" href="{{$route}}"><span class="font-weight-bold">{{$notify->first_name}}</span> has tagged you in a comment under <span class="font-weight-bold">{{$notify->name}}</span>'s lesson notes. <div class="time-ago">{{ getTimeAgo($notify->created_at)}}</div></a>
+                            @else
+                                <a class="dropdown-item-unread pt-2 pb-2" href="{{$route}}"><span class="font-weight-bold">{{$notify->first_name}}</span> has tagged you in a comment under <span class="font-weight-bold">{{$notify->name}}</span>'s case notes. <div class="time-ago">{{ getTimeAgo($notify->created_at)}}</div></a>
+                            @endif
+                        @endif                        
+                    @endforeach
+                    @endif
+                </div>    
         </div>
         <div class="header-middle">
             <p>Name List</p>
@@ -34,8 +84,7 @@
     <div class="search-bar">
         <p class="d-sm-none">Name List</p>
         <div class="header-addbtn">
-            <ul>
-                <li><a href="{{ route('student.create') }}"><img src="images/add-circle-outline.svg" alt=""> Add Student</a></li>
+            <ul>                
                 <li><a href="{{ route('user.create') }}"><img src="images/add-circle-outline.svg" alt=""> Add User</a></li>
             </ul>
             <form action="{{ route('staff.post') }}" method="POST">
@@ -182,7 +231,8 @@
 
 @section('pagejs')
     <script type="text/javascript">
-        var deleteUrl = "{{ route('user.delete') }}";        
+        var deleteUrl = "{{ route('user.delete') }}";   
+        var readNotiUrl = "{{ route('notification.read') }}";     
     </script>
     <script src="{{addPageJsLink('staff-index.js')}}"></script>
 @endsection

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Validator;
 use App\User;
 use App\Student;
 use App\Tls;
+use App\Notification;
 use Carbon\Carbon;
 use Auth;
 use DB;
@@ -21,6 +22,25 @@ class StudentController extends Controller
 
     public function pastStudent(Request $request)
     {
+        $notifications = Notification::query()
+                    ->leftjoin('users','notifications.updated_by','users.id')
+                    ->leftjoin('students','notifications.student_id','students.id')
+                    ->where('notifications.user_id',Auth::user()->id)
+                    ->where('notifications.deleted_at',null)
+                    ->select('users.first_name','students.name','notifications.student_id','notifications.is_read','notifications.case_id','notifications.case_type','notifications.created_at')
+                    ->orderBy('notifications.created_at','desc')
+                    ->limit(10)
+                    ->get();
+
+        $unReadNotificationCount = Notification::query()
+                    ->leftjoin('users','notifications.updated_by','users.id')
+                    ->where('notifications.user_id',Auth::user()->id)
+                    ->where('notifications.deleted_at',null)
+                    ->where('notifications.is_read',0)
+                    ->select('users.first_name','notifications.student_id','notifications.created_at')
+                    ->orderBy('notifications.created_at','desc')                    
+                    ->count();
+
         $users = Student::past()->orderBy('name','ASC')->search($request->q)->paginate(20000);
 
         $users->appends (array ('q' => $request->q));
@@ -30,7 +50,7 @@ class StudentController extends Controller
         if(isset($request->q))
             $q = $request->q;           
 
-        return view('students.past-students', compact('users','q'));
+        return view('students.past-students', compact('users','q','notifications','unReadNotificationCount'));
     }
 
     public function create()
@@ -130,7 +150,7 @@ class StudentController extends Controller
                        ->join('students','add_hour_logs.student_id','students.id')
                        ->where('add_hour_logs.deleted_at',null)
                        ->where('add_hour_logs.student_id',$student->id)
-                       ->select('add_hour_logs.hours','add_hour_logs.created_at','add_hour_logs.notes','students.name')
+                       ->select('add_hour_logs.id as aId','add_hour_logs.hours','add_hour_logs.created_at','add_hour_logs.notes','students.name')
                        ->orderBy('add_hour_logs.created_at','desc')
                        ->paginate(5,['*'], 'added');        
 
@@ -185,5 +205,29 @@ class StudentController extends Controller
         }
         toastr()->error('An error has occurred please try again later.');
         return back();
+    }
+
+    public function dateCheck(Request $request)
+    {
+        if($request->id)
+        {
+            $user = Student::find($request->id);
+            $user->is_appointment_done = 1; 
+            $user->updated_by = Auth::user()->id;
+            $r = $user->save();
+
+            if($r)
+            {                
+                $result = ['status' => true, 'message' => 'Appointment marked completed', 'data' => []];
+                return response()->json($result);
+            }
+            else
+            {                
+                $result = ['status' => false, 'message' => 'An error has occurred please try again later.', 'data' => []];
+                return response()->json($result);
+            }
+        }
+        $result = ['status' => false, 'message' => 'An error has occurred please try again later.', 'data' => []];
+        return response()->json($result);
     }
 }

@@ -59,7 +59,7 @@ class LessonController extends Controller
                 $html .= '<input type="hidden" name="update_id" value="'.$value->id.'" />';
                 $html .= '<div class="lesson-table pr-lg-2" id="sift'.$value->id.'">';
                 $html .= '<div class="save-btn">';
-                $html .= '<button type="submit"><img src="'.asset('images/download.svg').'" alt=""> Save</button>';
+                $html .= '<button type="submit" class="orange-bg"><img src="'.asset('images/download2.png').'" height="20"> Save</button>';
                 $html .= '<a href="javascript:void(0)" data-del-id="'.$value->id.'" class="del-lesson"><img src="'.asset('images/delete-button.svg').'" alt="" class="del-les-img"></a>';
                 $html .= '</div>';
                 $html .= '<table>
@@ -186,7 +186,7 @@ class LessonController extends Controller
                 $html .= '<input type="hidden" name="update_id" value="'.$value->id.'" />';
                 $html .= '<div class="lesson-table pl-lg-2" id="btlang'.$value->id.'">';
                 $html .= '<div class="save-btn">';
-                $html .= '<button type="submit"><img src="'.asset('images/download.svg').'" alt=""> Save</button>';
+                $html .= '<button type="submit" class="orange-bg"><img src="'.asset('images/download2.png').'" height="20"> Save</button>';
                 $html .= '<a href="javascript:void(0)" data-del-id="'.$value->id.'" class="del-lesson"><img src="'.asset('images/delete-button.svg').'" alt="" class="del-les-img"></a>';
                 $html .= '</div>';
                 $html .= '<table class="bt-lang">
@@ -264,7 +264,7 @@ class LessonController extends Controller
                 $html .= '<input type="hidden" name="update_id" value="'.$value->id.'" />';
                 $html .= '<div class="lesson-table pl-lg-2">';
                 $html .= '<div class="save-btn">';
-                $html .= '<button type="submit"><img src="'.asset('images/download.svg').'" alt=""> Save</button>';
+                $html .= '<button type="submit" class="orange-bg"><img src="'.asset('images/download2.png').'" height="20"> Save</button>';
                 $html .= '<a href="javascript:void(0)" data-del-id="'.$value->id.'" class="del-lesson"><img src="'.asset('images/delete-button.svg').'" alt="" class="del-les-img"></a>';
                 $html .= '</div>';
                 $html .= '<table class="im">

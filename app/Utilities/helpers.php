@@ -60,24 +60,24 @@ function colorOfDate($dt = '')
 	$week = Carbon::now()->addWeek();
 	$week2 = Carbon::now()->addWeek(2);
 	$days3 = Carbon::now()->addDays(3);
-	$days7 = Carbon::now()->addDays(7);
+	$days5 = Carbon::now()->addDays(5);
 	$now = Carbon::now();
 	if($dt)
 	{
 		$d = Carbon::parse($dt);
 		
-		if($dt > $days7)
+		if($dt > $days5)
 		{
 			return 3;
 		}
-		else if($dt > $days3 && $dt < $days7)
+		else if($dt > $now && $dt < $days5)
 		{
 			return 2;
 		}
-		elseif ($dt > $now && $dt < $days3) {
-			return 1;
-		}
-		elseif($dt < $now)
+		// elseif ($dt > $now && $dt < $days3) {
+		// 	return 1;
+		// }
+		elseif($dt <= $now)
 		{
 			return 4;
 		}

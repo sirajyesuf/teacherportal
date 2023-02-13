@@ -19,13 +19,28 @@
                     @csrf
                     <input type="hidden" name="student_id" value="{{ $student->id}}">
                     <div class="note-upper">
+                        @php 
+                            $t = colorOfDate($student->appointment_date);
+                            if($student->is_appointment_done)
+                                $colClass = 'newgreen-bg';
+                            elseif($t == 3)
+                                $colClass = 'newblue-bg';
+                            elseif($t == 2)
+                                $colClass = 'newyellow-bg';
+                            elseif($t == 4)
+                                $colClass = 'newred-bg'; 
+                            else
+                            {                                
+                                $colClass = 'grey-bg'; 
+                            }
+                        @endphp
                         <ul>
                             <li><a href="javascript:void(0)" class="delete-student"><img class="delete-img" src="{{ asset('images/delete-button.svg') }}" width="28" /></a></li>
                             <li><h2>{{$student->name}}</h2></li>
-                            <li><button type="submit"><img src="{{ asset('images/download.svg')}}" alt=""> Save</button></li>
-                            <li><a href="{{ route('casenotes',$student->id) }}"><img src="{{ asset('images/folder-shared.svg')}}" alt=""> View case notes</a></li>
-                            <li><a href="{{ route('lesson',$student->id)}}"><img src="{{ asset('images/description.svg')}}" alt=""> View Lesson</a></li>
-                            <li><input id="appointment_date" class="datePicker" type="hidden" /><a class="home-picker-profile" data-id="{{ $student->id }} "href="#">{{ ($student->appointment_date)?longDateFormat($student->appointment_date):"Calender Picker"}} </a></li>
+                            <li><button type="submit" class="orange-bg"><img src="{{ asset('images/download2.png')}}" height="20"> Save</button></li>
+                            <li><a href="{{ route('casenotes',$student->id) }}" class="dark-blue"><img src="{{ asset('images/folder-shared.svg')}}" alt=""> View case notes</a></li>
+                            <li><a href="{{ route('lesson',$student->id)}}" class="dark-blue"><img src="{{ asset('images/description.svg')}}" alt=""> View Lesson</a></li>
+                            <li><input id="appointment_date" class="" type="hidden" /><a class="home-picker-profile {{$colClass}}" data-id="{{ $student->id }} "href="#">{{ ($student->appointment_date)?longDateFormat($student->appointment_date):"Due Date"}} </a></li>
                         </ul>
                     </div>
 
@@ -52,12 +67,12 @@
                                 @foreach($tlss as $ke => $tls)
                                     @if(in_array($tls->date, $lesson_date_array))
                                         <tr>
-                                            <td class="b-blue">{{longDateFormat($tls->date)}}</td>
-                                            <td class="b-blue">{{ $tls->program}}</td>
-                                            <td class="b-blue">{{ $tls->music_day}}</td>
-                                            <td class="b-blue">{{ $tls->music_prog}}</td>
-                                            <td class="b-blue">{{ $tls->duration}} Mins</td>  
-                                            <td class="d-flex-action b-blue">
+                                            <td class="blue-bg">{{longDateFormat($tls->date)}}</td>
+                                            <td class="blue-bg">{{ $tls->program}}</td>
+                                            <td class="blue-bg">{{ $tls->music_day}}</td>
+                                            <td class="blue-bg">{{ $tls->music_prog}}</td>
+                                            <td class="blue-bg">{{ $tls->duration}} Mins</td>  
+                                            <td class="d-flex-action blue-bg">
                                                 <a href="javascript:void(0)" class="edit_tls" data-id="{{$tls->id}}"><img src="{{ asset('images/edit.svg')}}" alt="" height="18"></a>
                                                 <a href="javascript:void(0)" class="delete_tls" data-id="{{$tls->id}}"><img src="{{ asset('images/delete.svg')}}" alt=""></a>                          
                                             </td>
@@ -134,10 +149,17 @@
                             
                             @if($addedHours)
                                 @foreach($addedHours as $key => $ah)
-                                <div class="hour-box">
-                                    <h4>{{$ah->hours}} Hours</h4>
-                                    <span><img src="{{ asset('images/alarm-black.svg')}}" alt=""> {{ profileDateFormate($ah->created_at) }}</span>
-                                    <p>{{ $ah->notes }}</p>
+                                <div class="hour-box addhour-bg">
+                                    <div class="col-sm-3">
+                                        <h4>{{$ah->hours}} Hours</h4>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span><img src="{{ asset('images/alarm-black.svg')}}" alt=""> {{ profileDateFormate($ah->created_at) }}</span>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p>{{ $ah->notes }}</p>
+                                    </div>
+                                    <a href="javascript:void(0)" data-id="{{ $ah->aId }}" class="edit_add_hour"><i class="fa fa-edit"></i></a>
                                 </div>
                                 @endforeach                                    
                             {{ $addedHours->links() }}
@@ -203,7 +225,42 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-save">Save</button>
+                <button type="submit" class="btn btn-save orange-bg">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+{{-- Ends : for Add log hours --}}
+
+{{-- Start : for Add log hours --}}
+<div class="modal" tabindex="-1" role="dialog" id="edit_lesson_log_modal">
+    <div class="modal-dialog" role="document">
+        <form action="{{ route('log.hours.update') }}" method="post" id="log-hours-update-form">
+        @csrf
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Hours</h5>
+                <input type="hidden" name="id" id="edit_log_hour_id">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">                                
+                <div class="form-group">
+                    <label for="add_lesson_hour" class="col-form-label">Hours to Add:</label>
+                    <input type="number" step="0.5" name="add_lesson_hour" class="form-control" id="edit_lesson_hour">
+                    <span class="error"></span>
+                </div>
+                <div class="form-group">
+                    <label for="message-text" class="col-form-label">Notes:</label>
+                    <input type="text" step="0.25" name="lesson_note" class="form-control" id="edit_lesson_note">
+                    <span class="error"></span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-save orange-bg">Save</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -283,7 +340,7 @@
                 </div>                
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-save">Save</button>
+                <button type="submit" class="btn btn-save orange-bg">Save</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -298,6 +355,7 @@
     <script type="text/javascript">
         var addCircleOutline = "{{ asset('images/add-circle-outline.svg')}}";
         var addLogHoursUrl = $('#log-hours-add-form').attr('action');
+        var updateLogHoursUrl = $('#log-hours-update-form').attr('action');
         var hoursCompletedLogUrl = $('#hours-completed-log-form').attr('action');
         var changeDateUrl = "{{ route('appointment.update') }}";
         var level = "{{ Session::get('message.level') }}";
@@ -315,6 +373,7 @@
 @section('pagejs')
     <script type="text/javascript">
         var tlsDetailUrl = "{{ route('tls.details')}}";
+        var logHourDetailUrl = "{{ route('logHour.details')}}";
         var tlsUpdateUrl = "{{ route('tls.update')}}";
         var tlsDeleteUrl = "{{ route('tls.delete')}}";
         var tlsAddUrl = $('tls_form').attr('action');

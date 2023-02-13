@@ -22,9 +22,9 @@
                                 	<input type="hidden" id="student_id" name="student_id" value="{{$student->id}}">
                                 	<input type="radio" id="template_1" name="template_id" value="1">
                                     {{-- <label for="template_1">Template 1</label> --}}
-                                    <label for="template_1" class="option option-1">
+                                    <label for="template_1" class="option option-1 orange-bg">
 								    	<div class="dot"></div>
-								     	<span>SI/FT</span>
+								     	<span class="bold-white">SI/FT</span>
 								    </label>
                                 </div>
                                 <table>
@@ -73,9 +73,9 @@
                                 <div class="temp-ttl">
                                 	<input type="radio" id="template_2" name="template_id" value="2">
                                     {{-- <label for="template_2">Template 2</label> --}}
-                                    <label for="template_2" class="option option-2">
+                                    <label for="template_2" class="option option-2 orange-bg">
 								    	<div class="dot"></div>
-								     	<span>BT/Lang</span>
+								     	<span class="bold-white">BT/Lang</span>
 								    </label>
                                 </div>
                                 <table class="bt-lang">
@@ -95,9 +95,9 @@
                                 <div class="temp-ttl">
                                     <input type="radio" id="template_3" name="template_id" value="3">
                                     {{-- <label for="template_2">Template 2</label> --}}
-                                    <label for="template_3" class="option option-3">
+                                    <label for="template_3" class="option option-3 orange-bg">
                                         <div class="dot"></div>
-                                        <span>IM</span>
+                                        <span class="bold-white">IM</span>
                                     </label>
                                 </div>
                                 <table class="im">

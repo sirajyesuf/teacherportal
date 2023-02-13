@@ -84,6 +84,7 @@ class CaseNoteController extends Controller
         $caseMgmt->student_id = $request->id;
         $caseMgmt->date = Carbon::now()->format('Y-m-d');
         $caseMgmt->trainer = Auth::user()->first_name;
+        $caseMgmt->trainer_id = Auth::user()->id;
         $caseMgmt->updated_by = Auth::user()->id;
         $r = $caseMgmt->save();
 
@@ -105,6 +106,7 @@ class CaseNoteController extends Controller
         $parentReview->student_id = $request->id;
         $parentReview->date = Carbon::now()->format('Y-m-d');
         $parentReview->trainer = Auth::user()->first_name;
+        $parentReview->trainer_id = Auth::user()->id;
         $parentReview->updated_by = Auth::user()->id;
         $r = $parentReview->save();
 
@@ -122,12 +124,13 @@ class CaseNoteController extends Controller
 
     public function addCom(Request $request)
     {
-        $parentReview = new Comment;
-        $parentReview->student_id = $request->id;
-        $parentReview->date = Carbon::now()->format('Y-m-d');
-        $parentReview->trainer = Auth::user()->first_name;
-        $parentReview->updated_by = Auth::user()->id;
-        $r = $parentReview->save();
+        $comment = new Comment;
+        $comment->student_id = $request->id;
+        $comment->date = Carbon::now()->format('Y-m-d');
+        $comment->trainer = Auth::user()->first_name;
+        $comment->trainer_id = Auth::user()->id;
+        $comment->updated_by = Auth::user()->id;
+        $r = $comment->save();
 
         if($r)
         {
@@ -150,7 +153,7 @@ class CaseNoteController extends Controller
         {
             $caseMgmt = CaseManagement::find($request->update_id);
             $caseMgmt->date = $request->date;
-            $caseMgmt->trainer = $request->trainer;
+            // $caseMgmt->trainer = $request->trainer;
             $caseMgmt->package = $request->package;
             $caseMgmt->num = $request->num;
             $caseMgmt->description = $request->description;
@@ -222,7 +225,7 @@ class CaseNoteController extends Controller
         {
             $parentRw = ParentReview::find($request->update_id);
             $parentRw->date = $request->date;
-            $parentRw->trainer = $request->trainer;            
+            // $parentRw->trainer = $request->trainer;            
             $parentRw->description = $request->description;
             $parentRw->updated_by = Auth::user()->id;
             $r = $parentRw->save();
@@ -288,7 +291,7 @@ class CaseNoteController extends Controller
         {
             $comment = Comment::find($request->update_id);
             $comment->date = $request->date;
-            $comment->trainer = $request->trainer;            
+            // $comment->trainer = $request->trainer;            
             $comment->comments = $request->comments;
             $comment->updated_by = Auth::user()->id;
             $r = $comment->save();

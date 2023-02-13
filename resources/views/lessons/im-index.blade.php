@@ -50,8 +50,8 @@
                 <ul>                    
                     @if(isset($user->id))
                     <li><h2><a href="{{route('student.profile',$user->id)}}" class="nobtn">{{ (isset($user->name))?$user->name:'' }}</a></h2></li>
-                    <li><a href="{{ route('select.template',$user->id) }}"><img src="{{ asset('images/circle-2.svg')}}" alt=""> New Lesson</a></li>
-                    <li><a href="{{ route('casenotes',$user->id) }}"><img src="{{ asset('images/folder-shared.svg')}}" alt=""> View case notes</a></li>
+                    <li><a href="{{ route('select.template',$user->id) }}" class="dark-blue"><img src="{{ asset('images/circle-2.svg')}}" alt=""> New Lesson</a></li>
+                    <li><a href="{{ route('casenotes',$user->id) }}" class="dark-blue"><img src="{{ asset('images/folder-shared.svg')}}" alt=""> View case notes</a></li>
                     @endif
                 </ul>
             </div>

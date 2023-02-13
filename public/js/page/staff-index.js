@@ -1,5 +1,25 @@
 $( document ).ready(function() {
 
+    $(document).on('click','#navbarDropdown', function(e){
+        e.preventDefault();
+
+        $.ajax({
+            url: readNotiUrl,
+            type: 'GET',                                        
+            success: function(result) {
+                if (result.status == true) {
+
+                } else {
+
+                }
+            },
+            error: function(error) {
+                console.log(error)
+                // alert('Something went wrong!', 'error');                            
+            }
+        }); // Ajax ends
+    });
+
     $('body').on('click','.delUser',function(e){
         e.preventDefault();
 

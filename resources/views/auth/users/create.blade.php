@@ -2,6 +2,10 @@
 
 @section('title','Create User')
 
+@section('css')
+    <link rel="stylesheet" href="{{ asset('css/vendor/coloris.css') }}?{{time()}}" />    
+@endsection
+
 @section('content')
 	<main class="adduser-area">
 		<div class="home-btn">
@@ -84,11 +88,45 @@
 		                    <strong>{{ $message }}</strong>
 		                </span>
 		            @enderror
+		            <div class="adduser-item">
+	                    <label for="color">Colour:</label>
+	                    <input type="text" id="color" placeholder="Enter Role" name="color" value="{{ old('color','#fa5c7c') }}" data-coloris>
+	                </div>
+                    @error('color')
+		                <span class="invalid-feedback" role="alert">
+		                    <strong>{{ $message }}</strong>
+		                </span>
+		            @enderror
 	                <div class="adduser-item">
-	                    <button type="Submit">Submit</button>
+	                    <button type="Submit" class="orange-bg">Submit</button>
 	                </div>
 	            </form>
 	        </div>
 	    </div>
 	</main>
+@endsection
+
+@section('pagejs')
+<script src="{{asset('/js')}}/vendor/coloris.js?{{time()}}"></script>
+<script>
+    Coloris({
+      swatches: [
+        '#fa5c7c',
+        '#264653',
+        '#2a9d8f',
+        '#e9c46a',
+        '#f4a261',
+        '#e76f51',
+        '#d62828',
+        '#023e8a',
+        '#0077b6',
+        '#0096c7',
+        '#00b4d8',
+        '#48cae4',
+      ],
+      format: 'hex',
+      theme: 'large',
+      themeMode: 'light', // light, dark, auto
+    });
+</script>
 @endsection

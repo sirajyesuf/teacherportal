@@ -23,6 +23,29 @@ jQuery.browser = {};
                 $('#hiddenDate_'+id).datepicker("show");                
             });
 
+            $(document).on('click','.checked', function(){
+                var checkId = $(this).attr('data-id');
+
+                if(confirm('Are you sure ?')){
+                    $.ajax({
+                        url: checkDateUrl,
+                        type: 'POST',
+                        data: { id:checkId,_token: $('meta[name=csrf-token]').attr('content')},
+                        dataType: 'json',
+                        success: function(result) {                    
+                                       
+                            showMessage('success',result.message);
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1500);
+
+
+                        }
+                    });    
+                }
+
+            })
+
             $(document).on('click','#navbarDropdown', function(e){
                 e.preventDefault();
 

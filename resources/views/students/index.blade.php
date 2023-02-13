@@ -22,8 +22,10 @@
     <main class="main-wrapper">
         <div class="header-area">
             <div class="header-left">
-                <h2>Hello {{ auth()->user()->name}}!</h2>
-                <a class="btn-save" style="margin-left: 20px; border-radius: 10px" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" ria-haspopup="true" aria-expanded="false"><img src="{{ asset('images/bell.svg')}}" class="bellcolor" height="20" alt="" style=""> Notification <span class="badge badge-light nCount">@if($unReadNotificationCount){{$unReadNotificationCount}}@endif</span></a>
+                {{-- <h2>Hello {{ auth()->user()->first_name}}!</h2> --}}                
+                <img src="{{ asset('images/logo.png')}}" width="182" height="89">
+                
+                <a class="btn-save {{($unReadNotificationCount)?"bg-danger":"bg-secondary"}}" style="margin-left: 20px; border-radius: 10px" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" ria-haspopup="true" aria-expanded="false"><img src="{{ asset('images/bell.svg')}}" class="bellcolor" height="20" alt="" style=""> Notification <span class="badge badge-light nCount">@if($unReadNotificationCount){{$unReadNotificationCount}}@endif</span></a>
 
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     @if($notifications)
@@ -84,10 +86,7 @@
             <p class="d-sm-none">Name List</p>
             <div class="header-addbtn">
                 <ul>
-                    <li><a href="{{ route('student.create') }}"><img src="{{ asset('images/add-circle-outline.svg')}}" alt=""> Add Student</a></li>
-                    @if(auth()->user()->role_type == 1)
-                        <li><a href="{{ route('user.create') }}"><img src="{{ asset('images/add-circle-outline.svg')}}" alt=""> Add User</a></li>
-                    @endif
+                    <li><a href="{{ route('student.create') }}"><img src="{{ asset('images/add-circle-outline.svg')}}" alt=""> Add Student</a></li>                    
                 </ul>
                 <form action="{{ route('home.post') }}" method="POST">
                     @csrf
@@ -124,24 +123,29 @@
                                 </div>
                                 @php 
                                     $t = colorOfDate($user->appointment_date);
-                                    if($t == 3)
-                                        $colClass = 'black';
+                                    if($user->is_appointment_done)                                    
+                                        $colClass = 'newgreen';
+                                    elseif($t == 3)
+                                        $colClass = 'newblue';
                                     elseif($t == 2)
-                                        $colClass = 'yellow';
-                                    elseif($t == 1)
-                                        $colClass = 'red'; 
+                                        $colClass = 'newyellow';
+                                    elseif($t == 4)
+                                        $colClass = 'newred'; 
                                     else
                                     {
                                         $user->appointment_date = '';
-                                        $colClass = 'puple'; 
+                                        $colClass = 'grey'; 
                                     }
                                 @endphp
                                 <div class="col-md-5 d-flex align-items-center">
-                                    <a href="{{ route('lesson',$user->id)}}" lession-id="{{ $user->id }}">Lesson</a>
-                                    <a href="{{ route('casenotes',$user->id) }}" class="ml-1">Case Notes</a>
+                                    <a class="dark-blue" href="{{ route('lesson',$user->id)}}" lession-id="{{ $user->id }}">Lesson</a>
+                                    <a href="{{ route('casenotes',$user->id) }}" class="ml-1 dark-blue">Case Notes</a>
                                 </div>
                                 <div class="col-md-3 d-flex pl-0 align-items-center">
                                     <span class="{{$colClass}}"><input id="hiddenDate_{{$user->id}}" class="datePickerInput" type="hidden" /><a class="home-picker" data-id="{{ $user->id }}"><img src="{{ asset('images/alarm-3.svg')}}" class="filter-{{$colClass}}" alt=""> {{ shortDateFormat($user->appointment_date)}}</a></span>
+                                    @if($user->appointment_date && !$user->is_appointment_done)
+                                    <a href="javascript:void(0)" data-id="{{$user->id}}" class="bg-none black checked"><i class="fa fa-check"></i></a>
+                                    @endif
                                 </div>
                             </div>
                         </div>                        
@@ -163,25 +167,30 @@
                                 </div>
                                 @php 
                                     $t = colorOfDate($user->appointment_date);
-                                    if($t == 3)
-                                        $colClass = 'black';
+                                    if($user->is_appointment_done)                                    
+                                        $colClass = 'newgreen';                                    
+                                    elseif($t == 3)
+                                        $colClass = 'newblue';
                                     elseif($t == 2)
-                                        $colClass = 'yellow';
-                                    elseif($t == 1)
-                                        $colClass = 'red'; 
+                                        $colClass = 'newyellow';
+                                    elseif($t == 4)
+                                        $colClass = 'red';                                     
                                     else
                                     {
                                         $user->appointment_date = '';
-                                        $colClass = 'puple'; 
+                                        $colClass = 'grey'; 
                                     }
                                 @endphp
                                 <div class="col-md-5 d-flex align-items-center">
-                                    <a href="{{ route('lesson',$user->id)}}" {{ $user->id }}>Lesson</a>
-                                    <a href="{{ route('casenotes',$user->id) }}" class="ml-1">Case Notes</a>
+                                    <a class="dark-blue" href="{{ route('lesson',$user->id)}}" {{ $user->id }}>Lesson</a>
+                                    <a href="{{ route('casenotes',$user->id) }}" class="ml-1 dark-blue">Case Notes</a>
                                 </div>
                                 {{-- <span class="puple"><img src="images/alarm-3.svg" alt=""> 14 Sept</span> --}}
                                 <div class="col-md-3 d-flex pl-0 align-items-center">
                                     <span class="{{$colClass}}"><input id="hiddenDate_{{$user->id}}" class="datePickerInput" type="hidden" /><a class="home-picker" data-id="{{ $user->id }}"><img src="{{ asset('images/alarm-3.svg')}}" class="filter-{{$colClass}}" alt=""> {{ shortDateFormat($user->appointment_date)}}</a></span>
+                                    @if($user->appointment_date && !$user->is_appointment_done)
+                                    <a href="javascript:void(0)" data-id="{{$user->id}}" class="bg-none black checked"><i class="fa fa-check"></i></a>
+                                    @endif
                                 </div>
                             </div>
                         </div>                        
@@ -203,25 +212,30 @@
                                 </div>
                                 @php 
                                     $t = colorOfDate($user->appointment_date);
-                                    if($t == 3)
-                                        $colClass = 'black';
+                                    if($user->is_appointment_done)                                    
+                                        $colClass = 'newgreen';
+                                    elseif($t == 3)
+                                        $colClass = 'newblue';
                                     elseif($t == 2)
-                                        $colClass = 'yellow';
-                                    elseif($t == 1)
+                                        $colClass = 'newyellow';
+                                    elseif($t == 4)
                                         $colClass = 'red'; 
                                     else
                                     {
                                         $user->appointment_date = '';
-                                        $colClass = 'puple'; 
+                                        $colClass = 'grey'; 
                                     } 
                                 @endphp
                                 <div class="col-md-5 d-flex align-items-center">
-                                    <a href="{{ route('lesson',$user->id)}}" {{ $user->id }}>Lesson</a>
-                                    <a href="{{ route('casenotes',$user->id) }}" class="ml-1">Case Notes</a>
+                                    <a class="dark-blue" href="{{ route('lesson',$user->id)}}" {{ $user->id }}>Lesson</a>
+                                    <a href="{{ route('casenotes',$user->id) }}" class="ml-1 dark-blue">Case Notes</a>
                                 </div>
                                 {{-- <span class="puple"><img src="images/alarm-3.svg" alt=""> 24 June</span> --}}
                                 <div class="col-md-3 d-flex pl-0 align-items-center">
                                     <span class="{{$colClass}}"><input id="hiddenDate_{{$user->id}}" class="datePickerInput" type="hidden" /><a class="home-picker" data-id="{{ $user->id }}"><img src="{{ asset('images/alarm-3.svg')}}" class="filter-{{$colClass}}" alt=""> {{ shortDateFormat($user->appointment_date)}}</a></span>
+                                    @if($user->appointment_date && !$user->is_appointment_done)
+                                    <a href="javascript:void(0)" data-id="{{$user->id}}" class="bg-none black checked"><i class="fa fa-check"></i></a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -239,7 +253,9 @@
 @section('scripts')
     <script type="text/javascript">
         var changeDateUrl = "{{ route('appointment.update') }}";   
+        var checkDateUrl = "{{ route('appointment.check') }}";   
         var assetClock = "{{ asset("images/alarm-3.svg")}}";     
+        var readNotiUrl = "{{ route('notification.read') }}";
         var readNotiUrl = "{{ route('notification.read') }}";
     </script>
 @endsection
