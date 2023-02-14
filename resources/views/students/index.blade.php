@@ -143,9 +143,10 @@
                                 </div>
                                 <div class="col-md-3 d-flex pl-0 align-items-center">
                                     <span class="{{$colClass}}"><input id="hiddenDate_{{$user->id}}" class="datePickerInput" type="hidden" /><a class="home-picker" data-id="{{ $user->id }}"><img src="{{ asset('images/alarm-3.svg')}}" class="filter-{{$colClass}}" alt=""> {{ shortDateFormat($user->appointment_date)}}</a></span>
-                                    @if($user->appointment_date && !$user->is_appointment_done)
-                                    <a href="javascript:void(0)" data-check-id="{{$user->id}}" class="bg-none black checked"><i class="fa fa-check"></i></a>
+                                    @if($user->appointment_date)
+                                    <input type="checkbox" name="appointment-date" data-check-id="{{$user->id}}" class="bg-none black ml-2 checked" {{($user->is_appointment_done)?"checked disabled":""}}/>                                    
                                     @endif
+                                    
                                 </div>
                             </div>
                         </div>                        
@@ -188,8 +189,8 @@
                                 {{-- <span class="puple"><img src="images/alarm-3.svg" alt=""> 14 Sept</span> --}}
                                 <div class="col-md-3 d-flex pl-0 align-items-center">
                                     <span class="{{$colClass}}"><input id="hiddenDate_{{$user->id}}" class="datePickerInput" type="hidden" /><a class="home-picker" data-id="{{ $user->id }}"><img src="{{ asset('images/alarm-3.svg')}}" class="filter-{{$colClass}}" alt=""> {{ shortDateFormat($user->appointment_date)}}</a></span>
-                                    @if($user->appointment_date && !$user->is_appointment_done)
-                                    <a href="javascript:void(0)" data-check-id="{{$user->id}}" class="bg-none black checked"><i class="fa fa-check"></i></a>
+                                    @if($user->appointment_date)
+                                    <input type="checkbox" name="appointment-date" data-check-id="{{$user->id}}" class="bg-none black ml-2 checked" {{($user->is_appointment_done)?"checked disabled":""}}/>
                                     @endif
                                 </div>
                             </div>
@@ -233,8 +234,8 @@
                                 {{-- <span class="puple"><img src="images/alarm-3.svg" alt=""> 24 June</span> --}}
                                 <div class="col-md-3 d-flex pl-0 align-items-center">
                                     <span class="{{$colClass}}"><input id="hiddenDate_{{$user->id}}" class="datePickerInput" type="hidden" /><a class="home-picker" data-id="{{ $user->id }}"><img src="{{ asset('images/alarm-3.svg')}}" class="filter-{{$colClass}}" alt=""> {{ shortDateFormat($user->appointment_date)}}</a></span>
-                                    @if($user->appointment_date && !$user->is_appointment_done)
-                                    <a href="javascript:void(0)" data-check-id="{{$user->id}}" class="bg-none black checked"><i class="fa fa-check"></i></a>
+                                    @if($user->appointment_date)
+                                    <input type="checkbox" name="appointment-date" data-check-id="{{$user->id}}" class="bg-none black ml-2 checked" {{($user->is_appointment_done)?"checked disabled":""}}/>
                                     @endif
                                 </div>
                             </div>

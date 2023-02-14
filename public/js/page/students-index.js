@@ -25,24 +25,22 @@ jQuery.browser = {};
 
             $(document).on('click','.checked', function(){
                 var checkId = $(this).attr('data-check-id');
+                                 
+                $.ajax({
+                    url: checkDateUrl,
+                    type: 'POST',
+                    data: { id:checkId,_token: $('meta[name=csrf-token]').attr('content')},
+                    dataType: 'json',
+                    success: function(result) {                    
+                                   
+                        showMessage('success',result.message);
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1500);
+                    }
+                }); 
 
-                if(confirm('Are you sure ?')){
-                    $.ajax({
-                        url: checkDateUrl,
-                        type: 'POST',
-                        data: { id:checkId,_token: $('meta[name=csrf-token]').attr('content')},
-                        dataType: 'json',
-                        success: function(result) {                    
-                                       
-                            showMessage('success',result.message);
-                            setTimeout(function() {
-                                location.reload();
-                            }, 1500);
-
-
-                        }
-                    });    
-                }
+            return;               
 
             });
 
