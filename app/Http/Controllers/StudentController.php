@@ -106,7 +106,8 @@ class StudentController extends Controller
         if($request->id)
         {
             $user = Student::find($request->id);
-            $user->appointment_date = ($request->date)?$request->date:now(); 
+            $user->appointment_date = ($request->date)?$request->date:now();
+            $user->is_appointment_done = 0;
             $user->updated_by = Auth::user()->id;
             $r = $user->save();
 
