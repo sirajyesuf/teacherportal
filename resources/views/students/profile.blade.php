@@ -156,10 +156,11 @@
                                     <div class="col-sm-3">
                                         <span><img src="{{ asset('images/alarm-black.svg')}}" alt=""> {{ profileDateFormate($ah->created_at) }}</span>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-5">
                                         <p>{{ $ah->notes }}</p>
                                     </div>
                                     <a href="javascript:void(0)" data-id="{{ $ah->aId }}" class="edit_add_hour"><i class="fa fa-edit"></i></a>
+                                    <a href="javascript:void(0)" data-id="{{ $ah->aId }}" class="delete_add_hour ml-1"><i class="fa fa-trash"></i></a>
                                 </div>
                                 @endforeach                                    
                             {{ $addedHours->links() }}
@@ -376,6 +377,7 @@
         var logHourDetailUrl = "{{ route('logHour.details')}}";
         var tlsUpdateUrl = "{{ route('tls.update')}}";
         var tlsDeleteUrl = "{{ route('tls.delete')}}";
+        var addHourDeleteUrl = "{{ route('logHour.delete')}}";
         var tlsAddUrl = $('tls_form').attr('action');
         var tlsMultiAddUrl = "{{ route('tls.multiAdd') }}";
         var deleteUrl = "{{ route('student.delete') }}";

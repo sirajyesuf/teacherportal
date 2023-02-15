@@ -143,6 +143,40 @@ class LessonLogController extends Controller
         }
     }
 
+    public function delete(Request $request)
+    {
+        $model = LogHour::find($request->id);
+        $studeId = $model->student_id;
+        $model->delete();
+        
+        $totalHours = DB::table('add_hour_logs')
+                       ->where('add_hour_logs.deleted_at',null)
+                       ->where('add_hour_logs.student_id',$studeId)
+                       ->sum('hours');
+
+        $finishedHours = DB::table('lesson_hour_logs')
+                       ->where('lesson_hour_logs.deleted_at',null)
+                       ->where('lesson_hour_logs.student_id',$studeId)
+                       ->sum('hours');
+
+        $hoursRemaining = $totalHours - $finishedHours;
+
+        if($hoursRemaining < 0)
+            $hoursRemaining = 0;
+        
+        $student = Student::find($studeId);
+        $student->remaining_hours = $hoursRemaining;
+        $student->is_past = ($hoursRemaining) ? 0 : 1;
+        $r = $student->save();
+                
+        if($r){
+            $result = ['status' => true, 'message' => 'Delete successfully'];
+        }else{
+            $result = ['status' => false, 'message' => 'Delete fail'];
+        }
+        return response()->json($result);
+    }
+
     public function details(Request $request)
     {
         $model = LogHour::find($request->id);               

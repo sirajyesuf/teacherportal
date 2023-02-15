@@ -81,6 +81,7 @@ Route::post('/case-note/delete/com', 'CaseNoteController@deleteCom')->name('case
 Route::post('/lesson-hours/add', 'LessonLogController@add')->name('log.hours.add');
 Route::post('/lesson-hours/update', 'LessonLogController@update')->name('log.hours.update');
 Route::get('/lesson-hours/details', 'LessonLogController@details')->name('logHour.details');
+Route::post('/lesson-hours/delete', 'LessonLogController@delete')->name('logHour.delete');
 
 
 Route::post('/log-hours/add', 'LogHourController@add')->name('lesson.hours.add');

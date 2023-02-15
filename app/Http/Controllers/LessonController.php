@@ -24,7 +24,7 @@ class LessonController extends Controller
     public function index(Request $request)
     {
         $lessons = $user = '';
-        
+
         $q = '';
         if(isset($request->q))
             $q = $request->q;
@@ -48,7 +48,10 @@ class LessonController extends Controller
                     $tempName[$count] = $key1;
                     $tempValue[$count] = $value1;
                     $count++;
-                }                
+                }    
+
+                $trainer = $value->lessonHourLogs ? ($value->lessonHourLogs->user->first_name ?? $value->user->first_name) : $value->user->first_name;
+                $color = $value->lessonHourLogs ? ($value->lessonHourLogs->user->color ?? $value->user->first_name) : $value->user->color;
 
                 if($key % 2 == 0)
                     $html .= '<div class="row">';
@@ -69,7 +72,7 @@ class LessonController extends Controller
                                     <input type="text" class="datepicker1" id="'.$tempName[0].'_'.$value->id.'" name="'.$tempName[0].'" placeholder="'.normal_case($tempName[0]).':" value="'.$tempValue[0].'">
                                    <span>
                                         <label class="font-weight-bold">'.normal_case($tempName[1]).':</label>
-                                        <input type="text" name="'.$tempName[1].'" placeholder="'.normal_case($tempName[1]).':" value="'.$tempValue[1].'">
+                                        <input type="text" name="'.$tempName[1].'" placeholder="'.normal_case($tempName[1]).':" value="'.$trainer.'" style="background: '.$color.'" readonly>
                                    </span>
                                     <label class="font-weight-bold">'.normal_case($tempName[2]).':</label>
                                     <input type="number" step="0.25" name="'.$tempName[2].'" placeholder="'.normal_case($tempName[2]).':" value="'.$tempValue[2].'" required>                                            
@@ -175,7 +178,10 @@ class LessonController extends Controller
                     $tempName[$count] = $key1;
                     $tempValue[$count] = $value1;
                     $count++;
-                }                
+                }          
+
+                $trainer = $value->lessonHourLogs ? ($value->lessonHourLogs->user->first_name ?? $value->user->first_name) : $value->user->first_name;    
+                $color = $value->lessonHourLogs ? ($value->lessonHourLogs->user->color ?? $value->user->first_name) : $value->user->color;      
 
                 if($key % 2 == 0)
                     $html .= '<div class="row">';
@@ -197,7 +203,7 @@ class LessonController extends Controller
                                 </td>
                                 <td>
                                     <label class="font-weight-bold">'.normal_case($tempName[1]).':</label>
-                                    <input type="text" name="'.$tempName[1].'" placeholder="'.normal_case($tempName[1]).':" value="'.$tempValue[1].'">
+                                    <input type="text" name="'.$tempName[1].'" placeholder="'.normal_case($tempName[1]).':" value="'.$trainer.'" style="background: '.$color.'" readonly>
                                 </td>
                                 <td>
                                     <label class="font-weight-bold">'.normal_case($tempName[2]).':</label>
@@ -607,7 +613,7 @@ class LessonController extends Controller
             $lessonLog->student_id = $request->student_id;
             $lessonLog->hours = $request->duration;
             $lessonLog->lesson_date = Carbon::parse($dt)->format('Y-m-d');
-            $lessonLog->created_by = Auth::user()->id;
+            $lessonLog->created_by = $lessonLog->created_by ?? Auth::user()->id;
             $lessonLog->lesson_id = $lesson->id;
             $lessonLog->save();
             $rl = $lessonLog->save();
@@ -732,7 +738,7 @@ class LessonController extends Controller
             $lessonLog->student_id = $request->student_id;
             $lessonLog->hours = $request->duration;
             $lessonLog->lesson_date = Carbon::parse($dt)->format('Y-m-d');
-            $lessonLog->created_by = Auth::user()->id;
+            $lessonLog->created_by = $lessonLog->created_by ?? Auth::user()->id;
             $lessonLog->lesson_id = $lesson->id;
             $lessonLog->save();
             $rl = $lessonLog->save();

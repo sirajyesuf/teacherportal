@@ -40,6 +40,25 @@ $( document ).ready(function() {
         });
     })
 
+    $(document).on('click','.delete_add_hour',function(){
+        
+        var delDataId = $(this).attr('data-id');        
+
+        if(confirm('Are you sure want to delete?')){
+            $.ajax({
+                url: addHourDeleteUrl+'?id='+delDataId,
+                type: 'POST',
+                dataType: 'json',
+                success: function(result) {                            
+                    showMessage('success',result.message);
+                    setTimeout(function() {                    
+                        window.location.reload();                    
+                    }, 1500);
+                }
+            });
+        }
+    })
+
     $('body').on('click','.del-student',function(){
         var delId = $('#delete_id').val();
 

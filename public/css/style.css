@@ -775,7 +775,7 @@ ul {
     background: #FFFFFF;
     border: 1px solid #000000;
     padding: 17px 16px;
-    min-height: 385px;
+    max-height: 360px;
     margin-top: 21px;
 }
 
@@ -967,6 +967,7 @@ ul {
     font-weight: 400;
     font-size: 15px;
     color: #000000;
+    word-wrap: normal;
 }
 
 .student-right2prt {
@@ -1259,7 +1260,7 @@ li button{
     color: white;
     font-weight: 500;
 }
-.fa-edit:before{
+.fa-edit:before, .fa-trash:before {
     color: black;
 }
 .bg-none{
