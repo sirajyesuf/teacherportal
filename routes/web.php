@@ -33,6 +33,7 @@ Route::get('/user/{user}/edit', 'UserController@edit')->name('user.edit');
 Route::post('/user/{user}/update', 'UserController@update')->name('user.update');
 Route::get('/users', 'UserController@getlist')->name('user.getlist');
 Route::post('/user/delete', 'UserController@delete')->name('user.delete');
+Route::get('/getTrainerName', 'UserController@getTrainerName')->name('trainer.name');
 
 Route::get('/student/create', 'StudentController@create')->name('student.create');
 Route::post('/student/add', 'StudentController@add')->name('student.add');
@@ -85,6 +86,9 @@ Route::post('/lesson-hours/delete', 'LessonLogController@delete')->name('logHour
 
 
 Route::post('/log-hours/add', 'LogHourController@add')->name('lesson.hours.add');
+Route::post('/log-hours/update', 'LogHourController@update')->name('lesson.hours.update');
+Route::get('/log-hours/details', 'LogHourController@details')->name('lesson.hours.details');
+Route::post('/log-hours/delete', 'LogHourController@delete')->name('lesson.hours.delete');
 
 Route::post('/tls/add', 'TlsController@add')->name('tls.add');
 Route::get('/tls/details', 'TlsController@details')->name('tls.details');

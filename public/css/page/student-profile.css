@@ -22,3 +22,9 @@ td input{
 .delete-img{
     max-width: 22px!important;
 }
+.nav-tabs{
+    border-bottom: none!important;
+}
+.select2-container{
+    width: 100%!important;
+}

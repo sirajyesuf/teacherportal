@@ -108,7 +108,7 @@
             <div class="col-lg-5">
                 <div class="student-rightprt">
                     <div class="hour-part">
-                        <a id="add_hour_button" href="javascript:void(0)" data-toggle="modal" data-target="#add_lesson_log_modal"><img src="{{ asset('images/add-circle-outline.svg')}}" alt=""> Add Hours</a>
+                        {{-- <a id="add_hour_button" href="javascript:void(0)" data-toggle="modal" data-target="#add_lesson_log_modal"><img src="{{ asset('images/add-circle-outline.svg')}}" alt=""> Add Hours</a> --}}
                         <ul>
                             <li>
                                 <h2>{{ $hoursRemaining }}</h2>
@@ -122,12 +122,19 @@
                     </div>
 
                     <div class="hour-links">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">                            
                             <li class="nav-item">
-                                <a class="nav-link active" id="lesson_log-tab" data-toggle="tab" href="#lesson_log" role="tab" aria-controls="lesson_log" aria-selected="true">Lesson Log</a>
+                                <div class="nav-link active align-items-center d-flex" data-toggle="tab" href="#lesson_log" role="tab" aria-controls="lesson_log" aria-selected="true">
+                                    {{-- <a href="javascript:void(0)" class="add_lesson_log" data-toggle="modal" data-target="#add_hour_modal"><img src="{{ asset('images/circle-2.svg')}}" class="filter-black" alt="Add lesson log"></a> --}}
+                                    <a href="javascript:void(0)" class="mr-2 add-btn add_lesson_log align-items-center d-flex d-inline-flex justify-content-center" data-toggle="modal" data-target="#add_lesson_hour_modal"><img src="{{ asset('images/circle-2.svg')}}" class="add_log" alt="Add lesson log"></a>
+                                    <a class="" id="lesson_log-tab" >Lesson Log</a>
+                                </div>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="add_hour-tab" data-toggle="tab" href="#add_hour" role="tab" aria-controls="add_hour" aria-selected="false">Add Hours Log</a>
+                                <div class="nav-link align-items-center d-flex" data-toggle="tab" href="#add_hour" role="tab" aria-controls="add_hour" aria-selected="false">
+                                {{-- <a href="javascript:void(0)" class="add_hour_log" data-toggle="modal" data-target="#add_lesson_log_modal"><img src="{{ asset('images/circle-2.svg')}}" class="filter-black" alt="Add Hour"></a> --}}
+                                <a href="javascript:void(0)" class="mr-2 add-btn align-items-center d-flex d-inline-flex justify-content-center add_hour_log" data-toggle="modal" data-target="#add_hour_log_modal"><img src="{{ asset('images/circle-2.svg')}}" class="add_log" alt="Add Hour"></a>
+                                <a class="" id="add_hour-tab" >Add Hours Log</a>
                             </li>
                         </ul>
                     </div>
@@ -136,10 +143,18 @@
                         <div class="tab-pane fade show active" id="lesson_log" role="tabpanel" aria-labelledby="lesson_log-tab">
                             @if($completeHours)
                                 @foreach($completeHours as $k => $ch)
-                                <div class="hour-box">
-                                    <h4>{{ $ch->first_name }}</h4>
-                                    <span><img src="{{ asset('images/clock.svg')}}" alt=""> {{ $ch->hours}} hr</span>
-                                    <span><img src="{{ asset('images/alarm-black.svg')}}" alt=""> {{ profileDateFormate($ch->lesson_date) }}</span>
+                                <div class="hour-box {{($ch->lesson_id)?"":"lightgrey-bg"}}">
+                                    <div class="col-sm-3">
+                                        <h4>{{ $ch->first_name }}</h4>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span><img src="{{ asset('images/clock.svg')}}" alt=""> {{ $ch->hours}} hr</span>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <span><img src="{{ asset('images/alarm-black.svg')}}" alt=""> {{ profileDateFormate($ch->lesson_date) }}</span>
+                                    </div>
+                                    <a href="javascript:void(0)" data-id="{{ $ch->lhlId }}" class="edit_lesson_hour"><img src="{{ asset('images/edit.svg')}}" height="20"></a>
+                                    <a href="javascript:void(0)" data-type="{{$ch->lesson_id}}" data-id="{{ $ch->lhlId }}" class="delete_lesson_hour ml-1"><img src="{{ asset('images/delete.svg')}}" height="20"></a>
                                 </div>
                                 @endforeach
                                 {{ $completeHours->links() }}
@@ -159,8 +174,8 @@
                                     <div class="col-sm-5">
                                         <p>{{ $ah->notes }}</p>
                                     </div>
-                                    <a href="javascript:void(0)" data-id="{{ $ah->aId }}" class="edit_add_hour"><i class="fa fa-edit"></i></a>
-                                    <a href="javascript:void(0)" data-id="{{ $ah->aId }}" class="delete_add_hour ml-1"><i class="fa fa-trash"></i></a>
+                                    <a href="javascript:void(0)" data-id="{{ $ah->aId }}" class="edit_add_hour"><img src="{{ asset('images/edit.svg')}}" height="20"></a>
+                                    <a href="javascript:void(0)" data-id="{{ $ah->aId }}" class="delete_add_hour ml-1"><img src="{{ asset('images/delete.svg')}}" height="20"></a>
                                 </div>
                                 @endforeach                                    
                             {{ $addedHours->links() }}
@@ -201,7 +216,7 @@
 {{-- Ends : Delete Confirmation Modal --}}
 
 {{-- Start : for Add log hours --}}
-<div class="modal" tabindex="-1" role="dialog" id="add_lesson_log_modal">
+<div class="modal" tabindex="-1" role="dialog" id="add_hour_log_modal">
     <div class="modal-dialog" role="document">
         <form action="{{ route('log.hours.add') }}" method="post" id="log-hours-add-form">
         @csrf
@@ -235,8 +250,8 @@
 </div>
 {{-- Ends : for Add log hours --}}
 
-{{-- Start : for Add log hours --}}
-<div class="modal" tabindex="-1" role="dialog" id="edit_lesson_log_modal">
+{{-- Start : for edit log hours --}}
+<div class="modal" tabindex="-1" role="dialog" id="edit_hour_log_modal">
     <div class="modal-dialog" role="document">
         <form action="{{ route('log.hours.update') }}" method="post" id="log-hours-update-form">
         @csrf
@@ -251,12 +266,12 @@
             <div class="modal-body">                                
                 <div class="form-group">
                     <label for="add_lesson_hour" class="col-form-label">Hours to Add:</label>
-                    <input type="number" step="0.5" name="add_lesson_hour" class="form-control" id="edit_lesson_hour">
+                    <input type="number" step="0.5" name="add_lesson_hour" class="form-control" id="edit_add_hour">
                     <span class="error"></span>
                 </div>
                 <div class="form-group">
                     <label for="message-text" class="col-form-label">Notes:</label>
-                    <input type="text" step="0.25" name="lesson_note" class="form-control" id="edit_lesson_note">
+                    <input type="text" step="0.25" name="lesson_note" class="form-control" id="edit_note">
                     <span class="error"></span>
                 </div>
             </div>
@@ -268,27 +283,50 @@
         </form>
     </div>
 </div>
-{{-- Ends : for Add log hours --}}
+{{-- Ends : for edit log hours --}}
 
 {{-- Start : for Add lesson log hours --}}
-<div class="modal" tabindex="-1" role="dialog" id="add_hour_modal">
+<div class="modal" tabindex="-1" role="dialog" id="add_lesson_hour_modal">
     <div class="modal-dialog" role="document">
         <form action="{{ route('lesson.hours.add') }}" method="post" id="hours-completed-log-form">
         @csrf
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add Hours</h5>
+                <h5 class="modal-title">Add Lesson Log</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">                
-                <input type="hidden" name="add_log_hours_id" value="{{ $student->id }}">
-                <div class="form-group">
-                    <label for="add_log_hour" class="col-form-label">Hours to Add:</label>
-                    <input type="number" step="0.25" name="add_log_hour" class="form-control" id="add_log_hour">
-                    <span class="error"></span>
-                </div>                
+                <input type="hidden" name="add_log_student_id" value="{{ $student->id }}">
+                <input type="hidden" name="duplicate" id="duplicate" value="0">
+                <div class="row">
+                    <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="trainer_name" class="col-form-label">Trainer Name:</label>
+                        <select id="trainer_name" name="name" class="form-control"></select>                    
+                        <span class="error"></span>
+                    </div>          
+                    </div>
+                </div>      
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="add_log_hour" class="col-form-label">Hours</label>
+                            <input type="number" step="0.25" name="add_log_hour" class="form-control" id="add_log_hour">
+                            <span class="error"></span>
+                        </div>           
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="lesson_date" class="col-form-label">Date</label>
+                            <input type="text" name="lesson_date" class="form-control datePicker" id="lesson_date">
+                            <span class="error"></span>
+                        </div>           
+                    </div>
+                </div>     
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-save">Save</button>
@@ -299,6 +337,59 @@
     </div>
 </div>
 {{-- Ends : for Add lesson log hours --}}
+
+{{-- Start : for Edit lesson log hours --}}
+<div class="modal" tabindex="-1" role="dialog" id="edit_lesson_hour_modal">
+    <div class="modal-dialog" role="document">
+        <form action="{{ route('lesson.hours.update') }}" method="post" id="update-lesson-log-form">
+        @csrf
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Lesson Log</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">                
+                <input type="hidden" name="edit_lesson_log_id" id="edit_lesson_log_id" value="">
+                <input type="hidden" name="duplicate" id="edit_duplicate" value="0">
+                <div class="row">
+                    <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="edit_trainer_name" class="col-form-label">Trainer Name:</label>
+                        <select id="edit_trainer_name" name="name" class="form-control"></select>                    
+                        <span class="error"></span>
+                    </div>          
+                    </div>
+                </div>      
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="edit_log_hour" class="col-form-label">Hours</label>
+                            <input type="number" step="0.25" name="add_log_hour" class="form-control" id="edit_lesson_log_hour">
+                            <span class="error"></span>
+                        </div>           
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="edit_lesson_date" class="col-form-label">Date</label>
+                            <input type="text" name="lesson_date" class="form-control datePicker" id="edit_lesson_date">
+                            <span class="error"></span>
+                        </div>           
+                    </div>
+                </div>     
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-save">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+{{-- Ends : for Edit lesson log hours --}}
 
 {{-- Start : Edit Tls --}}
 <div class="modal" tabindex="-1" role="dialog" id="edit_tls_modal">
@@ -358,6 +449,7 @@
         var addLogHoursUrl = $('#log-hours-add-form').attr('action');
         var updateLogHoursUrl = $('#log-hours-update-form').attr('action');
         var hoursCompletedLogUrl = $('#hours-completed-log-form').attr('action');
+        var hoursCompletedLogUpdateUrl = $('#update-lesson-log-form').attr('action');
         var changeDateUrl = "{{ route('appointment.update') }}";
         var level = "{{ Session::get('message.level') }}";
         if(level)
@@ -375,9 +467,12 @@
     <script type="text/javascript">
         var tlsDetailUrl = "{{ route('tls.details')}}";
         var logHourDetailUrl = "{{ route('logHour.details')}}";
+        var lessonHourDetailUrl = "{{ route('lesson.hours.details')}}";
+        var getTrainerName = "{{ route('trainer.name')}}"
         var tlsUpdateUrl = "{{ route('tls.update')}}";
         var tlsDeleteUrl = "{{ route('tls.delete')}}";
         var addHourDeleteUrl = "{{ route('logHour.delete')}}";
+        var lessonLogDeleteUrl = "{{ route('lesson.hours.delete')}}";
         var tlsAddUrl = $('tls_form').attr('action');
         var tlsMultiAddUrl = "{{ route('tls.multiAdd') }}";
         var deleteUrl = "{{ route('student.delete') }}";

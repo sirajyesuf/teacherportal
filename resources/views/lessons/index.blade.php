@@ -68,91 +68,12 @@
             <ul>
                 <li><a href="#" id="active">SI/FT</a></li>
                 <li><a href="{{ route('lesson-bt',$user->id)}}">BT/Lang</a></li>
-                <li><a href="{{ route('lesson-im',$user->id) }}">IM</a></li>
-                
+                <li><a href="{{ route('lesson-im',$user->id) }}">IM</a></li>                
             </ul>
         </div>
 
         <div class="lesson-main">
             {!! $html !!}
-            {{-- <div class="row">
-                <div class="col-md-6">
-                    <div class="lesson-table pr-xl-4 pr-lg-2">
-                        <div class="save-btn">
-                            <a href="#"><img src="images/download.svg" alt=""> Save</a>
-                        </div>
-                        <table>
-                            <tr>
-                                <td>
-                                    Trainer: John Tan
-                                   <span>Date:</span>
-                                    Lesson length: 1.5 hr
-                                </td>
-                                <td>Objective of lesson:</td>
-                                <td>Massage:</td>
-                            </tr>
-                            <tr>
-                                <td>Reflex: </td>
-                                <td>Tactile: </td>
-                                <td>Vestibular:</td>
-                            </tr>
-                            <tr>
-                                <td>Oral:</td>
-                                <td>Kinestesia: </td>
-                                <td>Muscle tone:</td>
-                            </tr>
-                            <tr>
-                                <td>Proprioception:</td>
-                                <td>Vision:</td>
-                                <td>Emotions:</td>
-                            </tr>
-                            <tr>
-                                <td>Others: </td>
-                                <td>Plan for next session:</td>
-                                <td>Parent feedback:</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-md-6"> 
-                    <div class="lesson-table pl-xl-4 pl-lg-2">
-                        <div class="save-btn">
-                            <a href="#"><img src="images/download.svg" alt=""> Save</a>
-                        </div>
-                        <table>
-                            <tr>
-                                <td>
-                                    Trainer: John Tan
-                                   <span>Date:</span>
-                                    Lesson length: 1.5 hr
-                                </td>
-                                <td>Objective of lesson:</td>
-                                <td>Massage:</td>
-                            </tr>
-                            <tr>
-                                <td>Reflex: </td>
-                                <td>Tactile: </td>
-                                <td>Vestibular:</td>
-                            </tr>
-                            <tr>
-                                <td>Oral:</td>
-                                <td>Kinestesia: </td>
-                                <td>Muscle tone:</td>
-                            </tr>
-                            <tr>
-                                <td>Proprioception:</td>
-                                <td>Vision:</td>
-                                <td>Emotions:</td>
-                            </tr>
-                            <tr>
-                                <td>Others: </td>
-                                <td>Plan for next session:</td>
-                                <td>Parent feedback:</td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div> --}}
         </div>                             
     </div>            
 </main>
