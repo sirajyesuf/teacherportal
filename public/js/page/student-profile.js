@@ -24,21 +24,74 @@ $( document ).ready(function() {
             dataType: 'json',
             success: function(result) {
                 if(result.status){                            
-                    $('#edit_lesson_hour').val(result.detail.hours)
-                    $('#edit_lesson_note').val(result.detail.notes)
+                    $('#edit_add_hour').val(result.detail.hours)
+                    $('#edit_note').val(result.detail.notes)
 
-                    $('#edit_lesson_log_modal').modal('show');
+                    $('#edit_hour_log_modal').modal('show');
 
                 }else{                    
                     showMessage('error',result.message);
                     setTimeout(function() {
-                        $('#edit_lesson_log_modal').modal('hide');
+                        $('#edit_hour_log_modal').modal('hide');
                     }, 1500);
                     $('.error').html("");
                 }
             }
         });
     })
+
+    $(document).on('click','.edit_lesson_hour',function(){
+        
+        var dataId = $(this).attr('data-id');
+
+        $('#edit_lesson_log_id').val(dataId);
+
+        $.ajax({
+            url: lessonHourDetailUrl+'?id='+dataId,
+            type: 'GET',
+            dataType: 'json',
+            success: function(result) {
+                if(result.status){                            
+                    $('#edit_lesson_log_hour').val(result.detail.hours);
+                    $('#edit_lesson_date').val(result.date);
+
+                    var $newOption = $("<option selected='selected'></option>").val(result.id).text( result.username); 
+                    $("#edit_trainer_name").append($newOption).trigger('change');                    
+
+                    $('#edit_lesson_hour_modal').modal('show');
+
+                }else{                    
+                    showMessage('error',result.message);
+                    setTimeout(function() {
+                        $('#edit_lesson_hour_modal').modal('hide');
+                    }, 1500);
+                    $('.error').html("");
+                }
+            },
+            error: function(error) {                         
+                showMessage('error',error.responseJSON.message);                
+            }
+        });
+    })
+
+    $("#trainer_name,#edit_trainer_name").select2({    
+        dropdownCssClass: "category-member",
+        minimumInputLength: 2,
+        ajax: {
+        url: getTrainerName,
+        data: function (params) {
+            var query = {
+                search: params.term,        
+            }      
+            return query;
+            },
+            processResults: function (data) {
+                return {
+                    results: data
+                };
+            }
+        }    
+    });
 
     $(document).on('click','.delete_add_hour',function(){
         
@@ -54,6 +107,35 @@ $( document ).ready(function() {
                     setTimeout(function() {                    
                         window.location.reload();                    
                     }, 1500);
+                }
+            });
+        }
+    })
+
+    $(document).on('click','.delete_lesson_hour',function(){
+        
+        var delDataId = $(this).attr('data-id');    
+        var dataType = $(this).attr('data-type');
+        if(dataType)
+        {
+            $msg = 'Do You want to delete this item? there is a lesson note created.'
+        }else{
+            $msg = 'Do You want to delete this item?'
+        }    
+        
+        if(confirm($msg)){
+            $.ajax({
+                url: lessonLogDeleteUrl+'?id='+delDataId,
+                type: 'POST',
+                dataType: 'json',
+                success: function(result) {                            
+                    showMessage('success',result.message);
+                    setTimeout(function() {                    
+                        window.location.reload();                    
+                    }, 1500);
+                },
+                error: function(error) {                            
+                    showMessage('error',error.responseJSON.message);                    
                 }
             });
         }
@@ -125,9 +207,9 @@ $( document ).ready(function() {
         $('#appointment_date').datepicker("show");                
     });
 
-    $('#add_hour-tab').on('click',function(){
-        $('#add_hour_button').attr('data-target','#add_lesson_log_modal');
-    });
+    // $('#add_hour-tab').on('click',function(){
+    //     $('#add_hour_button').attr('data-target','#add_lesson_log_modal');
+    // });
 
     // $('#lesson_log-tab').on('click',function(){
     //     $('#add_hour_button').attr('data-target','#add_hour_modal');
@@ -150,7 +232,7 @@ $( document ).ready(function() {
                 if (result.status == true) {
                     $this[0].reset();
                     showMessage('success',result.message);
-                    $('#add_lesson_log_modal').modal('hide');
+                    $('#add_hour_log_modal').modal('hide');
                     setTimeout(function() {
                         // show_toast(result.message, 'success');
                         location.reload();
@@ -193,7 +275,7 @@ $( document ).ready(function() {
                 if (result.status == true) {
                     $this[0].reset();
                     showMessage('success',result.message);
-                    $('#edit_lesson_log_modal').modal('hide');
+                    $('#edit_hour_log_modal').modal('hide');
                     setTimeout(function() {
                         // show_toast(result.message, 'success');
                         location.reload();
@@ -234,9 +316,70 @@ $( document ).ready(function() {
             success: function(result) {
                 $($this).find('button[type="submit"]').prop('disabled', false);
                 if (result.status == true) {
+                    if (result.match) {
+                        if (confirm('attendance has been created at dashboard, would you like to overwrite this?')) {
+                            $('#duplicate').val(1);
+                        // Override values and submit form
+                        $('#hours-completed-log-form').submit();
+                      }
+                    $('#duplicate').val(0);
+                    return;
+                    }
                     $this[0].reset();
                     showMessage('success',result.message);
-                    $('#add_hour_modal').modal('hide');
+                    $('#add_lesson_hour_modal').modal('hide');
+                    setTimeout(function() {
+                        // show_toast(result.message, 'success');
+                        location.reload();
+                    }, 2500);
+
+                    $('.error').html("");                        
+
+                } else {
+                    first_input = "";
+                    $('.error').html("");
+                    $.each(result.message, function(key) {
+                        if(first_input=="") first_input=key;
+                        $('#'+key).closest('.form-group').find('.error').html(result.message[key]);
+                    });
+                    $('#hours-completed-log-form').find("#"+first_input).focus();
+                }
+            },
+            error: function(error) {
+                $($this).find('button[type="submit"]').prop('disabled', false);
+                alert('Something went wrong!', 'error');
+                // location.reload();
+            }
+        });
+    });
+
+    // completed hours update form submit
+    $('#update-lesson-log-form').submit(function(event) {
+        event.preventDefault();        
+        var $this = $(this);
+        $.ajax({
+            url: hoursCompletedLogUpdateUrl,
+            type: 'POST',
+            data: $('#update-lesson-log-form').serialize(),
+            dataType: 'json',
+            beforeSend: function() {
+                $($this).find('button[type="submit"]').prop('disabled', true);
+            },
+            success: function(result) {
+                $($this).find('button[type="submit"]').prop('disabled', false);
+                if (result.status == true) {
+                    if (result.match) {
+                        if (confirm('attendance has been created at dashboard, would you like to overwrite this?')) {
+                            $('#edit_duplicate').val(1);
+                        // Override values and submit form
+                        $('#update-lesson-log-form').submit();
+                      }
+                    $('#edit_duplicate').val(0);
+                    return;
+                    }
+                    $this[0].reset();
+                    showMessage('success',result.message);
+                    $('#edit_lesson_hour_modal').modal('hide');
                     setTimeout(function() {
                         // show_toast(result.message, 'success');
                         location.reload();

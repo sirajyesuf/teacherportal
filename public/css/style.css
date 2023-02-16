@@ -1139,7 +1139,8 @@ li button{
     filter: invert(61%) sepia(98%) saturate(1393%) hue-rotate(359deg) brightness(101%) contrast(107%);
 }
 .filter-black{
-    filter: invert(0%) sepia(79%) saturate(7460%) hue-rotate(58deg) brightness(87%) contrast(93%);
+/*    filter: invert(0%) sepia(79%) saturate(7460%) hue-rotate(58deg) brightness(87%) contrast(93%);*/
+    filter: brightness(0) saturate(100%)
 }
 .filter-red{
     filter: brightness(0) saturate(100%) invert(29%) sepia(31%) saturate(2483%) hue-rotate(323deg) brightness(115%) contrast(110%);
@@ -1228,7 +1229,7 @@ li button{
     background: darkblue!important;
 }
 .grey-bg {
-    background: #7e878d!important;
+    background: #7e878d!important;    
 }
 .newblue-bg{
     background: #35aae0!important;
@@ -1265,4 +1266,20 @@ li button{
 }
 .bg-none{
     background: none!important;
+}
+.add-btn{
+    background: black;
+    height: 26px;
+    width: 26px;
+    border-radius: 5px;    
+}
+.add_log{
+/*    padding: 1px 1px 10px;*/
+}
+div.nav-link.active a {
+    color: #000 !important;
+    opacity: 1;
+}
+div.nav-link{
+    cursor: pointer;    
 }

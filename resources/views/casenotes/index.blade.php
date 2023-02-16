@@ -123,7 +123,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="5">
-                                            <textarea name="description" rows="45" id="description" class="ckeditor">{{ $obj->description }}</textarea>
+                                            <textarea name="description" rows="40" id="description" class="ckeditor">{{ $obj->description }}</textarea>
                                         </td>
                                     </tr>
                                 </table>
@@ -161,7 +161,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="3">
-                                            <textarea name="description" rows="45" id="description" class="ckeditor">{{ $obj->description }}</textarea>
+                                            <textarea name="description" rows="5" id="description" class="ckeditor">{{ $obj->description }}</textarea>
                                         </td>
                                     </tr>
                                 </table>

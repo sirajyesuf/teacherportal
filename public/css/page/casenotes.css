@@ -1,5 +1,6 @@
 .cke_contents{
-  min-height: 500px!important;
+/*  min-height: 500px!important;*/
+  max-height: 302px!important;
 }
 
 ::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
@@ -85,5 +86,6 @@ img.del-les-img{
 }
 
 #cke_description, #cke_description .cke_contents,#cke_description .cke_reset {
-    max-height: 250px!important;
+/*    max-height: 250px!important;*/
+    max-height: 302px!important;
 }

@@ -143,7 +143,7 @@ class StudentController extends Controller
                        ->leftjoin('users','lesson_hour_logs.created_by','users.id')
                        ->where('lesson_hour_logs.deleted_at',null)
                        ->where('lesson_hour_logs.student_id',$student->id)
-                       ->select('lesson_hour_logs.hours','lesson_hour_logs.created_at','lesson_hour_logs.lesson_date','users.first_name')
+                       ->select('lesson_hour_logs.id as lhlId','lesson_hour_logs.lesson_id','lesson_hour_logs.hours','lesson_hour_logs.created_at','lesson_hour_logs.lesson_date','users.first_name')
                        ->orderBy('lesson_hour_logs.lesson_date','desc')
                        ->paginate(5,['*'], 'complete');
 

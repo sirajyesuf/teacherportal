@@ -29,6 +29,8 @@
         <!-- DateTime Picker CSS -->
         <link href="{{ asset('css/vendor/bootstrap-datetimepicker.css') }}" id="theme" rel="stylesheet">   
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.6.0/css/all.min.css" integrity="sha512-ykRBEJhyZ+B/BIJcBuOyUoIxh0OfdICfHPnPfBy7eIiyJv536ojTCsgX8aqrLQ9VJZHGz4tvYyzOM0lkgmQZGw==" crossorigin="anonymous" referrerpolicy="no-referrer" />   
+        <!-- Select 2 -->
+        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         
         <!-- Responsive CSS -->
         <link href="{{ asset('css/responsive.css') }}?{{time()}}" rel="stylesheet">        
@@ -61,6 +63,9 @@
         <!-- Bootstrap jQuery -->
         <script src="{{ asset('js/bootstrap.js') }}"></script>
         <script src="{{ asset('js/vendor/jquery.toast.js') }}"></script>
+
+        <!-- Select 2 -->
+        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         
         <!-- Custom jQuery -->
         

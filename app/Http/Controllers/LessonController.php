@@ -56,10 +56,11 @@ class LessonController extends Controller
                 if($key % 2 == 0)
                     $html .= '<div class="row">';
                 $html .= '<div class="col-md-6">';
-                $html .= '<form action="'.route("lesson.update").'" method="POST">';
+                $html .= '<form action="'.route("lesson.update").'" method="POST" class="forms">';
                 $html .= '<input type="hidden" name="_token" value="' . csrf_token() . '">';
                 $html .= '<input type="hidden" name="student_id" value="'.$request->id.'" />';
                 $html .= '<input type="hidden" name="update_id" value="'.$value->id.'" />';
+                $html .= '<input type="hidden" name="duplicate" class="duplicate" value="0" />';
                 $html .= '<div class="lesson-table pr-lg-2" id="sift'.$value->id.'">';
                 $html .= '<div class="save-btn">';
                 $html .= '<button type="submit" class="orange-bg"><img src="'.asset('images/download2.png').'" height="20"> Save</button>';
@@ -186,10 +187,11 @@ class LessonController extends Controller
                 if($key % 2 == 0)
                     $html .= '<div class="row">';
                 $html .= '<div class="col-md-6">';
-                $html .= '<form action="'.route("lesson-bt.update").'" method="POST">';
+                $html .= '<form action="'.route("lesson-bt.update").'" method="POST" class="forms">';
                 $html .= '<input type="hidden" name="_token" value="' . csrf_token() . '">';
                 $html .= '<input type="hidden" name="student_id" value="'.$request->id.'" />';
                 $html .= '<input type="hidden" name="update_id" value="'.$value->id.'" />';
+                $html .= '<input type="hidden" name="duplicate" class="duplicate" value="0" />';
                 $html .= '<div class="lesson-table pl-lg-2" id="btlang'.$value->id.'">';
                 $html .= '<div class="save-btn">';
                 $html .= '<button type="submit" class="orange-bg"><img src="'.asset('images/download2.png').'" height="20"> Save</button>';
@@ -543,6 +545,20 @@ class LessonController extends Controller
         if(isset($request->student_id) && isset($request->update_id))
         {
             $lesson = Lesson::find($request->update_id);
+
+            // Convert date to db date formate
+            $lesson_date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
+
+            $lessonDup = Lesson::where('id','!=',$request->update_id)->where('template_id',$lesson->template_id)->where('lesson_date',$lesson_date)->where('deleted_at',null)->first();
+
+            if(!$request->duplicate)
+            {                    
+                if($lessonDup)
+                {
+                    $result = ['status' => true, 'match' => 1, 'data' => []];
+                    return response()->json($result);
+                }
+            }
             
             $temps = json_decode($lesson->lesson_json,true);
             
@@ -646,14 +662,18 @@ class LessonController extends Controller
             
             if($rl)
             {            
-                session(['lessonUpdated' => 'form saved Successfully']);
-                return redirect()->route('lesson',$request->student_id);
+                // session(['lessonUpdated' => 'form saved Successfully']);
+                // return redirect()->route('lesson',$request->student_id);
+                $result = ['status' => true, 'message' => 'form saved Successfully', 'data' => []];
+                return response()->json($result);
             }
             else
             {
-                toastr()->error('An error has occurred please try again later.');
-                return redirect()->route('lesson',$request->student_id);
-                // return back();
+                // toastr()->error('An error has occurred please try again later.');
+                // return redirect()->route('lesson',$request->student_id);
+                $result = ['status' => false, 'message' => 'An error has occurred please try again later.', 'data' => []];
+                return response()->json($result);
+                
             }
 
         }
@@ -668,6 +688,20 @@ class LessonController extends Controller
         if(isset($request->student_id) && isset($request->update_id))
         {
             $lesson = Lesson::find($request->update_id);
+
+            // Convert date to db date formate
+            $lesson_date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
+
+            $lessonDup = Lesson::where('id','!=',$request->update_id)->where('template_id',$lesson->template_id)->where('lesson_date',$lesson_date)->where('deleted_at',null)->first();
+
+            if(!$request->duplicate)
+            {                    
+                if($lessonDup)
+                {
+                    $result = ['status' => true, 'match' => 1, 'data' => []];
+                    return response()->json($result);
+                }
+            }
             
             $temps = json_decode($lesson->lesson_json,true);
             
@@ -771,13 +805,17 @@ class LessonController extends Controller
             
             if($rl)
             {            
-                session(['lessonUpdated' => 'form saved Successfully']);
-                return redirect()->route('lesson-bt',$request->student_id);
+                // session(['lessonUpdated' => 'form saved Successfully']);
+                // return redirect()->route('lesson-bt',$request->student_id);
+                $result = ['status' => true, 'message' => 'form saved Successfully', 'data' => []];
+                return response()->json($result);
             }
             else
             {
-                toastr()->error('An error has occurred please try again later.');
-                return redirect()->route('lesson-bt',$request->student_id);
+                // toastr()->error('An error has occurred please try again later.');
+                // return redirect()->route('lesson-bt',$request->student_id);
+                $result = ['status' => false, 'message' => 'An error has occurred please try again later.', 'data' => []];
+                return response()->json($result);
                 // return back();
             }
 
@@ -883,9 +921,8 @@ class LessonController extends Controller
         $model->updated_by = Auth::user()->id;
         $model->deleted_at = Carbon::now();
 
-        // delete related lesson hours log
-        $lg = LessonLog::where('lesson_id',$request->id);
-        $lg->delete();
+        // udpate related lesson hours log
+        $lg = LessonLog::where('lesson_id',$request->id)->update(['lesson_id' => null]);        
 
         if($model->save()){
             $result = ['status' => true, 'message' => 'Delete successfully'];

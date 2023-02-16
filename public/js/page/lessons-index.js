@@ -54,6 +54,57 @@ $( document ).ready(function() {
         });
     });
 
+    // add click event listener to each submit button
+    $('.forms button[type="submit"]').on('click', function(event) {
+        // prevent form from submitting automatically
+        event.preventDefault();
+        // get the form element associated with the clicked button
+        var form = $(this).closest('form');
+
+        // Ckeditor read data
+        for (instance in CKEDITOR.instances) {
+            CKEDITOR.instances[instance].updateElement();
+        }
+        // serialize the form data
+        var formData = form.serialize();
+        
+        $.ajax({
+            url: form.attr('action'),
+            type: form.attr('method'),
+            data: formData,
+            context: form,            
+            success: function(result) {
+                if (result.status == true) {       
+                    if (result.match) {
+                        if (confirm('attendance has been created at dashboard, would you like to keep this?')) {
+                            form.find('.duplicate').val(1);
+                            // Override values and submit form
+                            form.find('button[type="submit"]').click();                            
+                        }
+                        form.find('.duplicate').val(0);
+                        return;
+                    }             
+                    showMessage('success',result.message);   
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1500);                                                        
+                } else {
+                    showMessage('error',result.message);
+                }
+            },
+            error: function(error) {                
+                if(error.responseJSON.errors.duration.length)
+                {
+                    showMessage('error',error.responseJSON.errors.duration[0]);
+                    return;
+                }
+                showMessage('error',error.responseJSON.message);
+            }
+        });
+    });
+
+
+
     if(errorLesson)
     {
         showMessage('error',errorLesson);

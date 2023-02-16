@@ -119,5 +119,32 @@ class UserController extends Controller
             return json_encode($userArray);            
         }
     }
+
+    public function getTrainerName(Request $request)
+    {
+        $search = $request->search;
+
+        $items = DB::table('users')
+            ->where('users.deleted_at',null)
+            ->where(function ($query) use ($search) {
+                $query->where('users.first_name', 'LIKE', '%'.$search.'%')
+                      ->orWhere('users.last_name', 'LIKE', '%'.$search.'%');
+            })
+            ->select('users.id',DB::raw("CONCAT(COALESCE(users.first_name, ''), ' ', COALESCE(users.last_name, '')) AS fullname"))
+            ->get();        
+
+        if($items)
+        {
+            $response = array();
+                foreach($items as $key => $item){
+                    
+                    $response[$key] = array(
+                        "id"=>$item->id,
+                        "text"=>$item->fullname
+                    );
+            }
+            return response()->json($response); 
+        }
+    }
     
 }
