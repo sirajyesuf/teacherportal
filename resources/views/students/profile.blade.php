@@ -98,17 +98,13 @@
                         <div class="action text-right">                            
                             <button type="button" class="btn btn-sm btn-save mt-1" id="add_tls">+</button>
                             <button type="button" class="btn btn-sm btn-save mt-1" id="add_tls_13">+13</button>
-                            {{-- <a href="javascript:void(0)" id="add_tls"><img src="{{ asset('images/plus.svg')}}" alt=""></a> --}}
-                            {{-- <a href="javascript:void(0)" id="add_tls_13"><img src="{{ asset('images/add13.png')}}" alt=""></a> --}}
-                            {{-- <button type="button" class="btn btn-sm btn-primary" id="add_13">Add Rows</button> --}}
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-5">
                 <div class="student-rightprt">
-                    <div class="hour-part">
-                        {{-- <a id="add_hour_button" href="javascript:void(0)" data-toggle="modal" data-target="#add_lesson_log_modal"><img src="{{ asset('images/add-circle-outline.svg')}}" alt=""> Add Hours</a> --}}
+                    <div class="hour-part">                        
                         <ul>
                             <li>
                                 <h2>{{ $hoursRemaining }}</h2>
@@ -124,15 +120,13 @@
                     <div class="hour-links">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">                            
                             <li class="nav-item">
-                                <div class="nav-link active align-items-center d-flex" data-toggle="tab" href="#lesson_log" role="tab" aria-controls="lesson_log" aria-selected="true">
-                                    {{-- <a href="javascript:void(0)" class="add_lesson_log" data-toggle="modal" data-target="#add_hour_modal"><img src="{{ asset('images/circle-2.svg')}}" class="filter-black" alt="Add lesson log"></a> --}}
+                                <div class="nav-link active align-items-center d-flex" data-toggle="tab" href="#lesson_log" role="tab" aria-controls="lesson_log" aria-selected="true">                                    
                                     <a href="javascript:void(0)" class="mr-2 add-btn add_lesson_log align-items-center d-flex d-inline-flex justify-content-center" data-toggle="modal" data-target="#add_lesson_hour_modal"><img src="{{ asset('images/circle-2.svg')}}" class="add_log" alt="Add lesson log"></a>
                                     <a class="" id="lesson_log-tab" >Lesson Log</a>
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <div class="nav-link align-items-center d-flex" data-toggle="tab" href="#add_hour" role="tab" aria-controls="add_hour" aria-selected="false">
-                                {{-- <a href="javascript:void(0)" class="add_hour_log" data-toggle="modal" data-target="#add_lesson_log_modal"><img src="{{ asset('images/circle-2.svg')}}" class="filter-black" alt="Add Hour"></a> --}}
+                                <div class="nav-link align-items-center d-flex" data-toggle="tab" href="#add_hour" role="tab" aria-controls="add_hour" aria-selected="false">                                
                                 <a href="javascript:void(0)" class="mr-2 add-btn align-items-center d-flex d-inline-flex justify-content-center add_hour_log" data-toggle="modal" data-target="#add_hour_log_modal"><img src="{{ asset('images/circle-2.svg')}}" class="add_log" alt="Add Hour"></a>
                                 <a class="" id="add_hour-tab" >Add Hours Log</a>
                             </li>

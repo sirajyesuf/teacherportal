@@ -129,9 +129,6 @@ class TlsController extends Controller
 
     public function multiAdd(Request $request)
     {
-        // echo "<pre>";
-        // print_r($request->all());
-        // die;
         if($request->tpl_student_id)
         {
             if(is_array($request->date))

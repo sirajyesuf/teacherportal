@@ -20,8 +20,7 @@
                             <div class="lesson-table pr-lg-2">
                                 <div class="temp-ttl">
                                 	<input type="hidden" id="student_id" name="student_id" value="{{$student->id}}">
-                                	<input type="radio" id="template_1" name="template_id" value="1">
-                                    {{-- <label for="template_1">Template 1</label> --}}
+                                	<input type="radio" id="template_1" name="template_id" value="1">                                    
                                     <label for="template_1" class="option option-1 orange-bg">
 								    	<div class="dot"></div>
 								     	<span class="bold-white">SI/FT</span>
@@ -38,10 +37,6 @@
                                            </span>
                                             <label>Duration:</label>
                                             <input type="text">
-                                        
-                                            {{-- Date: 
-                                            <span>Trainer:</span>
-                                            Duration:  --}}
                                         </td>
                                         <td>Vestibular:</td>
                                         <td>Proprioception:</td>
@@ -67,12 +62,10 @@
                                 </table>
                             </div>
                         </div>
-                        <div class="col-md-6"> 
-                            {{-- <div class="lesson-table pl-xl-5 pl-lg-2"> --}}
+                        <div class="col-md-6">                             
                             <div class="lesson-table pl-lg-2">
                                 <div class="temp-ttl">
                                 	<input type="radio" id="template_2" name="template_id" value="2">
-                                    {{-- <label for="template_2">Template 2</label> --}}
                                     <label for="template_2" class="option option-2 orange-bg">
 								    	<div class="dot"></div>
 								     	<span class="bold-white">BT/Lang</span>
@@ -94,7 +87,6 @@
                             <div class="lesson-table pl-lg-2">
                                 <div class="temp-ttl">
                                     <input type="radio" id="template_3" name="template_id" value="3">
-                                    {{-- <label for="template_2">Template 2</label> --}}
                                     <label for="template_3" class="option option-3 orange-bg">
                                         <div class="dot"></div>
                                         <span class="bold-white">IM</span>
@@ -163,7 +155,6 @@
                                     </tr>
                                 </table>
                             </div>
-
                         </div>
                     </div>
                 </div>                             

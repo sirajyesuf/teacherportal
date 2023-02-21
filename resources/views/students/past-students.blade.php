@@ -118,7 +118,6 @@
                                 <div class="col-md-4 pr-0 d-flex align-items-center">
                                     <div class="student-cnt">
                                         <a href="{{route('student.profile',$user->id)}}}"><h4>{{ $user->name }}</h4></a>
-                                        {{-- <p><img src="{{ asset('images/clock.svg')}}" alt=""> {{ decimalToHHmm($user->remaining_hours) }}</p> --}}
                                     </div>
                                 </div>
                                 @php 
@@ -162,7 +161,6 @@
                                 <div class="col-md-4 pr-0 d-flex align-items-center">
                                     <div class="student-cnt">
                                         <a href="{{route('student.profile',$user->id)}}}"><h4>{{ $user->name }}</h4></a>
-                                        {{-- <p><img src="images/clock.svg" alt=""> {{ decimalToHHmm($user->remaining_hours) }}</p> --}}
                                     </div>
                                 </div>
                                 @php 
@@ -207,7 +205,6 @@
                                 <div class="col-md-4 pr-0 d-flex align-items-center">
                                     <div class="student-cnt">
                                         <a href="{{route('student.profile',$user->id)}}}"><h4>{{ $user->name }}</h4></a>
-                                        {{-- <p><img src="images/clock.svg" alt=""> {{ decimalToHHmm($user->remaining_hours) }}</p> --}}
                                     </div>
                                 </div>
                                 @php 

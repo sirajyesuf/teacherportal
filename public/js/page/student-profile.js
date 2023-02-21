@@ -177,13 +177,11 @@ $( document ).ready(function() {
                     success: function(result) {
                         if (result.status == true) {
                             var dt = '';
-                            dt += moment(selectedDate).format('DD MMM YY');
-                            // console.log(dt);
+                            dt += moment(selectedDate).format('DD MMM YY');                            
                             var t = $( "a[data-id^="+userId+"]" ).html( dt );
-                            // toastr.success('date update success');
-                            // console.log(t);
+                            
                             showMessage('success','Date update success');
-                            // $('.jq-toast-wrap').remove();
+                            
                             setTimeout(function() {
                                 window.location.reload(true);                                
                                 
@@ -207,14 +205,6 @@ $( document ).ready(function() {
         $('#appointment_date').datepicker("show");                
     });
 
-    // $('#add_hour-tab').on('click',function(){
-    //     $('#add_hour_button').attr('data-target','#add_lesson_log_modal');
-    // });
-
-    // $('#lesson_log-tab').on('click',function(){
-    //     $('#add_hour_button').attr('data-target','#add_hour_modal');
-    // });
-
     // create/add hours form submit
     $('#log-hours-add-form').submit(function(event) {
         event.preventDefault();        
@@ -233,8 +223,7 @@ $( document ).ready(function() {
                     $this[0].reset();
                     showMessage('success',result.message);
                     $('#add_hour_log_modal').modal('hide');
-                    setTimeout(function() {
-                        // show_toast(result.message, 'success');
+                    setTimeout(function() {                        
                         location.reload();
                     }, 2500);
 
@@ -252,8 +241,7 @@ $( document ).ready(function() {
             },
             error: function(error) {
                 $($this).find('button[type="submit"]').prop('disabled', false);
-                alert('Something went wrong!', 'error');
-                // location.reload();
+                alert('Something went wrong!', 'error');                
             }
         });
     });
@@ -276,8 +264,7 @@ $( document ).ready(function() {
                     $this[0].reset();
                     showMessage('success',result.message);
                     $('#edit_hour_log_modal').modal('hide');
-                    setTimeout(function() {
-                        // show_toast(result.message, 'success');
+                    setTimeout(function() {                        
                         location.reload();
                     }, 2500);
 
@@ -295,8 +282,7 @@ $( document ).ready(function() {
             },
             error: function(error) {
                 $($this).find('button[type="submit"]').prop('disabled', false);
-                alert('Something went wrong!', 'error');
-                // location.reload();
+                alert('Something went wrong!', 'error');                
             }
         });
     });
@@ -328,8 +314,7 @@ $( document ).ready(function() {
                     $this[0].reset();
                     showMessage('success',result.message);
                     $('#add_lesson_hour_modal').modal('hide');
-                    setTimeout(function() {
-                        // show_toast(result.message, 'success');
+                    setTimeout(function() {                        
                         location.reload();
                     }, 2500);
 
@@ -347,8 +332,7 @@ $( document ).ready(function() {
             },
             error: function(error) {
                 $($this).find('button[type="submit"]').prop('disabled', false);
-                alert('Something went wrong!', 'error');
-                // location.reload();
+                alert('Something went wrong!', 'error');                
             }
         });
     });
@@ -380,8 +364,7 @@ $( document ).ready(function() {
                     $this[0].reset();
                     showMessage('success',result.message);
                     $('#edit_lesson_hour_modal').modal('hide');
-                    setTimeout(function() {
-                        // show_toast(result.message, 'success');
+                    setTimeout(function() {                        
                         location.reload();
                     }, 2500);
 
@@ -399,8 +382,7 @@ $( document ).ready(function() {
             },
             error: function(error) {
                 $($this).find('button[type="submit"]').prop('disabled', false);
-                alert('Something went wrong!', 'error');
-                // location.reload();
+                alert('Something went wrong!', 'error');                
             }
         });
     });
@@ -678,8 +660,7 @@ $( document ).ready(function() {
             },
             error: function(error) {
                 $($this).find('button[type="submit"]').prop('disabled', false);
-                alert('Something want wrong!', 'error');
-                // location.reload();
+                alert('Something want wrong!', 'error');                
             }
         });
     });
