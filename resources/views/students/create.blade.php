@@ -30,45 +30,6 @@
 		                    <strong>{{ $message }}</strong>
 		                </span>
 		            @enderror
-	                {{-- <div class="adduser-item">
-	                    <label for="email">Email:</label>
-	                    <input type="email" id="email" placeholder="Enter Email" name="email" value="{{ old('email') }}">
-	                </div>
-                    @error('email')
-		                <span class="invalid-feedback" role="alert">
-		                    <strong>{{ $message }}</strong>
-		                </span>
-		            @enderror
-		            <div class="adduser-item">
-	                    <label for="phone">Phone:</label>
-	                    <input type="phone" id="phone" placeholder="Enter Phone" name="phone" value="{{ old('phone') }}">
-	                </div>
-                    @error('phone')
-		                <span class="invalid-feedback" role="alert">
-		                    <strong>{{ $message }}</strong>
-		                </span>
-		            @enderror --}}
-		            {{-- <div class="adduser-item">
-	                    <label for="password">Password:</label>
-	                    <input type="password" id="password" placeholder="Enter Password" name="password" value="{{ old('password') }}">
-	                </div>
-                    @error('password')
-		                <span class="invalid-feedback" role="alert">
-		                    <strong>{{ $message }}</strong>
-		                </span>
-		            @enderror
-		            <div class="adduser-item">
-	                    <label for="password_confirmation">{{ __('Confirm Password') }}:</label>
-	                    <input type="password" id="password_confirmation" placeholder="Enter {{ __('Confirm Password') }}" name="password_confirmation" value="{{ old('password_confirmation') }}">
-	                </div>
-                    @error('password_confirmation')
-		                <span class="invalid-feedback" role="alert">
-		                    <strong>{{ $message }}</strong>
-		                </span>
-		            @enderror --}}
-	                	                    
-	                {{-- <input type="hidden" id="role" name="role" value="student">                 --}}
-                    
 	                <div class="adduser-item">
 	                    <button type="Submit" class="orange-bg">Submit</button>
 	                </div>

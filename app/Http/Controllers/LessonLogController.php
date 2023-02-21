@@ -64,13 +64,11 @@ class LessonLogController extends Controller
 
                 if($r)
                 {            
-                    // toastr()->success('Hours added Successfully');
                     $result = ['status' => true, 'message' => 'Hours added Successfully', 'data' => []];
                     return response()->json($result);
                 }
                 else
                 {
-                    // toastr()->error('An error has occurred please try again later.');
                     $result = ['status' => false, 'message' => 'Error in saving data', 'data' => []];      
                     return response()->json($result);              
                 }

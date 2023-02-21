@@ -121,8 +121,7 @@
                             <div class="col-md-5 d-flex align-items-center">
                                 <a href="{{ route('user.edit', $user->id) }}">Edit</a>
                                 <a href="javascriot:void(0)" data-id="{{$user->id}}" class="ml-1 delUser">Delete</a>
-                            </div>
-                            {{-- <button href="javascript:void(0)" class="delete_usr" data-id="{{$user->id}}"><img src="http://teacherportal.test/images/delete.svg" alt=""></button> --}}
+                            </div>                            
                         </div>
                     </div>
                 @endif
@@ -169,38 +168,9 @@
                 @endforeach
             </div>
         </div>
-        <div class="mt-5">
-            {{-- {{ $users->links() }}             --}}
+        <div class="mt-5">            
         </div>
     </div>
-
-    {{-- <div class="staff-area">
-        <div class="staff-main">
-            <div class="staff-left">
-                @foreach($users as $key => $user)
-                @if($key % 2 == 0)
-                    <div class="staff-box">
-                        <h4>{{ $user->name }}</h4>
-                        <h4>{{ $user->role }}</h4>
-                        <a href="{{ route('user.edit', $user->id) }}">Edit</a>
-                    </div>                
-                @endif
-                @endforeach
-            </div>
-            <div class="staff-right">
-                @foreach($users as $key => $user)
-                @if($key % 2 == 1)
-                    <div class="staff-box">
-                        <h4>{{ $user->name }}</h4>
-                        <h4>{{ $user->role }}</h4>
-                        <a href="{{ route('user.edit', $user->id) }}">Edit</a>
-                    </div>        
-                @endif
-                @endforeach
-            </div>
-        </div>
-    {{ $users->links() }}
-    </div> --}}            
 </main>
 
 {{-- Start : Delete Confirmation Modal --}}

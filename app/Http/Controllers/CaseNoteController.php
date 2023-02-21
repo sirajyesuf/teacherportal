@@ -23,7 +23,7 @@ class CaseNoteController extends Controller
         if($request->id)
         {
             $user = Student::find($request->id);
-            // $caseNote = CaseNote::where('student_id',$request->id)->where('deleted_at',null)->first();
+            
             $totalHours = DB::table('add_hour_logs')
                        ->where('add_hour_logs.deleted_at',null)
                        ->where('add_hour_logs.student_id',$request->id)
@@ -152,8 +152,7 @@ class CaseNoteController extends Controller
         if($request->update_id)
         {
             $caseMgmt = CaseManagement::find($request->update_id);
-            $caseMgmt->date = $request->date;
-            // $caseMgmt->trainer = $request->trainer;
+            $caseMgmt->date = $request->date;            
             $caseMgmt->package = $request->package;
             $caseMgmt->num = $request->num;
             $caseMgmt->description = $request->description;
@@ -205,13 +204,10 @@ class CaseNoteController extends Controller
         if($r)
         {
             session(['dataUpdated' => 'Case Management Meeting saved']);
-            return back();
-
-            // toastr()->success('Case Management Meeting saved');
+            return back();            
         }
         else
-        {
-            // toastr()->error('An error has occurred please try again later.');
+        {            
             session(['updateFail' => 'An error has occurred please try again later.']);
             return back();
         }
@@ -224,8 +220,7 @@ class CaseNoteController extends Controller
         if($request->update_id)
         {
             $parentRw = ParentReview::find($request->update_id);
-            $parentRw->date = $request->date;
-            // $parentRw->trainer = $request->trainer;            
+            $parentRw->date = $request->date;            
             $parentRw->description = $request->description;
             $parentRw->updated_by = Auth::user()->id;
             $r = $parentRw->save();
@@ -290,8 +285,7 @@ class CaseNoteController extends Controller
         if($request->update_id)
         {
             $comment = Comment::find($request->update_id);
-            $comment->date = $request->date;
-            // $comment->trainer = $request->trainer;            
+            $comment->date = $request->date;                      
             $comment->comments = $request->comments;
             $comment->updated_by = Auth::user()->id;
             $r = $comment->save();

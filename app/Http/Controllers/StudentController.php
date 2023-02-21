@@ -62,13 +62,10 @@ class StudentController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        // $request->request->add(['role' => 'student','role_type' => 3]);
-
         $user = Student::create($request->all());
         
         if($user)
         {
-            // toastr()->success('Student created Successfully');
             session(['successMsg' => 'Student created Successfully']);
             return redirect()->route('home');
         }
@@ -95,9 +92,7 @@ class StudentController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            // 'email' => ['required', 'string', 'email', 'max:255'],
-            // 'password' => ['required', 'string', 'min:8', 'confirmed'],            
+            'name' => ['required', 'string', 'max:255'],            
         ]);
     }
 
@@ -113,13 +108,11 @@ class StudentController extends Controller
 
             if($r)
             {
-                // toastr()->success('Date changes Successfully');                
                 $result = ['status' => true, 'message' => 'Date changes success.', 'data' => []];
                 return response()->json($result);
             }
             else
             {
-                // toastr()->error('An error has occurred please try again later.');
                 $result = ['status' => false, 'message' => 'An error has occurred please try again later.', 'data' => []];
                 return response()->json($result);
             }
@@ -198,7 +191,6 @@ class StudentController extends Controller
 
             if($r)
             {            
-                // toastr()->success('Profile updated Successfully');
                 $request->session()->flash('message.level', 'success');
                 $request->session()->flash('message.content', 'Profile description updated Successfully!');
                 return redirect()->back();

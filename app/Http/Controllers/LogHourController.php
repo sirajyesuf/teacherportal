@@ -38,7 +38,7 @@ class LogHourController extends Controller
                 // Convert date to db date formate
                 $lesson_date = Carbon::createFromFormat('d M Y', $request->lesson_date)->format('Y-m-d');
 
-                $lessonLog = LessonLog::where('lesson_date',$lesson_date)->where('deleted_at',null)->first();
+                $lessonLog = LessonLog::where('lesson_date',$lesson_date)->where('student_id',$request->add_log_student_id)->where('deleted_at',null)->first();
 
                 if(!$request->duplicate)
                 {                    
@@ -50,8 +50,7 @@ class LogHourController extends Controller
                 }
                 
                 if(!$lessonLog){
-                    $lessonLog = new LessonLog;                                
-                    \Log::info('new');
+                    $lessonLog = new LessonLog;                                                    
                 }
                 $lessonLog->student_id = $request->add_log_student_id;
                 $lessonLog->hours = $request->add_log_hour;
@@ -229,13 +228,11 @@ class LogHourController extends Controller
 
                 if($r)
                 {            
-                    // toastr()->success('Hours added Successfully');
                     $result = ['status' => true, 'message' => 'Hours added Successfully', 'data' => []];
                     return response()->json($result);
                 }
                 else
                 {
-                    // toastr()->error('An error has occurred please try again later.');
                     $result = ['status' => false, 'message' => 'Error in saving data', 'data' => []];                    
                     return response()->json($result);
                 }

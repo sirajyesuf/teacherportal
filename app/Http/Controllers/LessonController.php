@@ -461,8 +461,7 @@ class LessonController extends Controller
 
                 "date" => Carbon::now()->format('d-m-Y'),
                 "trainer" => Auth::user()->first_name,
-                "duration" => "",
-                // "objective_of_lesson" => "",
+                "duration" => "",                
                 "vestibular" => "",
                 "proprioception" => "",
                 "muscle_tone" => "",
@@ -471,12 +470,10 @@ class LessonController extends Controller
                 "massage" => "",
                 "tactile" => "",
                 "emotions" => "",
-                "vp" => "",
-                // "oral" => "",
+                "vp" => "",                
                 "ep" => "",
                 "others" => "",
-                "ft" => "",
-                // "parent_feedback" => "",
+                "ft" => "",                
             ];
         }
         else if($id == 2)
@@ -549,11 +546,11 @@ class LessonController extends Controller
             // Convert date to db date formate
             $lesson_date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
 
-            $lessonDup = Lesson::where('id','!=',$request->update_id)->where('template_id',$lesson->template_id)->where('lesson_date',$lesson_date)->where('deleted_at',null)->first();
+            $lessonLog = LessonLog::where('student_id',$request->student_id)->where('lesson_date',$lesson_date)->where('deleted_at',null)->first();
 
             if(!$request->duplicate)
             {                    
-                if($lessonDup)
+                if($lessonLog)
                 {
                     $result = ['status' => true, 'match' => 1, 'data' => []];
                     return response()->json($result);
@@ -621,7 +618,6 @@ class LessonController extends Controller
             $r = $lesson->save();
 
             // lesson log entry : starts
-            $lessonLog = LessonLog::where('student_id',$request->student_id)->where('lesson_id',$request->update_id)->where('deleted_at',null)->first();
             if(!$lessonLog)
             {
                 $lessonLog = new LessonLog;
@@ -662,15 +658,11 @@ class LessonController extends Controller
             
             if($rl)
             {            
-                // session(['lessonUpdated' => 'form saved Successfully']);
-                // return redirect()->route('lesson',$request->student_id);
                 $result = ['status' => true, 'message' => 'form saved Successfully', 'data' => []];
                 return response()->json($result);
             }
             else
             {
-                // toastr()->error('An error has occurred please try again later.');
-                // return redirect()->route('lesson',$request->student_id);
                 $result = ['status' => false, 'message' => 'An error has occurred please try again later.', 'data' => []];
                 return response()->json($result);
                 
@@ -692,11 +684,11 @@ class LessonController extends Controller
             // Convert date to db date formate
             $lesson_date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
 
-            $lessonDup = Lesson::where('id','!=',$request->update_id)->where('template_id',$lesson->template_id)->where('lesson_date',$lesson_date)->where('deleted_at',null)->first();
+            $lessonLog = LessonLog::where('student_id',$request->student_id)->where('lesson_date',$lesson_date)->where('deleted_at',null)->first();
 
             if(!$request->duplicate)
             {                    
-                if($lessonDup)
+                if($lessonLog)
                 {
                     $result = ['status' => true, 'match' => 1, 'data' => []];
                     return response()->json($result);
@@ -764,7 +756,6 @@ class LessonController extends Controller
             $r = $lesson->save();
 
             // lesson log entry : starts
-            $lessonLog = LessonLog::where('student_id',$request->student_id)->where('lesson_id',$request->update_id)->where('deleted_at',null)->first();
             if(!$lessonLog)
             {
                 $lessonLog = new LessonLog;
@@ -805,18 +796,13 @@ class LessonController extends Controller
             
             if($rl)
             {            
-                // session(['lessonUpdated' => 'form saved Successfully']);
-                // return redirect()->route('lesson-bt',$request->student_id);
                 $result = ['status' => true, 'message' => 'form saved Successfully', 'data' => []];
                 return response()->json($result);
             }
             else
             {
-                // toastr()->error('An error has occurred please try again later.');
-                // return redirect()->route('lesson-bt',$request->student_id);
                 $result = ['status' => false, 'message' => 'An error has occurred please try again later.', 'data' => []];
                 return response()->json($result);
-                // return back();
             }
 
         }
@@ -824,8 +810,6 @@ class LessonController extends Controller
 
     public function imUpdate(Request $request)
     {
-        // $this->validator($request->all())->validate();
-
         $data = $request->all();
             
         if(isset($request->student_id) && isset($request->update_id))
@@ -852,20 +836,6 @@ class LessonController extends Controller
             $lesson->lesson_json = json_encode($temps);
             $lesson->updated_by = Auth::user()->id;
             $r = $lesson->save();
-
-            // lesson log entry : starts
-            // $lessonLog = LessonLog::where('student_id',$request->student_id)->where('lesson_id',$request->update_id)->where('deleted_at',null)->first();
-            // if(!$lessonLog)
-            // {
-            //     $lessonLog = new LessonLog;
-            // }
-            // $lessonLog->student_id = $request->student_id;
-            // $lessonLog->hours = $request->duration;
-            // $lessonLog->lesson_date = Carbon::parse($dt)->format('Y-m-d');
-            // $lessonLog->created_by = Auth::user()->id;
-            // $lessonLog->lesson_id = $lesson->id;
-            // $lessonLog->save();
-            // $rl = $lessonLog->save();
 
             $totalHours = DB::table('add_hour_logs')
                    ->where('add_hour_logs.deleted_at',null)
@@ -902,7 +872,6 @@ class LessonController extends Controller
             {
                 toastr()->error('An error has occurred please try again later.');
                 return redirect()->route('lesson-im',$request->student_id);
-                // return back();
             }
 
         }
