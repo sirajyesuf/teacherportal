@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','CaseNotes - Index')
+@section('title',(isset($user->name))?$user->name.' - Case Notes':'Case Notes')
 
 @section('css')
     <link href="{{ asset('css/page/casenotes.css') }}?{{time()}}" rel="stylesheet">

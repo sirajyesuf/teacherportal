@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Lesson - Index')
+@section('title',(isset($user->name))?$user->name.' - Lesson Notes':'Lesson Notes')
 
 @section('css')
     <link href="{{ asset('css/page/bt-index.css') }}?{{time()}}" rel="stylesheet">

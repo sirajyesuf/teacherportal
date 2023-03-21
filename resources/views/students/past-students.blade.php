@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Home - Admin')
+@section('title','Past Students')
 
 @section('css')
     <link href="{{ asset('css/page/student-index.css') }}?{{time()}}" rel="stylesheet">
