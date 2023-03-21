@@ -6,18 +6,31 @@ $( document ).ready(function() {
         dateFormat: 'dd-mm-yy',
     });
 
-    CKEDITOR.replaceAll('vestibular');
-    CKEDITOR.replaceAll('proprioception');
-    CKEDITOR.replaceAll('muscle_tone');
-    CKEDITOR.replaceAll('reflex');
-    CKEDITOR.replaceAll('kinestesia');
-    CKEDITOR.replaceAll('massage');
-    CKEDITOR.replaceAll('tactile');
-    CKEDITOR.replaceAll('emotions');
-    CKEDITOR.replaceAll('vp');
-    CKEDITOR.replaceAll('ep');
-    CKEDITOR.replaceAll('others');
-    CKEDITOR.replaceAll('ft');
+    // CKEDITOR.replaceAll('vestibular');
+    // CKEDITOR.replaceAll('proprioception');
+    // CKEDITOR.replaceAll('muscle_tone');
+    // CKEDITOR.replaceAll('reflex');
+    // CKEDITOR.replaceAll('kinestesia');
+    // CKEDITOR.replaceAll('massage');
+    // CKEDITOR.replaceAll('tactile');
+    // CKEDITOR.replaceAll('emotions');
+    // CKEDITOR.replaceAll('vp');
+    // CKEDITOR.replaceAll('ep');
+    // CKEDITOR.replaceAll('others');
+    // CKEDITOR.replaceAll('ft');
+
+    // Generate a unique ID for each textarea element
+    var textareas = document.getElementsByTagName('textarea');
+    for (var i = 0; i < textareas.length; i++) {
+        var textarea = textareas[i];
+        textarea.id = 'editor' + (i + 1);
+    }
+
+    // Initialize a CKEditor instance for each textarea element
+    for (var i = 0; i < textareas.length; i++) {
+        var textarea = textareas[i];
+        CKEDITOR.replace(textarea.id);
+    }
 
     CKEDITOR.config.mentions = [ { 
         feed: url+'/users?name={encodedQuery}',        
@@ -62,8 +75,14 @@ $( document ).ready(function() {
         var form = $(this).closest('form');
 
         // Ckeditor read data
-        for (instance in CKEDITOR.instances) {
-            CKEDITOR.instances[instance].updateElement();
+        // for (instance in CKEDITOR.instances) {        
+        //     CKEDITOR.instances[instance].updateElement();
+        // }
+
+        // Update the value of each textarea element with the data from its corresponding CKEditor instance
+        for (var i = 0; i < textareas.length; i++) {
+            var textarea = textareas[i];
+            CKEDITOR.instances[textarea.id].updateElement();
         }
         // serialize the form data
         var formData = form.serialize();

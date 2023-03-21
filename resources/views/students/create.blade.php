@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Create User')
+@section('title','Add New Student')
 
 @section('content')
 	<main class="adduser-area">

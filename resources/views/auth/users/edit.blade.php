@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Create User')
+@section('title','Edit Staff')
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/vendor/coloris.css') }}?{{time()}}" />    

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title','Home - Admin')
+@section('title',$student->name)
 
 @section('css')
     <link href="{{ asset('css/page/student-profile.css') }}?{{time()}}" rel="stylesheet">

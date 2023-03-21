@@ -12,7 +12,7 @@
         <meta name="designer" content="">
         
         <!-- Title -->
-        <title>@yield('title') - {{env('APP_NAME') }} </title>
+        <title>@yield('title')</title>
         
         <!-- Fav Icon -->
         <link rel="icon" href="{{ asset('images/favicon.ico') }}" />   
