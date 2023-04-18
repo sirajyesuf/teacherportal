@@ -9,9 +9,77 @@ $( document ).ready(function() {
     }
     initDatePicker();
 
+    CKEDITOR.replace('description', {
+      on: {
+        instanceReady: function(event) {
+          event.editor.element.removeClass('cke-hidden');
+        }
+      }
+    });
+
+    CKEDITOR.config.contentsCss = [
+      cssUrl
+    ];
+
     $('body').on('click','.delete-student',function(){
         $('#delete_modal').modal('show');
     });
+
+    // student name update script
+    $(document).on('click', '.editable', function() {
+        var studentId = $(this).data('student-id');
+        var name = $(this).text();
+        $(this).html('<input type="text" name="name" id="nameUpdate" value="' + name + '">');
+        $('input[name="name"]').focus();
+    });
+
+    $(document).on('click','.checked', function(){
+        var checkId = $(this).attr('data-check-id');
+                         
+        $.ajax({
+            url: checkDateUrl,
+            type: 'POST',
+            data: { id:checkId,_token: $('meta[name=csrf-token]').attr('content')},
+            dataType: 'json',
+            success: function(result) {                    
+                           
+                showMessage('success',result.message);
+                setTimeout(function() {
+                    location.reload();
+                }, 1500);
+            }
+        }); 
+
+    return;               
+
+    });
+
+    var clicked = false;
+    $(document).on('click', 'input[name="name"]', function() {
+        clicked = true;
+    }).on('blur', 'input[name="name"]', function() {
+        if (clicked) {
+            clicked = false;
+            return;
+        }
+        var name = $(this).val();
+        var studentId = $(this).closest('.editable').data('student-id');
+        var url = $('.editable[data-student-id="' + studentId + '"]').data('url');
+        $.ajax({
+            url: url,
+            method: 'PUT',
+            data: {
+                'name': name
+            },
+            success: function(response) {
+                $('.editable[data-student-id="' + studentId + '"]').html(response);
+            },
+            error: function(response) {
+                alert('Error updating name.');
+            }
+        });
+    });
+    // student name update script Ends
 
     $(document).on('click','.edit_add_hour',function(){
         
@@ -54,6 +122,7 @@ $( document ).ready(function() {
                 if(result.status){                            
                     $('#edit_lesson_log_hour').val(result.detail.hours);
                     $('#edit_lesson_date').val(result.date);
+                    $('#edit_program').val(result.detail.program);
 
                     var $newOption = $("<option selected='selected'></option>").val(result.id).text( result.username); 
                     $("#edit_trainer_name").append($newOption).trigger('change');                    

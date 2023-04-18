@@ -6,19 +6,6 @@ $( document ).ready(function() {
         dateFormat: 'dd-mm-yy',
     });
 
-    // CKEDITOR.replaceAll('vestibular');
-    // CKEDITOR.replaceAll('proprioception');
-    // CKEDITOR.replaceAll('muscle_tone');
-    // CKEDITOR.replaceAll('reflex');
-    // CKEDITOR.replaceAll('kinestesia');
-    // CKEDITOR.replaceAll('massage');
-    // CKEDITOR.replaceAll('tactile');
-    // CKEDITOR.replaceAll('emotions');
-    // CKEDITOR.replaceAll('vp');
-    // CKEDITOR.replaceAll('ep');
-    // CKEDITOR.replaceAll('others');
-    // CKEDITOR.replaceAll('ft');
-
     // Generate a unique ID for each textarea element
     var textareas = document.getElementsByTagName('textarea');
     for (var i = 0; i < textareas.length; i++) {
@@ -38,6 +25,10 @@ $( document ).ready(function() {
         outputTemplate: '<a href="{userId}">{name}</a>',
         
     } ];    
+
+    CKEDITOR.config.contentsCss = [
+      cssUrl
+    ];
 
     $('body').on('click','.del-lesson',function(e){
         e.preventDefault();

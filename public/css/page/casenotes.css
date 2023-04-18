@@ -82,10 +82,24 @@ img.del-les-img{
     background-color: #e9ecef!important;
 }
 #cke_comments, #cke_comments .cke_contents,#cke_comments .cke_reset {
-    max-height: 100px!important;
+    max-height: 228px!important;
 }
 
 #cke_description, #cke_description .cke_contents,#cke_description .cke_reset {
 /*    max-height: 250px!important;*/
-    max-height: 302px!important;
+    max-height: 602px!important;
+}
+
+#cke_description .cke_contents {
+    height: 400px!important;
+}
+.cke_editable {
+    font-size: 13px;    
+    font-family: sans-serif, Arial, Verdana, "Trebuchet MS", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    line-height: 1.6;
+    word-wrap: break-word;
+}
+p {
+    margin-block-start: 0em;
+    margin-block-end: 0em;
 }

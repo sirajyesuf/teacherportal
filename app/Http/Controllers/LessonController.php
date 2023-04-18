@@ -218,7 +218,7 @@ class LessonController extends Controller
                             <tr class="">                                
                                 <td class="third-col" rowspan="6">
                                     <label class="font-weight-bold">'.normal_case($tempName[3]).':</label>
-                                    <textarea name="'.$tempName[3].'" placeholder="'.normal_case($tempName[3]).'" class="ckeditor">'.$tempValue[3].'</textarea>
+                                    <textarea name="'.$tempName[3].'" placeholder="'.normal_case($tempName[3]).'" class="">'.$tempValue[3].'</textarea>
                                 </td>
                             </tr>                            
                         </table>
@@ -469,8 +469,8 @@ class LessonController extends Controller
                 "kinestesia" => "",
                 "massage" => "",
                 "tactile" => "",
-                "emotions" => "",
                 "vp" => "",                
+                "emotions" => "",
                 "ep" => "",
                 "others" => "",
                 "ft" => "",                
@@ -625,6 +625,7 @@ class LessonController extends Controller
             $lessonLog->student_id = $request->student_id;
             $lessonLog->hours = $request->duration;
             $lessonLog->lesson_date = Carbon::parse($dt)->format('Y-m-d');
+            $lessonLog->program = 'SI';
             $lessonLog->created_by = $lessonLog->created_by ?? Auth::user()->id;
             $lessonLog->lesson_id = $lesson->id;
             $lessonLog->save();
@@ -646,12 +647,8 @@ class LessonController extends Controller
                 $hoursRemaining = 0;
 
             $student = Student::find($request->student_id);
-
-            if($hoursRemaining == 0)
-            {
-                $student->is_past = 1;                    
-            }
             $student->remaining_hours = $hoursRemaining;
+            $student->is_past = ($hoursRemaining) ? 0 : 1;
             $student->save();
 
             // lesson log entry : Ends
@@ -763,6 +760,7 @@ class LessonController extends Controller
             $lessonLog->student_id = $request->student_id;
             $lessonLog->hours = $request->duration;
             $lessonLog->lesson_date = Carbon::parse($dt)->format('Y-m-d');
+            $lessonLog->program = 'BT';
             $lessonLog->created_by = $lessonLog->created_by ?? Auth::user()->id;
             $lessonLog->lesson_id = $lesson->id;
             $lessonLog->save();
@@ -784,12 +782,8 @@ class LessonController extends Controller
                 $hoursRemaining = 0;
 
             $student = Student::find($request->student_id);
-
-            if($hoursRemaining == 0)
-            {
-                $student->is_past = 1;                    
-            }
             $student->remaining_hours = $hoursRemaining;
+            $student->is_past = ($hoursRemaining) ? 0 : 1;
             $student->save();
 
             // lesson log entry : Ends

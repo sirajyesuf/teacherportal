@@ -109,6 +109,7 @@
     <script type="text/javascript">        
         var deleteUrl = "{{ route('lesson.delete') }}";     
         var url = "{{ url("/")}}";   
+        var cssUrl = "{{ asset('css/page/lessons-index.css') }}";
     </script>
     <script src="{{addPageJsLink('lessons-index.js')}}"></script>
 @endsection

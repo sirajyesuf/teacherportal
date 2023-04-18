@@ -36,16 +36,20 @@
                         @endphp
                         <ul>
                             <li><a href="javascript:void(0)" class="delete-student"><img class="delete-img" src="{{ asset('images/delete-button.svg') }}" width="28" /></a></li>
-                            <li><h2>{{$student->name}}</h2></li>
+                            {{-- <li><h2>{{$student->name}}</h2></li> --}}
+                            <li><h2 class="editable" data-student-id="{{$student->id}}" data-url="{{route('student.nameUpdate', ['id' => $student->id])}}">{{$student->name}}</h2></li>
                             <li><button type="submit" class="orange-bg"><img src="{{ asset('images/download2.png')}}" height="20"> Save</button></li>
                             <li><a href="{{ route('casenotes',$student->id) }}" class="dark-blue"><img src="{{ asset('images/folder-shared.svg')}}" alt=""> View case notes</a></li>
                             <li><a href="{{ route('lesson',$student->id)}}" class="dark-blue"><img src="{{ asset('images/description.svg')}}" alt=""> View Lesson</a></li>
                             <li><input id="appointment_date" class="" type="hidden" /><a class="home-picker-profile {{$colClass}}" data-id="{{ $student->id }} "href="#">{{ ($student->appointment_date)?longDateFormat($student->appointment_date):"Due Date"}} </a></li>
+                            @if($student->appointment_date)
+                                <input type="checkbox" name="appointment-date" data-check-id="{{$student->id}}" class="bg-none black ml-2 checked" {{($student->is_appointment_done)?"checked disabled":""}}/>                                    
+                            @endif
                         </ul>
                     </div>
 
                     <div class="student-infobox">
-                        <textarea name="description" id="description" class="ckeditor">{{ $student->description}}</textarea>
+                        <textarea name="description" id="description" class="cke-hidden" rows="50">{{ $student->description}}</textarea>
                     </div>
                 </form>
 
@@ -141,6 +145,9 @@
                                     <div class="col-sm-3">
                                         <h4>{{ $ch->first_name }}</h4>
                                     </div>
+                                    {{-- <div class="col-sm-2"> --}}
+                                        <span><h4>{{ $ch->program }}</h4></span>
+                                    {{-- </div> --}}
                                     <div class="col-sm-3">
                                         <span><img src="{{ asset('images/clock.svg')}}" alt=""> {{ $ch->hours}} hr</span>
                                     </div>
@@ -253,6 +260,7 @@
             <div class="modal-header">
                 <h5 class="modal-title">Edit Hours</h5>
                 <input type="hidden" name="id" id="edit_log_hour_id">
+                <input type="hidden" name="edit_add_hour_stu_id" value="{{ $student->id }}">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -306,6 +314,19 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">
+                            <label for="program" class="col-form-label">Program:</label>
+                            <input type="text" maxlength="5" name="program" class="form-control" id="program">
+                            {{-- <select class="form-control" name="program" id="program">
+                                <option value="1">SI</option>
+                                <option value="2">BT</option>
+                            </select> --}}
+                            <span class="error"></span>
+                        </div>           
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
                             <label for="add_log_hour" class="col-form-label">Hours</label>
                             <input type="number" step="0.25" name="add_log_hour" class="form-control" id="add_log_hour">
                             <span class="error"></span>
@@ -355,7 +376,16 @@
                         <span class="error"></span>
                     </div>          
                     </div>
-                </div>      
+                </div>  
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="edit_program" class="col-form-label">Program:</label>
+                            <input type="text" maxlength="5" name="program" class="form-control" id="edit_program">
+                            <span class="error"></span>
+                        </div>           
+                    </div>
+                </div>    
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">
@@ -471,6 +501,8 @@
         var tlsMultiAddUrl = "{{ route('tls.multiAdd') }}";
         var deleteUrl = "{{ route('student.delete') }}";
         var homeUrl = "{{ route('home') }}";
+        var checkDateUrl = "{{ route('appointment.check') }}";
+        var cssUrl = "{{ asset('css/page/student-profile.css') }}";
     </script>
     <script src="{{addPageJsLink('student-profile.js')}}"></script>
 @endsection

@@ -44,6 +44,7 @@ Route::post('/student/description/update', 'StudentController@descriptionUpdate'
 Route::get('/student/past', 'StudentController@pastStudent')->name('student.past');
 Route::post('/student/past', 'StudentController@pastStudent')->name('student.past.post');
 Route::post('/student/delete', 'StudentController@delete')->name('student.delete');
+Route::put('/student/name/{id}', 'StudentController@nameUpdate')->name('student.nameUpdate');
 
 
 Route::get('/lesson/{id}', 'LessonController@index')->name('lesson');

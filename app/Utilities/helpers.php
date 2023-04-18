@@ -35,6 +35,15 @@ function dbDateFormate($dt = '')
 	return '';
 }
 
+function caseDateFormate($dt = '')
+{
+	if($dt)
+	{		
+		return date("d-m-Y", strtotime($dt) );
+	}
+	return '';
+}
+
 function addPageJsLink($link){
     return asset('js/page')."/".$link.'?'.time();
 }
@@ -51,6 +60,12 @@ function normal_case($str)
 		return 'FT';
 	else if($str == 'notes')
 		return 'Notes/ Observations';
+	else if($str == 'others')
+		return 'Others / Parent Feedback';
+	else if($str == 'kinestesia')
+		return 'Ocular / Motor';
+	else if($str == 'proprioception')
+		return 'Proprioception / Kinestesia';
 	else
 		return implode(' ', array_map('ucfirst', explode('_', $str)));
 }
