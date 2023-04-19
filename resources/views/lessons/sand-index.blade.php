@@ -3,8 +3,7 @@
 @section('title',(isset($user->name))?$user->name.' - Lesson Notes':'Lesson Notes')
 
 @section('css')
-    <link href="{{ asset('css/page/bt-index.css') }}?{{time()}}" rel="stylesheet">
-    <link href="{{ asset('css/page/im-index.css') }}?{{time()}}" rel="stylesheet">
+    <link href="{{ asset('css/page/sand-index.css') }}?{{time()}}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -48,7 +47,7 @@
     <div class="note-main">
         <div class="lesson-upper">
             <div class="note-upper">
-                <ul>                    
+                <ul>
                     @if(isset($user->id))
                     <input type="hidden" id="student_id" value="{{$user->id}}">
                     <li><h2><a href="{{route('student.profile',$user->id)}}" class="nobtn">{{ (isset($user->name))?$user->name:'' }}</a></h2></li>
@@ -65,7 +64,7 @@
                     @endif
                 </ul>
             </div>
-            <form action="{{ route('lesson-im.post')}}" method="POST">
+            <form action="{{ route('lesson-sand.post')}}" method="POST">
                 @csrf
                 <input type="hidden" name="id" value="{{ $user->id}}">
                 <div class="search-box">
@@ -78,8 +77,9 @@
             <ul>
                 <li><a href="{{ route('lesson',$user->id)}}">SI/FT</a></li>
                 <li><a href="{{ route('lesson-bt',$user->id)}}">BT/Lang</a></li>
-                <li><a href="#" id="active">IM</a></li>
-                <li><a href="{{ route('lesson-sand',$user->id) }}">Sand</a></li>                
+                <li><a href="{{ route('lesson-im',$user->id) }}">IM</a></li>
+                <li><a href="#" id="active">Sand</a></li>
+                
             </ul>
         </div>
 
@@ -113,13 +113,12 @@
     </div>
 </div>
 {{-- Ends : Delete Confirmation Modal --}}
-
 @endsection
 
 @section('pagejs')
     <script type="text/javascript">        
-        var deleteUrl = "{{ route('lesson.delete') }}";      
-        var url = "{{ url("/")}}";  
+        var deleteUrl = "{{ route('lesson.delete') }}";
+        var url = "{{ url("/")}}";       
         var cssUrl = "{{ asset('css/page/lessons-index.css') }}";
         var newsiftUrl ="{{ route('lesson.addSift')}}";
         var newBtUrl ="{{ route('lesson.addBtLang')}}";
@@ -128,7 +127,7 @@
         var lessonUrl = "{{ route('lesson',$user->id)}}";
         var lessonBtUrl = "{{ route('lesson-bt',$user->id)}}";
         var lessonImUrl = "{{ route('lesson-im',$user->id)}}";
-        var lessonSandUrl = "{{ route('lesson-sand',$user->id)}}";
+        var lessonSandUrl = "{{ route('lesson-sand',$user->id)}}"; 
     </script>
     <script src="{{addPageJsLink('lessons-index.js')}}"></script>
 @endsection

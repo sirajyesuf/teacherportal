@@ -44,6 +44,7 @@ Route::post('/student/description/update', 'StudentController@descriptionUpdate'
 Route::get('/student/past', 'StudentController@pastStudent')->name('student.past');
 Route::post('/student/past', 'StudentController@pastStudent')->name('student.past.post');
 Route::post('/student/delete', 'StudentController@delete')->name('student.delete');
+Route::put('/student/name/{id}', 'StudentController@nameUpdate')->name('student.nameUpdate');
 
 
 Route::get('/lesson/{id}', 'LessonController@index')->name('lesson');
@@ -55,6 +56,8 @@ Route::post('/lesson-bt', 'LessonController@btIndex')->name('lesson-bt.post');
 Route::get('/lesson-im/{id}', 'LessonController@imIndex')->name('lesson-im');
 Route::post('/lesson-im', 'LessonController@imIndex')->name('lesson-im.post');
 
+Route::get('/lesson-sand/{id}', 'LessonController@sandIndex')->name('lesson-sand');
+Route::post('/lesson-sand', 'LessonController@sandIndex')->name('lesson-sand.post');
 
 Route::get('/select/template/{student}', 'LessonController@templateChoice')->name('select.template');
 Route::post('/lessons/create', 'LessonController@create')->name('lesson.create');
@@ -62,8 +65,14 @@ Route::post('/lessons/create', 'LessonController@create')->name('lesson.create')
 Route::post('/lessons/update', 'LessonController@update')->name('lesson.update');
 Route::post('/lessons-bt/update', 'LessonController@btUpdate')->name('lesson-bt.update');
 Route::post('/lessons-im/update', 'LessonController@imUpdate')->name('lesson-im.update');
+Route::post('/lessons-sand/update', 'LessonController@sandUpdate')->name('lesson-sand.update');
 
 Route::post('/lessons/delete', 'LessonController@delete')->name('lesson.delete');
+
+Route::post('/lesson/addSift', 'LessonController@addSift')->name('lesson.addSift');
+Route::post('/lesson/addBtLang', 'LessonController@addBtLang')->name('lesson.addBtLang');
+Route::post('/lesson/addIm', 'LessonController@addIm')->name('lesson.addIm');
+Route::post('/lesson/addSand', 'LessonController@addSand')->name('lesson.addSand');
 
 Route::get('/casenotes/{id}', 'CaseNoteController@index')->name('casenotes');
 Route::post('/case-note/update', 'CaseNoteController@update')->name('casenote.update');

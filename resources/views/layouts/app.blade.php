@@ -91,6 +91,16 @@
                     'X-CSRF-TOKEN': _token
                 }
             });
+
+            @if (Session::has('flash_message_success'))      
+              var msg = "{{ Session::get('flash_message_success')}}";
+              showMessage('success',msg);              
+            @endif
+
+            @if (Session::has('flash_message_error'))      
+              var msg = "{{ Session::get('flash_message_error')}}";
+              showMessage('error',msg);
+            @endif
             
         </script>        
         @yield('scripts')

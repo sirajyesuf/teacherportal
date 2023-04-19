@@ -108,12 +108,12 @@ class LessonLogController extends Controller
 
                 $totalHours = DB::table('add_hour_logs')
                        ->where('add_hour_logs.deleted_at',null)
-                       ->where('add_hour_logs.student_id',$request->add_lesson_log_id)
+                       ->where('add_hour_logs.student_id',$request->edit_add_hour_stu_id)
                        ->sum('hours');
 
                 $finishedHours = DB::table('lesson_hour_logs')
                                ->where('lesson_hour_logs.deleted_at',null)
-                               ->where('lesson_hour_logs.student_id',$request->add_lesson_log_id)
+                               ->where('lesson_hour_logs.student_id',$request->edit_add_hour_stu_id)
                                ->sum('hours');
 
                 $hoursRemaining = $totalHours - $finishedHours;

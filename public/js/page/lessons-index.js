@@ -1,23 +1,11 @@
 $( document ).ready(function() {
+    var stuId = $('#student_id').val();
     
     $('.datepicker1').datepicker({
         changeYear: 'true',
         changeMonth: 'true',
         dateFormat: 'dd-mm-yy',
     });
-
-    // CKEDITOR.replaceAll('vestibular');
-    // CKEDITOR.replaceAll('proprioception');
-    // CKEDITOR.replaceAll('muscle_tone');
-    // CKEDITOR.replaceAll('reflex');
-    // CKEDITOR.replaceAll('kinestesia');
-    // CKEDITOR.replaceAll('massage');
-    // CKEDITOR.replaceAll('tactile');
-    // CKEDITOR.replaceAll('emotions');
-    // CKEDITOR.replaceAll('vp');
-    // CKEDITOR.replaceAll('ep');
-    // CKEDITOR.replaceAll('others');
-    // CKEDITOR.replaceAll('ft');
 
     // Generate a unique ID for each textarea element
     var textareas = document.getElementsByTagName('textarea');
@@ -38,6 +26,82 @@ $( document ).ready(function() {
         outputTemplate: '<a href="{userId}">{name}</a>',
         
     } ];    
+
+    CKEDITOR.config.contentsCss = [
+      cssUrl
+    ];
+
+    $('body').on('click','.new_sift',function(e){
+        e.preventDefault();        
+        
+        $.ajax({
+            url: newsiftUrl+'?id='+stuId,
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            type: 'POST',
+            dataType: 'json',
+            success: function(result) {  
+                showMessage('success','Added');
+
+                setTimeout(function() {                    
+                    window.location.href = lessonUrl;
+                }, 1500);
+            }
+        });
+    });
+
+    $('body').on('click','.new_btlang',function(e){
+        e.preventDefault();        
+        
+        $.ajax({
+            url: newBtUrl+'?id='+stuId,
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            type: 'POST',
+            dataType: 'json',
+            success: function(result) {  
+                showMessage('success','Added');
+
+                setTimeout(function() {                    
+                    window.location.href = lessonBtUrl;
+                }, 1500);
+            }
+        });
+    });
+
+    $('body').on('click','.new_im',function(e){
+        e.preventDefault();        
+        
+        $.ajax({
+            url: newImUrl+'?id='+stuId,
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            type: 'POST',
+            dataType: 'json',
+            success: function(result) {  
+                showMessage('success','Added');
+
+                setTimeout(function() {                    
+                    window.location.href = lessonImUrl;
+                }, 1500);
+            }
+        });
+    });
+
+    $('body').on('click','.new_sand',function(e){
+        e.preventDefault();        
+        
+        $.ajax({
+            url: newSandUrl+'?id='+stuId,
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            type: 'POST',
+            dataType: 'json',
+            success: function(result) {  
+                showMessage('success','Added');
+
+                setTimeout(function() {                    
+                    window.location.href = lessonSandUrl;
+                }, 1500);
+            }
+        });
+    });
 
     $('body').on('click','.del-lesson',function(e){
         e.preventDefault();
@@ -111,12 +175,12 @@ $( document ).ready(function() {
                     showMessage('error',result.message);
                 }
             },
-            error: function(error) {                
-                if(error.responseJSON.errors.duration.length)
+            error: function(error) {      
+                if(typeof(error.responseJSON.errors) !== 'undefined' && error.responseJSON.errors.duration.length)
                 {
                     showMessage('error',error.responseJSON.errors.duration[0]);
                     return;
-                }
+                }                
                 showMessage('error',error.responseJSON.message);
             }
         });

@@ -28,3 +28,27 @@ td input{
 .select2-container{
     width: 100%!important;
 }
+#cke_description .cke_contents {
+    height: 400px!important;
+}
+.student-infobox {    
+    max-height: 540px;    
+}
+
+textarea.cke-hidden {
+  visibility: hidden!important;
+  height: 0;
+}
+#nameUpdate {
+  max-width: 150px;
+}
+.cke_editable {
+    font-size: 13px;    
+    font-family: sans-serif, Arial, Verdana, "Trebuchet MS", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    line-height: 1.6;
+    word-wrap: break-word;
+}
+p {
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+}

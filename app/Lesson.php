@@ -17,4 +17,9 @@ class Lesson extends Model
     {
         return $this->belongsTo(User::class,'updated_by');
     }
+
+    const SIFT = 1;
+    const BTLANG = 2;
+    const IM = 3;
+    const SAND = 4;    
 }

@@ -152,7 +152,7 @@ class CaseNoteController extends Controller
         if($request->update_id)
         {
             $caseMgmt = CaseManagement::find($request->update_id);
-            $caseMgmt->date = $request->date;            
+            $caseMgmt->date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
             $caseMgmt->package = $request->package;
             $caseMgmt->num = $request->num;
             $caseMgmt->description = $request->description;
@@ -220,7 +220,7 @@ class CaseNoteController extends Controller
         if($request->update_id)
         {
             $parentRw = ParentReview::find($request->update_id);
-            $parentRw->date = $request->date;            
+            $parentRw->date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');            
             $parentRw->description = $request->description;
             $parentRw->updated_by = Auth::user()->id;
             $r = $parentRw->save();
@@ -285,7 +285,7 @@ class CaseNoteController extends Controller
         if($request->update_id)
         {
             $comment = Comment::find($request->update_id);
-            $comment->date = $request->date;                      
+            $comment->date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
             $comment->comments = $request->comments;
             $comment->updated_by = Auth::user()->id;
             $r = $comment->save();

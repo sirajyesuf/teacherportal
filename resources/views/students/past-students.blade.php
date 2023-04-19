@@ -55,6 +55,14 @@
                             elseif($notify->case_type == 5)
                             {
                                 $route = route('lesson-bt',$notify->student_id)."#btlang".$notify->case_id;
+                            }
+                            elseif($notify->case_type == 6)
+                            {
+                                $route = route('lesson-im',$notify->student_id)."#im".$notify->case_id;
+                            }
+                            elseif($notify->case_type == 7)
+                            {
+                                $route = route('lesson-sand',$notify->student_id)."#sand".$notify->case_id;
                             }                            
                         ?>
                         @if($notify->is_read)

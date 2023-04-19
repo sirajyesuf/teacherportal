@@ -92,7 +92,7 @@
                                         <td>
                                             <div class="d-flex">
                                                 <label class="font-weight-bold mb-0 mr-1">Date:</label>
-                                                <input type="text" class="datepicker" id="date_cmm_{{ $obj->id }}" name="date" placeholder="Date:" value="{{ $obj->date }}">
+                                                <input type="text" class="datepicker" id="date_cmm_{{ $obj->id }}" name="date" placeholder="Date:" value="{{ caseDateFormate($obj->date) }}">
                                             </div>
                                         </td>
                                         <td>
@@ -123,7 +123,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="5">
-                                            <textarea name="description" rows="40" id="description" class="ckeditor">{{ $obj->description }}</textarea>
+                                            <textarea name="description" rows="50" id="description" class="ckeditor">{{ $obj->description }}</textarea>
                                         </td>
                                     </tr>
                                 </table>
@@ -145,7 +145,7 @@
                                         <td>
                                             <div class="d-flex">
                                                 <label class="font-weight-bold mb-0 mr-1">Date:</label>
-                                                <input type="text" class="datepicker" id="date_prs_{{ $obj->id }}" name="date" placeholder="Date:" value="{{ $obj->date }}">
+                                                <input type="text" class="datepicker" id="date_prs_{{ $obj->id }}" name="date" placeholder="Date:" value="{{ caseDateFormate($obj->date) }}">
                                             </div>
                                         </td>
                                         <td>
@@ -161,7 +161,7 @@
                                     </tr>
                                     <tr>
                                         <td colspan="3">
-                                            <textarea name="description" rows="5" id="description" class="ckeditor">{{ $obj->description }}</textarea>
+                                            <textarea name="description" rows="50" id="description" class="ckeditor">{{ $obj->description }}</textarea>
                                         </td>
                                     </tr>
                                 </table>
@@ -183,7 +183,7 @@
                                         <td>
                                             <div class="d-flex">
                                                 <label class="font-weight-bold mb-0 mr-1">Date:</label>
-                                                <input type="text" class="datepicker" id="date_com_{{ $obj->id }}" name="date" placeholder="Date:" value="{{ $obj->date }}">
+                                                <input type="text" class="datepicker" id="date_com_{{ $obj->id }}" name="date" placeholder="Date:" value="{{ caseDateFormate($obj->date) }}">
                                             </div>
                                         </td>
                                         <td>
@@ -201,7 +201,7 @@
                                     <tr>
                                         <td colspan="3">
                                             {{-- <textarea name="comments" rows="45" id="comments" class="ckeditor">{{ $comment->comments }}</textarea> --}}
-                                            <textarea name="comments" rows="15" class="comments">{{ $obj->comments }}</textarea>
+                                            <textarea name="comments" rows="25" class="comments">{{ $obj->comments }}</textarea>
                                         </td>
                                     </tr>
                                 </table>
@@ -252,6 +252,7 @@
         var deleteCmmUrl = "{{ route('casenote.deleteCmm') }}";
         var deletePrsUrl = "{{ route('casenote.deletePrs') }}";
         var deleteComUrl = "{{ route('casenote.deleteCom') }}";
+        var cssUrl = "{{ asset('css/page/casenotes.css') }}";
         var url = "{{ url("/")}}"
 
     </script>

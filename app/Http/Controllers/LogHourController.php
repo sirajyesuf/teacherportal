@@ -55,6 +55,7 @@ class LogHourController extends Controller
                 $lessonLog->student_id = $request->add_log_student_id;
                 $lessonLog->hours = $request->add_log_hour;
                 $lessonLog->lesson_date = $lesson_date;
+                $lessonLog->program = $request->program;
                 $lessonLog->created_by = $request->name;
                 $r = $lessonLog->save();
 
@@ -218,12 +219,8 @@ class LogHourController extends Controller
                     $hoursRemaining = 0;
 
                 $student = Student::find($lessonLog->student_id);
-
-                if($hoursRemaining == 0)
-                {
-                    $student->is_past = 1;                    
-                }
                 $student->remaining_hours = $hoursRemaining;
+                $student->is_past = ($hoursRemaining) ? 0 : 1;
                 $student->save();
 
                 if($r)

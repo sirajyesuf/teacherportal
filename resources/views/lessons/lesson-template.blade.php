@@ -157,6 +157,31 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-md-6">                             
+                            <div class="lesson-table pl-lg-2">
+                                <div class="temp-ttl">
+                                    <input type="radio" id="template_4" name="template_id" value="4">
+                                    <label for="template_4" class="option option-2 orange-bg">
+                                        <div class="dot"></div>
+                                        <span class="bold-white">Sand</span>
+                                    </label>
+                                </div>
+                                <table class="bt-lang">
+                                    <tr>
+                                        <td>Date:</td>
+                                        <td>Trainer:</td>
+                                        <td>Duration:</td>
+                                    </tr>
+                                </table>
+                                <table class="bt-lang">
+                                    <tr class="bt-lang" style="height:225px">
+                                        <td class="first-col" rowspan="6" style="height:225px"></td>
+                                    </tr>                                    
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                 </div>                             
             </div>            
         </main>
@@ -168,6 +193,7 @@
 	var lessonUrl = "{{ route('lesson',$student->id)}}";
     var lessonBtUrl = "{{ route('lesson-bt',$student->id)}}";
     var lessonImUrl = "{{ route('lesson-im',$student->id)}}";
+    var lessonSandUrl = "{{ route('lesson-sand',$student->id)}}";
 </script>
 @endsection
 

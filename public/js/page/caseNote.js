@@ -4,7 +4,7 @@ $(document).ready(function() {
     $('.datepicker').datepicker({
         changeYear: 'true',
         changeMonth: 'true',
-        dateFormat: 'yy-mm-dd',
+        dateFormat: 'dd-mm-yy',
     });    
 
     CKEDITOR.config.mentions = [ { 
@@ -13,6 +13,10 @@ $(document).ready(function() {
         outputTemplate: '<a href="{userId}">{name}</a>',
         
     } ];
+
+    CKEDITOR.config.contentsCss = [
+      cssUrl
+    ];
 
     CKEDITOR.replaceAll( 'comments');
 
