@@ -441,7 +441,7 @@
                 </div>
                 <div class="form-group">
                     <label for="music_day" class="col-form-label">Music Day:</label>
-                    <input type="text" name="music_day" class="form-control" id="music_day">
+                    <input type="number" min="0" step="1" name="music_day" class="form-control" id="music_day">
                     <span class="error"></span>
                 </div>
                 <div class="form-group">

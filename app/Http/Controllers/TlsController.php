@@ -98,11 +98,11 @@ class TlsController extends Controller
                         else{                            
                             $temp = $m->date = Carbon::parse($temp)->addDays('1')->format('Y-m-d');                            
                         }
-                        $r1 = $m->save();
+                        $m->save();
                     }
                 }
 
-                if($r && $r1)
+                if($r)
                 {
                     $result = ['status' => true, 'message' => 'TLS update successfully.', 'data' => []];
                 }else{

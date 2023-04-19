@@ -19,6 +19,8 @@ $("input[type='radio']").click(function(){
                     window.location.href = lessonBtUrl;
                 else if(id == 3)
                     window.location.href = lessonImUrl;
+                else if(id == 4)
+                    window.location.href = lessonSandUrl;
             } else {
                 
             }

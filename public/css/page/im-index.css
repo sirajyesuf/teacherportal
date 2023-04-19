@@ -1,0 +1,15 @@
+.cke_top,.cke_bottom
+{
+    display: none!important;
+}
+.truncated-text {
+  width: 100px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.truncated-text:hover {
+  overflow: visible;
+  white-space: normal;
+}

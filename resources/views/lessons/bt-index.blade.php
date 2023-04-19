@@ -49,8 +49,17 @@
             <div class="note-upper">
                 <ul>
                     @if(isset($user->id))
+                    <input type="hidden" id="student_id" value="{{$user->id}}">
                     <li><h2><a href="{{route('student.profile',$user->id)}}" class="nobtn">{{ (isset($user->name))?$user->name:'' }}</a></h2></li>
-                    <li><a href="{{ route('select.template',$user->id) }}" class="dark-blue"><img src="{{ asset('images/circle-2.svg')}}" alt=""> New Lesson</a></li>
+                    <li><a class="btn-save dark-blue" style="margin-left: 20px; border-radius: 10px" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{ asset('images/circle-2.svg')}}" alt=""> New Lesson </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item pt-2 pb-2 dp-down new_sift" href="javascript:void(0)">SI/FT</a>
+                            <a class="dropdown-item pt-2 pb-2 dp-down new_btlang" href="javascript:void(0)">BT/Lang</a>
+                            <a class="dropdown-item pt-2 pb-2 dp-down new_im" href="javascript:void(0)">IM</a>
+                            <a class="dropdown-item pt-2 pb-2 dp-down new_sand" href="javascript:void(0)">Sand</a>
+                        </div>
+                    </li>
+                    {{-- <li><a href="{{ route('select.template',$user->id) }}" class="dark-blue"><img src="{{ asset('images/circle-2.svg')}}" alt=""> New Lesson</a></li> --}}
                     <li><a href="{{ route('casenotes',$user->id) }}" class="dark-blue"><img src="{{ asset('images/folder-shared.svg')}}" alt=""> View case notes</a></li>
                     @endif
                 </ul>
@@ -69,7 +78,7 @@
                 <li><a href="{{ route('lesson',$user->id)}}">SI/FT</a></li>
                 <li><a href="#" id="active">BT/Lang</a></li>
                 <li><a href="{{ route('lesson-im',$user->id) }}">IM</a></li>
-                
+                <li><a href="{{ route('lesson-sand',$user->id) }}">Sand</a></li>                
             </ul>
         </div>
 
@@ -109,7 +118,15 @@
     <script type="text/javascript">        
         var deleteUrl = "{{ route('lesson.delete') }}";
         var url = "{{ url("/")}}";       
-        var cssUrl = "{{ asset('css/page/lessons-index.css') }}"; 
+        var cssUrl = "{{ asset('css/page/lessons-index.css') }}";
+        var newsiftUrl ="{{ route('lesson.addSift')}}";
+        var newBtUrl ="{{ route('lesson.addBtLang')}}";
+        var newImUrl ="{{ route('lesson.addIm')}}";
+        var newSandUrl ="{{ route('lesson.addSand')}}";
+        var lessonUrl = "{{ route('lesson',$user->id)}}";
+        var lessonBtUrl = "{{ route('lesson-bt',$user->id)}}";
+        var lessonImUrl = "{{ route('lesson-im',$user->id)}}";
+        var lessonSandUrl = "{{ route('lesson-sand',$user->id)}}"; 
     </script>
     <script src="{{addPageJsLink('lessons-index.js')}}"></script>
 @endsection
