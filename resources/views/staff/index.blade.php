@@ -115,66 +115,24 @@
     <?php $count = count($users); ?>
     <div class="main-part">
         <div class="row">
-            <div class="col-xl-4 col-md-6">
-                @foreach($users as $key => $user)
-                @if($key % 3 == 0)
-                    <div class="staff-box">
-                        <div class="row">
-                            <div class="col-md-4 d-flex align-items-center">                                
-                                <h4 class="mb-0 mt-0">{{ $user->first_name }}</h4>
-                            </div>
-                            <div class="col-md-3 d-flex align-items-center">
-                                <h4 class="mb-0 mt-0">{{ $user->role }}</h4>
-                            </div>
-                            <div class="col-md-5 d-flex align-items-center">
-                                <a href="{{ route('user.edit', $user->id) }}">Edit</a>
-                                <a href="javascriot:void(0)" data-id="{{$user->id}}" class="ml-1 delUser">Delete</a>
-                            </div>                            
+            @foreach($users as $key => $user)                
+            <div class="col-md-4">
+                <div class="staff-box">
+                    <div class="row">
+                        <div class="col-md-4 d-flex align-items-center">                                
+                            <h4 class="mb-0 mt-0">{{ $user->first_name }}</h4>
                         </div>
-                    </div>
-                @endif
-                @endforeach
-            </div>
-            <div class="col-xl-4 col-md-6">
-                @foreach($users as $key => $user)
-                @if($key % 3 == 1)
-                    <div class="staff-box">
-                        <div class="row">
-                            <div class="col-md-4 d-flex align-items-center">
-                                <h4 class="mb-0 mt-0">{{ $user->first_name }}</h4>
-                            </div>
-                            <div class="col-md-3 d-flex align-items-center">
-                                <h4 class="mb-0 mt-0">{{ $user->role }}</h4>
-                            </div>
-                            <div class="col-md-5 d-flex align-items-center justify-content-end">
-                                <a href="{{ route('user.edit', $user->id) }}">Edit</a>
-                                <a href="javascriot:void(0)" data-id="{{$user->id}}" class="ml-1 delUser">Delete</a>
-                            </div>
+                        <div class="col-md-3 d-flex align-items-center">
+                            <h4 class="mb-0 mt-0">{{ $user->role }}</h4>
                         </div>
+                        <div class="col-md-5 d-flex align-items-center">
+                            <a href="{{ route('user.edit', $user->id) }}">Edit</a>
+                            <a href="javascriot:void(0)" data-id="{{$user->id}}" class="ml-1 delUser">Delete</a>
+                        </div>                            
                     </div>
-                @endif
-                @endforeach
-            </div>
-            <div class="col-xl-4 col-md-6">
-                @foreach($users as $key => $user)
-                @if($key % 3 == 2)
-                    <div class="staff-box">
-                        <div class="row">
-                            <div class="col-md-4 d-flex align-items-center">
-                                <h4 class="mb-0 mt-0">{{ $user->first_name }}</h4>
-                            </div>
-                            <div class="col-md-3 d-flex align-items-center">
-                                <h4 class="mb-0 mt-0">{{ $user->role }}</h4>
-                            </div>
-                            <div class="col-md-5 d-flex align-items-center justify-content-end">
-                                <a href="{{ route('user.edit', $user->id) }}">Edit</a>
-                                <a href="javascriot:void(0)" data-id="{{$user->id}}" class="ml-1 delUser">Delete</a>
-                            </div>
-                        </div>
-                    </div>
-                @endif
-                @endforeach
-            </div>
+                </div>                
+            </div>            
+            @endforeach
         </div>
         <div class="mt-5">            
         </div>
