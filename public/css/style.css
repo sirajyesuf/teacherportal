@@ -787,7 +787,7 @@ ul {
 
 .student-leftprt .note-upper ul li {
     /*padding-right: 30px;*/
-    padding-right: 16px;
+    padding-right: 10px;
 }
 
 .tls-part {
@@ -1282,4 +1282,30 @@ div.nav-link.active a {
 }
 div.nav-link{
     cursor: pointer;    
+}
+
+/* CSS Added 21-04-2023 */
+.note-upper ul li.s_btndlt a{padding:10px 0;}
+.student-leftprt .note-upper ul li:last-child{padding-right:0;}
+.note-upper ul li a img{margin-right:0;}
+.s_btndlt{width:40px;}
+.s_name{width:calc(100% - 492px);}
+.s_btnsave{width:95px;}
+.s_case{width:155px;}
+.s_btnview{width:135px;}
+.s_btndate{width:67px;}
+.student-leftprt .note-upper h2{display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;}
+
+@media(max-width:767px){
+.student-leftprt .note-upper ul li.s_name{width:100% !important;}
+.hour-links ul li a{font-size:14px !important;}
+.student-infobox{ max-height: initial;}
+.header-right{width:150px;}
+.header-addbtn .search-box input{width:100%;}
+.student-box .col-md-3{margin: 15px;}
+.note-wrapper{padding:0;}
+.note-upper ul{width: 100%; margin: 0; padding: 0;}
+.note-upper ul li{width: calc(50% - 5px) !important; margin: 0;    margin-bottom: 0 !important;}
+.note-upper ul li:last-child{margin-left:10px;}
+
 }

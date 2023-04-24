@@ -35,13 +35,13 @@
                             }
                         @endphp
                         <ul>
-                            <li><a href="javascript:void(0)" class="delete-student"><img class="delete-img" src="{{ asset('images/delete-button.svg') }}" width="28" /></a></li>
+                            <li class="s_btndlt"><a href="javascript:void(0)" class="delete-student"><img class="delete-img" src="{{ asset('images/delete-button.svg') }}" width="28" /></a></li>
                             {{-- <li><h2>{{$student->name}}</h2></li> --}}
-                            <li><h2 class="editable" data-student-id="{{$student->id}}" data-url="{{route('student.nameUpdate', ['id' => $student->id])}}">{{$student->name}}</h2></li>
-                            <li><button type="submit" class="orange-bg"><img src="{{ asset('images/download2.png')}}" height="20"> Save</button></li>
-                            <li><a href="{{ route('casenotes',$student->id) }}" class="dark-blue"><img src="{{ asset('images/folder-shared.svg')}}" alt=""> View case notes</a></li>
-                            <li><a href="{{ route('lesson',$student->id)}}" class="dark-blue"><img src="{{ asset('images/description.svg')}}" alt=""> View Lesson</a></li>
-                            <li><input id="appointment_date" class="" type="hidden" /><a class="home-picker-profile {{$colClass}}" data-id="{{ $student->id }} "href="#">{{ ($student->appointment_date)?longDateFormat($student->appointment_date):"Due Date"}} </a></li>
+                            <li class="s_name"><h2 class="editable" data-student-id="{{$student->id}}" data-url="{{route('student.nameUpdate', ['id' => $student->id])}}">{{$student->name}}</h2></li>
+                            <li class="s_btnsave"><button type="submit" class="orange-bg"><img src="{{ asset('images/download2.png')}}" height="20"> Save</button></li>
+                            <li class="s_case"><a href="{{ route('casenotes',$student->id) }}" class="dark-blue"><img src="{{ asset('images/folder-shared.svg')}}" alt=""> View case notes</a></li>
+                            <li class="s_btnview"><a href="{{ route('lesson',$student->id)}}" class="dark-blue"><img src="{{ asset('images/description.svg')}}" alt=""> View Lesson</a></li>
+                            <li class="s_btndate"><input id="appointment_date" class="" type="hidden" /><a class="home-picker-profile {{$colClass}}" data-id="{{ $student->id }} "href="#">{{ ($student->appointment_date)?longDateFormat($student->appointment_date):"Due Date"}} </a></li>
                             @if($student->appointment_date)
                                 <input type="checkbox" name="appointment-date" data-check-id="{{$student->id}}" class="bg-none black ml-2 checked" {{($student->is_appointment_done)?"checked disabled":""}}/>                                    
                             @endif
