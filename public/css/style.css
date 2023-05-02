@@ -135,17 +135,17 @@ ul {
 }
 
 .adduser-item label {
-    width: 70px;
+    width: 210px;
     font-family: 'Baloo Bhai 2', cursive;
     font-weight: 700;
     font-size: 24px;
     color: #000000;
-    margin-right: 40px;
+    margin-right: 20px;
     margin-bottom: 0;
 }
 
 .adduser-item input {
-    max-width: 403px;
+    max-width: calc(100% - 240px);
     width: 100%;
     display: block;
     font-weight: 400;
@@ -158,8 +158,10 @@ ul {
     outline: none;
     border-radius: 12px;
     margin-left: 10px;
+	border: 1px solid transparent;
 }
-
+.adduser-item .clr-field{max-width: calc(100% - 240px);}
+.adduser-item .clr-field input{max-width:100%;}
 .adduser-item input::placeholder {
     color: rgba(0, 0, 0, 0.57);
     opacity: 1;
@@ -268,6 +270,7 @@ ul {
     padding-left: 50px;
     margin-left: auto;
     margin-right: 50px;
+	border:1px solid transparent;
 }
 
 .search-box input:focus {
@@ -305,8 +308,8 @@ ul {
 }
 
 .main-part {
-    padding-left: 10px;
-    padding-bottom: 40px;
+   /* padding-left: 10px;
+    padding-bottom: 40px;*/
 }
 
 .student-box {
@@ -362,12 +365,12 @@ ul {
 
 .student-box span {
     font-weight: 400;
-    font-size: 16px;
+    font-size: 13px;
     color: #EF5D5D;
 }
 
 .student-box span img {
-    max-width: 24px;
+    max-width: 16px;
 }
 
 .student-box .holud {
@@ -1289,23 +1292,46 @@ div.nav-link{
 .student-leftprt .note-upper ul li:last-child{padding-right:0;}
 .note-upper ul li a img{margin-right:0;}
 .s_btndlt{width:40px;}
-.s_name{width:calc(100% - 492px);}
-.s_btnsave{width:95px;}
-.s_case{width:155px;}
-.s_btnview{width:135px;}
-.s_btndate{width:67px;}
+.s_name{width:calc(100% - 557px);}
+.s_btnsave{width:100px;}
+.s_case{width:165px;}
+.s_btnview{width:145px;}
+.s_btndate{width:97px;}
 .student-leftprt .note-upper h2{display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;}
+
+.header-area .dropdown-menu{padding: 0;height: 435px; overflow: hidden; overflow-y: auto; width: 300px;}
+.header-area .dropdown-item{white-space: break-spaces;font-size: 12px;}
+
 
 @media(max-width:767px){
 .student-leftprt .note-upper ul li.s_name{width:100% !important;}
 .hour-links ul li a{font-size:14px !important;}
 .student-infobox{ max-height: initial;}
-.header-right{width:150px;}
+.header-right{width:80px;}
 .header-addbtn .search-box input{width:100%;}
 .student-box .col-md-3{margin: 15px;}
 .note-wrapper{padding:0;}
 .note-upper ul{width: 100%; margin: 0; padding: 0;}
 .note-upper ul li{width: calc(50% - 5px) !important; margin: 0;    margin-bottom: 0 !important;}
 .note-upper ul li:last-child{margin-left:10px;}
-
+.adduser-item{display:block;}
+.adduser-item label{width:100%; margin-bottom:5px;}
+.adduser-item input{max-width:100%; margin-left: 0; margin-top: 0;}
+.adduser-item .clr-field{max-width:100%;}
+.clr-field button{margin-top: 0 !important;}
+.lesson-upper{padding-left:0;}
+.note-upper ul li:nth-child(2){width:100% !important;}
+.note-upper ul li{width: auto !important; padding-right: 5px!important;}
+.note-upper ul li a{margin-left:0 !important;}
+.hour-part{display:flex; width:100%; margin-top: 10px;}
+.hour-part ul{display:flex; align-items:center;}
+.hour-part ul li, .hour-part ul li:nth-child(2){width: 48% !important; padding-left: 20px;}
+.lesson-table{overflow: hidden; overflow-x: auto;}
+.student-infobox{max-height: initial !important;}
+.header-area{display:flex;}
+.header-area .header-right a{padding: 8px 10px!important;}
+.header-area .header-left{width: calc(100% - 80px);display:flex; align-items:center;}
+.header-area .header-left .btn-save{width: 40px; overflow: hidden; height: 40px; display: flex;}
+.header-area .header-left .btn-save > img{margin-right: 10px; margin-top: 4px;}
+#tls_form{overflow: hidden; overflow-x: auto;}
 }
