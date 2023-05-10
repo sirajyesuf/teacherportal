@@ -52,3 +52,7 @@ p {
     margin-block-start: 0em;
     margin-block-end: 0em;
 }
+.edit_student{
+    background: none!important;
+    padding: 0!important;
+}

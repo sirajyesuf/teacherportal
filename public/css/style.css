@@ -1297,7 +1297,8 @@ div.nav-link{
 .s_case{width:165px;}
 .s_btnview{width:145px;}
 .s_btndate{width:97px;}
-.student-leftprt .note-upper h2{display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;}
+#studentName{width: 180px;word-break: break-word}
+.student-leftprt .note-upper h2{display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden;}
 
 .header-area .dropdown-menu{padding: 0;height: 435px; overflow: hidden; overflow-y: auto; width: 300px;}
 .header-area .dropdown-item{white-space: break-spaces;font-size: 12px;}

@@ -36,8 +36,7 @@
                         @endphp
                         <ul>
                             <li class="s_btndlt"><a href="javascript:void(0)" class="delete-student"><img class="delete-img" src="{{ asset('images/delete-button.svg') }}" width="28" /></a></li>
-                            {{-- <li><h2>{{$student->name}}</h2></li> --}}
-                            <li class="s_name"><h2 class="editable" data-student-id="{{$student->id}}" data-url="{{route('student.nameUpdate', ['id' => $student->id])}}">{{$student->name}}</h2></li>
+                            <li class="d-flex align-items-center"><h2 id="studentName">{{$student->name}}</h2><a href="javascript:void(0)" data-student-id="{{$student->id}}" class="edit_student ml-2"><img src="{{ asset('images/edit.svg')}}" alt="" height="18"></a></li>                            
                             <li class="s_btnsave"><button type="submit" class="orange-bg"><img src="{{ asset('images/download2.png')}}" height="20"> Save</button></li>
                             <li class="s_case"><a href="{{ route('casenotes',$student->id) }}" class="dark-blue"><img src="{{ asset('images/folder-shared.svg')}}" alt=""> View case notes</a></li>
                             <li class="s_btnview"><a href="{{ route('lesson',$student->id)}}" class="dark-blue"><img src="{{ asset('images/description.svg')}}" alt=""> View Lesson</a></li>
@@ -190,6 +189,36 @@
         </div>             
     </div>            
 </main>
+
+{{-- Start : for edit student --}}
+<div class="modal" tabindex="-1" role="dialog" id="edit_student_modal">
+    <div class="modal-dialog" role="document">
+        <form action="{{ route('log.hours.add') }}" method="post" id="EditStudentForm">
+        @csrf
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Edit Student</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">                
+                <input type="hidden" id="editStudentId" name="id" value="{{ $student->id }}">
+                <div class="form-group">
+                    <label for="studentName" class="col-form-label">Name:</label>
+                    <input type="text" name="name" id="edit_name" class="form-control">
+                    <span class="error"></span>
+                </div>                
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-save orange-bg">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+{{-- Ends : for edit student --}}
 
 {{-- Start : Delete Confirmation Modal --}}
 <div class="modal" tabindex="-1" role="dialog" id="delete_modal">
@@ -503,6 +532,7 @@
         var homeUrl = "{{ route('home') }}";
         var checkDateUrl = "{{ route('appointment.check') }}";
         var cssUrl = "{{ asset('css/page/student-profile.css') }}";
+        var nameUpdateUrl = "{{ route('student.nameUpdate') }}";
     </script>
     <script src="{{addPageJsLink('student-profile.js')}}"></script>
 @endsection

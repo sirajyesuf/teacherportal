@@ -729,6 +729,7 @@ class LessonController extends Controller
         $lesson->template_id = Lesson::SIFT;
         $lesson->lesson_date = Carbon::now()->format('Y-m-d');
         $lesson->lesson_json = $this->getLessonJson(Lesson::SIFT);
+        $lesson->created_by = $user->id;
         $lesson->updated_by = $user->id;
         $r = $lesson->save();
 
@@ -753,6 +754,7 @@ class LessonController extends Controller
         $lesson->template_id = Lesson::BTLANG;
         $lesson->lesson_date = Carbon::now()->format('Y-m-d');
         $lesson->lesson_json = $this->getLessonJson(Lesson::BTLANG);
+        $lesson->created_by = $user->id;
         $lesson->updated_by = $user->id;
         $r = $lesson->save();
 
@@ -777,6 +779,7 @@ class LessonController extends Controller
         $lesson->template_id = Lesson::IM;
         $lesson->lesson_date = Carbon::now()->format('Y-m-d');
         $lesson->lesson_json = $this->getLessonJson(Lesson::IM);
+        $lesson->created_by = $user->id;
         $lesson->updated_by = $user->id;
         $r = $lesson->save();
 
@@ -801,6 +804,7 @@ class LessonController extends Controller
         $lesson->template_id = Lesson::SAND;
         $lesson->lesson_date = Carbon::now()->format('Y-m-d');
         $lesson->lesson_json = $this->getLessonJson(Lesson::SAND);
+        $lesson->created_by = $user->id;
         $lesson->updated_by = $user->id;
         $r = $lesson->save();
 
@@ -976,7 +980,7 @@ class LessonController extends Controller
 
             if($lesson)
             {
-                if($lesson->updated_by != $user->id)
+                if($lesson->created_by != $user->id && $user->role_type != '1')
                 {
                     return response()->json(['message' => 'Only person who post can edit'], 422);
                 }
@@ -1120,7 +1124,7 @@ class LessonController extends Controller
 
             if($lesson)
             {
-                if($lesson->updated_by != $user->id)
+                if($lesson->created_by != $user->id && $user->role_type != '1')
                 {
                     return response()->json(['message' => 'Only person who post can edit'], 422);
                 }
@@ -1263,7 +1267,7 @@ class LessonController extends Controller
 
             if($lesson)
             {
-                if($lesson->updated_by != $user->id)
+                if($lesson->created_by != $user->id && $user->role_type != '1')
                 {
                     return response()->json(['message' => 'Only person who post can edit'], 422);
                 }
@@ -1404,7 +1408,7 @@ class LessonController extends Controller
 
             if($lesson)
             {
-                if($lesson->updated_by != $user->id)
+                if($lesson->created_by != $user->id && $user->role_type != '1')
                 {
                     // return response()->json(['message' => 'Only person who post can edit'], 422);
                     return redirect()->back()->with(['flash_message_error' => 'Only person who post can edit']);

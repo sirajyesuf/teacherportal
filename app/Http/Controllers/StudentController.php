@@ -224,11 +224,28 @@ class StudentController extends Controller
         return response()->json($result);
     }
 
-    public function nameUpdate(Request $request, $id)
+    public function nameUpdate(Request $request)
     {
-        $student = Student::findOrFail($id);
-        $student->name = $request->input('name');
-        $student->save();
-        return $student->name;
+        if($request->ajax()) {
+            $rules = array(
+                'name' => 'required|max:50',                
+            );
+            $validator = Validator::make($request->all(), $rules);
+            if($validator->fails()){
+                $result = ['status' => false, 'message' => $validator->errors(), 'data' => []];
+            }else{                
+                $student = Student::findOrFail($request->id);
+                $student->name = $request->name;
+                $r = $student->save();
+
+                if($r)
+                {
+                    $result = ['status' => true,  'name' => $request->name, 'message' => 'Name update successfully.', 'data' => []];
+                }else{
+                    $result = ['status' => false, 'message' => 'Name update fail!', 'data' => []];
+                }
+            }
+            return response()->json($result);
+        }        
     }
 }

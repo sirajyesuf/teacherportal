@@ -54,33 +54,6 @@ $( document ).ready(function() {
 
     });
 
-    var clicked = false;
-    $(document).on('click', 'input[name="name"]', function() {
-        clicked = true;
-    }).on('blur', 'input[name="name"]', function() {
-        if (clicked) {
-            clicked = false;
-            return;
-        }
-        var name = $(this).val();
-        var studentId = $(this).closest('.editable').data('student-id');
-        var url = $('.editable[data-student-id="' + studentId + '"]').data('url');
-        $.ajax({
-            url: url,
-            method: 'PUT',
-            data: {
-                'name': name
-            },
-            success: function(response) {
-                $('.editable[data-student-id="' + studentId + '"]').html(response);
-            },
-            error: function(response) {
-                alert('Error updating name.');
-            }
-        });
-    });
-    // student name update script Ends
-
     $(document).on('click','.edit_add_hour',function(){
         
         var dataId = $(this).attr('data-id');
@@ -725,6 +698,52 @@ $( document ).ready(function() {
                         $('#edit_tls_form').find('#'+key).closest('.form-group').find('.error').html(result.message[key]);
                     });
                     $('#edit_tls_form').find("."+first_input).focus();
+                }
+            },
+            error: function(error) {
+                $($this).find('button[type="submit"]').prop('disabled', false);
+                alert('Something want wrong!', 'error');                
+            }
+        });
+    });
+
+    $(document).on('click','.edit_student', function(){
+        var stuId = $(this).attr('data-student-id');
+        $('#editStudentId').val(stuId);
+        var stuName = $('#studentName').html();
+        $('#edit_name').val(stuName);
+        $('#edit_student_modal').modal('show');
+    });
+
+    $('#EditStudentForm').submit(function(event) {
+        event.preventDefault();
+        var $this = $(this);                    
+
+        $.ajax({
+            url: nameUpdateUrl,
+            type: 'POST',
+            data: $('#EditStudentForm').serialize(),                
+            dataType: 'json',
+            beforeSend: function() {
+                $($this).find('button[type="submit"]').prop('disabled', true);
+            },
+            success: function(result) {
+                $($this).find('button[type="submit"]').prop('disabled', false);
+                if (result.status == true) {
+                    $('#studentName').html(result.name);
+                    $('#edit_student_modal').modal('hide');
+                    $this[0].reset();                    
+                    showMessage('success',result.message)                    
+                    $('.error').html("");
+                }
+                else {
+                    first_input = "";
+                    $('.error').html("");
+                    $.each(result.message, function(key) {
+                        if(first_input=="") first_input=key;
+                        $('#EditStudentForm').find('#edit_'+key).closest('.form-group').find('.error').html(result.message[key]);
+                    });
+                    $('#EditStudentForm').find("."+first_input).focus();
                 }
             },
             error: function(error) {
