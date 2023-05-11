@@ -1524,7 +1524,15 @@ class LessonController extends Controller
 
     public function delete(Request $request)
     {
-        $model = Lesson::find($request->id);                
+        $user = Auth::user();
+        $model = Lesson::find($request->id);   
+        if($model)
+        {
+            if($model->created_by != $user->id && $user->role_type != '1')
+            {
+                return response()->json(['message' => 'Only person who post can delete'], 422);
+            }
+        }             
         $model->updated_by = Auth::user()->id;
         $model->deleted_at = Carbon::now();
 

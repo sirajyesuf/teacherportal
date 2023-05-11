@@ -127,6 +127,15 @@ $( document ).ready(function() {
                 setTimeout(function() {                    
                     window.location.reload();
                 }, 1500);
+            },
+            error: function(error) {      
+                if(typeof(error.responseJSON.errors) !== 'undefined' && error.responseJSON.errors.duration.length)
+                {
+                    showMessage('error',error.responseJSON.errors.duration[0]);
+                    return;
+                }                
+                showMessage('error',error.responseJSON.message);
+                $('#delete_modal').modal('hide');
             }
         });
     });
