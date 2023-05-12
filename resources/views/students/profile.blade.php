@@ -75,9 +75,11 @@
                                             <td class="blue-bg">{{ $tls->music_day}}</td>
                                             <td class="blue-bg">{{ $tls->music_prog}}</td>
                                             <td class="blue-bg">{{ $tls->duration}} Mins</td>  
-                                            <td class="d-flex-action blue-bg">
-                                                <a href="javascript:void(0)" class="edit_tls" data-id="{{$tls->id}}"><img src="{{ asset('images/edit.svg')}}" alt="" height="18"></a>
-                                                <a href="javascript:void(0)" class="delete_tls" data-id="{{$tls->id}}"><img src="{{ asset('images/delete.svg')}}" alt=""></a>                          
+                                            <td class="blue-bg">
+                                                <div class="d-flex-action">
+                                                    <a href="javascript:void(0)" class="edit_tls" data-id="{{$tls->id}}"><img src="{{ asset('images/edit.svg')}}" alt="" height="18"></a>
+                                                    <a href="javascript:void(0)" class="delete_tls" data-id="{{$tls->id}}"><img src="{{ asset('images/delete.svg')}}" alt=""></a>
+                                                </div>                          
                                             </td>
                                         </tr>
                                     @else
@@ -87,9 +89,11 @@
                                             <td>{{ $tls->music_day}}</td>
                                             <td>{{ $tls->music_prog}}</td>
                                             <td>{{ $tls->duration}} Mins</td>  
-                                            <td class="d-flex-action">
-                                                <a href="javascript:void(0)" class="edit_tls" data-id="{{$tls->id}}"><img src="{{ asset('images/edit.svg')}}" alt="" height="18"></a>
-                                                <a href="javascript:void(0)" class="delete_tls" data-id="{{$tls->id}}"><img src="{{ asset('images/delete.svg')}}" alt=""></a>                          
+                                            <td class="">
+                                                <div class="d-flex-action">
+                                                    <a href="javascript:void(0)" class="edit_tls" data-id="{{$tls->id}}"><img src="{{ asset('images/edit.svg')}}" alt="" height="18"></a>
+                                                    <a href="javascript:void(0)" class="delete_tls" data-id="{{$tls->id}}"><img src="{{ asset('images/delete.svg')}}" alt=""></a>
+                                                </div>                          
                                             </td>
                                         </tr>
                                     @endif
