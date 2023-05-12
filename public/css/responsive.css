@@ -588,7 +588,7 @@ Extra - Small Screen - Mobile
 
 	.lesson-table table tr td {
 		height: 120px;
-		padding: 12px 10px;
+		padding: 12px 6px;
 		font-size: 12px;
 	}
 
@@ -639,6 +639,7 @@ Extra - Small Screen - Mobile
 		width: 72px;
 	}
 
+.lesson-table table tr td{padding-left:1px; padding-right:1px;    font-size: 11px;}
 
 }
 
