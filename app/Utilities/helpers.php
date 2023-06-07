@@ -57,7 +57,7 @@ function normal_case($str)
 	else if($str == 'ep')
 		return 'EP';
 	else if($str == 'ft')
-		return 'FT';
+		return 'FT / BT / Lang';
 	else if($str == 'notes')
 		return 'Notes/ Observations';
 	else if($str == 'others')

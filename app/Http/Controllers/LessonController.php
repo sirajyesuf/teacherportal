@@ -288,19 +288,14 @@ class LessonController extends Controller
                                 <td>
                                     <label class="font-weight-bold">'.normal_case($tempName[1]).':</label>
                                     <input type="text" name="'.$tempName[1].'" placeholder="'.normal_case($tempName[1]).':" value="'.$trainer.'" style="background: '.$color.'" readonly>
-                                </td>
-                                <td>
-                                    <label class="font-weight-bold">'.normal_case($tempName[2]).':</label>
-                                    <input type="number" step="0.25" name="'.$tempName[2].'" placeholder="'.normal_case($tempName[2]).':" value="'.$tempValue[2].'" required>  
-                                    
-                                </td>
+                                </td>                                
                             </tr>
                             </table>
                             <table class="bt-lang">
                             <tr class="">                                
                                 <td class="third-col" rowspan="6">
-                                    <label class="font-weight-bold">'.normal_case($tempName[3]).':</label>
-                                    <textarea name="'.$tempName[3].'" placeholder="'.normal_case($tempName[3]).'" class="">'.$tempValue[3].'</textarea>
+                                    <label class="font-weight-bold">'.normal_case($tempName[2]).':</label>
+                                    <textarea name="'.$tempName[2].'" placeholder="'.normal_case($tempName[2]).'" class="">'.$tempValue[2].'</textarea>
                                 </td>
                             </tr>                            
                         </table>
@@ -958,7 +953,7 @@ class LessonController extends Controller
 
                 "date" => Carbon::now()->format('d-m-Y'),
                 "trainer" => Auth::user()->first_name,
-                "duration" => "",
+                // "duration" => "",
                 "description" => "",                
             ];
         }
@@ -1068,7 +1063,7 @@ class LessonController extends Controller
             $lessonLog->student_id = $request->student_id;
             $lessonLog->hours = $request->duration;
             $lessonLog->lesson_date = Carbon::parse($dt)->format('Y-m-d');
-            $lessonLog->program = 'SI';
+            $lessonLog->program = 'SI/FT';
             $lessonLog->created_by = $lessonLog->created_by ?? Auth::user()->id;
             $lessonLog->lesson_id = $lesson->id;
             $lessonLog->save();
@@ -1212,7 +1207,7 @@ class LessonController extends Controller
             $lessonLog->student_id = $request->student_id;
             $lessonLog->hours = $request->duration;
             $lessonLog->lesson_date = Carbon::parse($dt)->format('Y-m-d');
-            $lessonLog->program = 'BT';
+            $lessonLog->program = 'BT/Lang';
             $lessonLog->created_by = $lessonLog->created_by ?? Auth::user()->id;
             $lessonLog->lesson_id = $lesson->id;
             $lessonLog->save();
@@ -1256,7 +1251,7 @@ class LessonController extends Controller
 
     public function sandUpdate(Request $request)
     {
-        $this->validator($request->all())->validate();
+        // $this->validator($request->all())->validate();
 
         $data = $request->all();
         $user = Auth::user();
@@ -1276,16 +1271,16 @@ class LessonController extends Controller
             // Convert date to db date formate
             $lesson_date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
 
-            $lessonLog = LessonLog::where('student_id',$request->student_id)->where('lesson_date',$lesson_date)->where('deleted_at',null)->first();
+            // $lessonLog = LessonLog::where('student_id',$request->student_id)->where('lesson_date',$lesson_date)->where('deleted_at',null)->first();
 
-            if(!$request->duplicate)
-            {                    
-                if($lessonLog)
-                {
-                    $result = ['status' => true, 'match' => 1, 'data' => []];
-                    return response()->json($result);
-                }
-            }
+            // if(!$request->duplicate)
+            // {                    
+            //     if($lessonLog)
+            //     {
+            //         $result = ['status' => true, 'match' => 1, 'data' => []];
+            //         return response()->json($result);
+            //     }
+            // }
             
             $temps = json_decode($lesson->lesson_json,true);
             
@@ -1348,42 +1343,42 @@ class LessonController extends Controller
             $r = $lesson->save();
 
             // lesson log entry : starts
-            if(!$lessonLog)
-            {
-                $lessonLog = new LessonLog;
-            }
-            $lessonLog->student_id = $request->student_id;
-            $lessonLog->hours = $request->duration;
-            $lessonLog->lesson_date = Carbon::parse($dt)->format('Y-m-d');
-            $lessonLog->program = 'Sand';
-            $lessonLog->created_by = $lessonLog->created_by ?? Auth::user()->id;
-            $lessonLog->lesson_id = $lesson->id;
-            $lessonLog->save();
-            $rl = $lessonLog->save();
+            // if(!$lessonLog)
+            // {
+            //     $lessonLog = new LessonLog;
+            // }
+            // $lessonLog->student_id = $request->student_id;
+            // $lessonLog->hours = $request->duration;
+            // $lessonLog->lesson_date = Carbon::parse($dt)->format('Y-m-d');
+            // $lessonLog->program = 'Sand';
+            // $lessonLog->created_by = $lessonLog->created_by ?? Auth::user()->id;
+            // $lessonLog->lesson_id = $lesson->id;
+            // $lessonLog->save();
+            // $rl = $lessonLog->save();
 
-            $totalHours = DB::table('add_hour_logs')
-                   ->where('add_hour_logs.deleted_at',null)
-                   ->where('add_hour_logs.student_id',$request->student_id)
-                   ->sum('hours');
+            // $totalHours = DB::table('add_hour_logs')
+            //        ->where('add_hour_logs.deleted_at',null)
+            //        ->where('add_hour_logs.student_id',$request->student_id)
+            //        ->sum('hours');
 
-            $finishedHours = DB::table('lesson_hour_logs')
-                           ->where('lesson_hour_logs.deleted_at',null)
-                           ->where('lesson_hour_logs.student_id',$request->student_id)
-                           ->sum('hours');
+            // $finishedHours = DB::table('lesson_hour_logs')
+            //                ->where('lesson_hour_logs.deleted_at',null)
+            //                ->where('lesson_hour_logs.student_id',$request->student_id)
+            //                ->sum('hours');
 
-            $hoursRemaining = $totalHours - $finishedHours;
+            // $hoursRemaining = $totalHours - $finishedHours;
 
-            if($hoursRemaining < 0)
-                $hoursRemaining = 0;
+            // if($hoursRemaining < 0)
+            //     $hoursRemaining = 0;
 
-            $student = Student::find($request->student_id);
-            $student->remaining_hours = $hoursRemaining;
-            $student->is_past = ($hoursRemaining) ? 0 : 1;
-            $student->save();
+            // $student = Student::find($request->student_id);
+            // $student->remaining_hours = $hoursRemaining;
+            // $student->is_past = ($hoursRemaining) ? 0 : 1;
+            // $student->save();
 
             // lesson log entry : Ends
             
-            if($rl)
+            if($r)
             {            
                 $result = ['status' => true, 'message' => 'form saved Successfully', 'data' => []];
                 return response()->json($result);
