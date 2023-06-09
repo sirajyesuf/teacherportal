@@ -51,15 +51,15 @@ function addPageJsLink($link){
 function normal_case($str)
 {
 	if($str == 'vp')
-		return 'VP/AP';
+		return 'VP / AP';
 	else if($str == 'tactile')
-		return 'Tactile/Oral';
+		return 'Tactile / Oral';
 	else if($str == 'ep')
 		return 'EP';
 	else if($str == 'ft')
 		return 'FT / BT / Lang';
 	else if($str == 'notes')
-		return 'Notes/ Observations';
+		return 'Notes / Observations';
 	else if($str == 'others')
 		return 'Others / Parent Feedback';
 	else if($str == 'kinestesia')
