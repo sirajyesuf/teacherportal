@@ -251,7 +251,10 @@ class LogHourController extends Controller
 
             if($model->lesson_id)
             {
-                $model->lesson->delete();
+                if(isset($model->lesson->id))
+                {
+                    $model->lesson->delete();
+                }
             }
 
             $model->delete();

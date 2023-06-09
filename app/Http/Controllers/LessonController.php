@@ -980,6 +980,9 @@ class LessonController extends Controller
                     return response()->json(['message' => 'Only person who post can edit'], 422);
                 }
             }
+            else{
+                return response()->json(['message' => 'Lesson not found'], 422);
+            }
 
             // Convert date to db date formate
             $lesson_date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
@@ -1124,6 +1127,9 @@ class LessonController extends Controller
                     return response()->json(['message' => 'Only person who post can edit'], 422);
                 }
             }
+            else{
+                return response()->json(['message' => 'Lesson not found'], 422);
+            }
 
             // Convert date to db date formate
             $lesson_date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
@@ -1267,6 +1273,9 @@ class LessonController extends Controller
                     return response()->json(['message' => 'Only person who post can edit'], 422);
                 }
             }
+            else{
+                return response()->json(['message' => 'Lesson not found'], 422);
+            }
 
             // Convert date to db date formate
             $lesson_date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
@@ -1408,6 +1417,9 @@ class LessonController extends Controller
                     // return response()->json(['message' => 'Only person who post can edit'], 422);
                     return redirect()->back()->with(['flash_message_error' => 'Only person who post can edit']);
                 }
+            }
+            else{
+                return response()->json(['message' => 'Lesson not found'], 422);
             }
             
             $temps = json_decode($lesson->lesson_json,true);

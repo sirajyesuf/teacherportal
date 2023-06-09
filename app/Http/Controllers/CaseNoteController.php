@@ -80,12 +80,13 @@ class CaseNoteController extends Controller
 
     public function addCmm(Request $request)
     {
+        $user = auth()->user();
         $caseMgmt = new CaseManagement;
         $caseMgmt->student_id = $request->id;
         $caseMgmt->date = Carbon::now()->format('Y-m-d');
-        $caseMgmt->trainer = Auth::user()->first_name;
-        $caseMgmt->trainer_id = Auth::user()->id;
-        $caseMgmt->updated_by = Auth::user()->id;
+        $caseMgmt->trainer = $user->first_name;
+        $caseMgmt->trainer_id = $user->id;
+        $caseMgmt->updated_by = $user->id;
         $r = $caseMgmt->save();
 
         if($r)
@@ -102,12 +103,14 @@ class CaseNoteController extends Controller
 
     public function addPrs(Request $request)
     {   
+        $user = auth()->user();
+
         $parentReview = new ParentReview;
         $parentReview->student_id = $request->id;
         $parentReview->date = Carbon::now()->format('Y-m-d');
-        $parentReview->trainer = Auth::user()->first_name;
-        $parentReview->trainer_id = Auth::user()->id;
-        $parentReview->updated_by = Auth::user()->id;
+        $parentReview->trainer = $user->first_name;
+        $parentReview->trainer_id = $user->id;
+        $parentReview->updated_by = $user->id;
         $r = $parentReview->save();
 
         if($r)
@@ -124,12 +127,14 @@ class CaseNoteController extends Controller
 
     public function addCom(Request $request)
     {
+        $user = auth()->user();
+
         $comment = new Comment;
         $comment->student_id = $request->id;
         $comment->date = Carbon::now()->format('Y-m-d');
-        $comment->trainer = Auth::user()->first_name;
-        $comment->trainer_id = Auth::user()->id;
-        $comment->updated_by = Auth::user()->id;
+        $comment->trainer = $user->first_name;
+        $comment->trainer_id = $user->id;
+        $comment->updated_by = $user->id;
         $r = $comment->save();
 
         if($r)
@@ -146,7 +151,7 @@ class CaseNoteController extends Controller
 
     public function updateCmm(Request $request)
     {
-
+        $user = auth()->user();
         $r = '';
 
         if($request->update_id)
@@ -156,7 +161,7 @@ class CaseNoteController extends Controller
             $caseMgmt->package = $request->package;
             $caseMgmt->num = $request->num;
             $caseMgmt->description = $request->description;
-            $caseMgmt->updated_by = Auth::user()->id;
+            $caseMgmt->updated_by = $user->id;
             $r = $caseMgmt->save();
 
             if($request->description)
@@ -183,7 +188,7 @@ class CaseNoteController extends Controller
                 {
                     foreach($notIds as $uId)
                     {                        
-                        $notification = Notification::where('student_id',$request->student_id)->where('user_id',$uId)->where('case_id',$request->update_id)->where('case_type',1)->where('updated_by',Auth::user()->id)->where('deleted_at',null)->first();
+                        $notification = Notification::where('student_id',$request->student_id)->where('user_id',$uId)->where('case_id',$request->update_id)->where('case_type',1)->where('updated_by',$user->id)->where('deleted_at',null)->first();
 
                         if($notification)
                             continue;                        
@@ -193,7 +198,7 @@ class CaseNoteController extends Controller
                         $notification->user_id = $uId;
                         $notification->case_id = $request->update_id;
                         $notification->case_type = 1; // 1 : Case Management Meeting, 2: Parent Review Session                        
-                        $notification->updated_by = Auth::user()->id;
+                        $notification->updated_by = $user->id;
                         $notification->save();
                     }
                 }
@@ -215,6 +220,7 @@ class CaseNoteController extends Controller
 
     public function updatePrs(Request $request)
     {
+        $user = auth()->user();
         $r = '';
 
         if($request->update_id)
@@ -222,7 +228,7 @@ class CaseNoteController extends Controller
             $parentRw = ParentReview::find($request->update_id);
             $parentRw->date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');            
             $parentRw->description = $request->description;
-            $parentRw->updated_by = Auth::user()->id;
+            $parentRw->updated_by = $user->id;
             $r = $parentRw->save();
 
             if($request->description)
@@ -249,7 +255,7 @@ class CaseNoteController extends Controller
                 {
                     foreach($notIds as $uId)
                     {                        
-                        $notification = Notification::where('student_id',$request->student_id)->where('user_id',$uId)->where('case_id',$request->update_id)->where('case_type',1)->where('updated_by',Auth::user()->id)->where('deleted_at',null)->first();
+                        $notification = Notification::where('student_id',$request->student_id)->where('user_id',$uId)->where('case_id',$request->update_id)->where('case_type',1)->where('updated_by',$user->id)->where('deleted_at',null)->first();
 
                         if($notification)
                             continue;                        
@@ -259,7 +265,7 @@ class CaseNoteController extends Controller
                         $notification->user_id = $uId;
                         $notification->case_id = $request->update_id;
                         $notification->case_type = 2; // 1 : Case Management Meeting, 2: Parent Review Session                        
-                        $notification->updated_by = Auth::user()->id;
+                        $notification->updated_by = $user->id;
                         $notification->save();
                     }
                 }
@@ -280,6 +286,7 @@ class CaseNoteController extends Controller
 
     public function updateCom(Request $request)
     {
+        $user = auth()->user();
         $r = '';
 
         if($request->update_id)
@@ -287,7 +294,7 @@ class CaseNoteController extends Controller
             $comment = Comment::find($request->update_id);
             $comment->date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
             $comment->comments = $request->comments;
-            $comment->updated_by = Auth::user()->id;
+            $comment->updated_by = $user->id;
             $r = $comment->save();
 
             if($request->comments)
@@ -314,7 +321,7 @@ class CaseNoteController extends Controller
                 {
                     foreach($notIds as $uId)
                     {                        
-                        $notification = Notification::where('student_id',$request->student_id)->where('user_id',$uId)->where('case_id',$request->update_id)->where('case_type',1)->where('updated_by',Auth::user()->id)->where('deleted_at',null)->first();
+                        $notification = Notification::where('student_id',$request->student_id)->where('user_id',$uId)->where('case_id',$request->update_id)->where('case_type',1)->where('updated_by',$user->id)->where('deleted_at',null)->first();
 
                         if($notification)
                             continue;                        
@@ -324,7 +331,7 @@ class CaseNoteController extends Controller
                         $notification->user_id = $uId;
                         $notification->case_id = $request->update_id;
                         $notification->case_type = 3; // 1 : Case Management Meeting, 2: Parent Review Session, 3: Comments                        
-                        $notification->updated_by = Auth::user()->id;
+                        $notification->updated_by = $user->id;
                         $notification->save();
                     }
                 }
