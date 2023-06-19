@@ -120,9 +120,15 @@ class TlsController extends Controller
         if(!$model)
         {
             return response()->json(['message' => 'Tls not found'], 422);
-        }
+        }         
 
-        $tls = Tls::where('id','>',$request->id)->decrement('music_day',1);        
+        $tls = Tls::where('id', '>', $request->id)->get();
+
+        foreach ($tls as $item) {
+            if ($item->music_day > 0) {
+                $item->decrement('music_day', 1);
+            }
+        }       
                 
         if($model->delete()){
             $result = ['status' => true, 'message' => 'Delete successfully'];

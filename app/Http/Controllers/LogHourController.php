@@ -171,6 +171,7 @@ class LogHourController extends Controller
                 $lessonLog = LessonLog::find($request->edit_lesson_log_id);                
                 $lessonLog->hours = $request->add_log_hour;
                 $lessonLog->lesson_date = $lesson_date;
+                $lessonLog->program = $request->program;
                 $lessonLog->created_by = $request->name;
                 $r = $lessonLog->save();
 

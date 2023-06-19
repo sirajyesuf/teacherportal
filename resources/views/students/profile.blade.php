@@ -348,7 +348,7 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label for="program" class="col-form-label">Program:</label>
-                            <input type="text" maxlength="5" name="program" class="form-control" id="program">
+                            <input type="text" name="program" class="form-control" id="program">
                             {{-- <select class="form-control" name="program" id="program">
                                 <option value="1">SI</option>
                                 <option value="2">BT</option>
