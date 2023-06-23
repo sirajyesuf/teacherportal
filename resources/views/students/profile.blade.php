@@ -414,7 +414,7 @@
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label for="edit_program" class="col-form-label">Program:</label>
-                            <input type="text" maxlength="5" name="program" class="form-control" id="edit_program">
+                            <input type="text" name="program" class="form-control" id="edit_program">
                             <span class="error"></span>
                         </div>           
                     </div>
