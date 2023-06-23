@@ -77,28 +77,33 @@ class TlsController extends Controller
                 $parsedDate = Carbon::parse($request->date)->format('Y-m-d');
                 
                 $tls = Tls::find($request->update_id);
+
+                $oldDate = $tls->date;
+                
                 $tls->date = $parsedDate;
                 $tls->program = $request->program;
                 $tls->music_day = $request->music_day;
                 $tls->music_prog = $request->music_prog;
-                $tls->duration = $request->duration;
-                $tls->duration = $request->duration;
+                $tls->duration = $request->duration;                
                 $tls->created_by = Auth::user()->id;
                 $r = $tls->save();
 
-                $more = Tls::where('student_id',$tls->student_id)->where('id','>',$tls->id)->orderBy('id','ASC')->get();
-                if($more->count())
-                {
-                    foreach($more as $key => $m)
+                if($oldDate != $parsedDate)
+                {                    
+                    $more = Tls::where('student_id',$tls->student_id)->where('id','>',$tls->id)->orderBy('id','ASC')->get();
+                    if($more->count())
                     {
-                        if($key == 0)
+                        foreach($more as $key => $m)
                         {
-                            $temp = $m->date = Carbon::parse($tls->date)->addDays('1')->format('Y-m-d');                            
+                            if($key == 0)
+                            {
+                                $temp = $m->date = Carbon::parse($tls->date)->addDays('1')->format('Y-m-d');                            
+                            }
+                            else{                            
+                                $temp = $m->date = Carbon::parse($temp)->addDays('1')->format('Y-m-d');                            
+                            }
+                            $m->save();
                         }
-                        else{                            
-                            $temp = $m->date = Carbon::parse($temp)->addDays('1')->format('Y-m-d');                            
-                        }
-                        $m->save();
                     }
                 }
 

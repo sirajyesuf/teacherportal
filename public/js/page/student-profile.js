@@ -643,11 +643,14 @@ $( document ).ready(function() {
             success: function(result) {
                 if(result.status){                            
                     $.each(result.detail,function(key){
-                    
-                    $('#edit_tls_form').find('#'+key).val(result.detail[key]);
+                        if(key == 'date')
+                        {
+                            $("#date").val( moment(result.detail[key]).format('DD MMM YY') );
+                        }
+                        else{
+                            $('#edit_tls_form').find('#'+key).val(result.detail[key]);
+                        }                    
                     });  
-
-                    $("#date").val( moment().format('DD MMM YY') );
 
                     $('#edit_tls_modal').modal('show');
 

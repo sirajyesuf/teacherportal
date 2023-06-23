@@ -530,7 +530,7 @@
         var tlsDeleteUrl = "{{ route('tls.delete')}}";
         var addHourDeleteUrl = "{{ route('logHour.delete')}}";
         var lessonLogDeleteUrl = "{{ route('lesson.hours.delete')}}";
-        var tlsAddUrl = $('tls_form').attr('action');
+        var tlsAddUrl = $('#tls_form').attr('action');
         var tlsMultiAddUrl = "{{ route('tls.multiAdd') }}";
         var deleteUrl = "{{ route('student.delete') }}";
         var homeUrl = "{{ route('home') }}";
