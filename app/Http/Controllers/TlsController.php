@@ -127,7 +127,9 @@ class TlsController extends Controller
             return response()->json(['message' => 'Tls not found'], 422);
         }         
 
-        $tls = Tls::where('id', '>', $request->id)->where('student_id', $model->student_id)->get();
+        // $tls = Tls::where('id', '>', $request->id)->where('student_id', $model->student_id)->get();
+
+        $tls = Tls::where('date', '>', $model->date)->where('student_id', $model->student_id)->get();
 
         foreach ($tls as $item) {
             if ($item->music_day > 0) {

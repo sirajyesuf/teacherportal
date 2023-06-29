@@ -172,6 +172,7 @@ class StudentController extends Controller
                ->where('tls.deleted_at',null)
                ->where('tls.student_id',$student->id)
                ->select('tls.*')
+               ->orderBy('tls.date','asc')
                ->get();
 
         if($hoursRemaining < 0)
