@@ -193,13 +193,16 @@ class CaseNoteController extends Controller
                         if($notification)
                             continue;                        
 
-                        $notification = new Notification;
-                        $notification->student_id = $request->student_id;
-                        $notification->user_id = $uId;
-                        $notification->case_id = $request->update_id;
-                        $notification->case_type = 1; // 1 : Case Management Meeting, 2: Parent Review Session                        
-                        $notification->updated_by = $user->id;
-                        $notification->save();
+                        if($uId)
+                        {                            
+                            $notification = new Notification;
+                            $notification->student_id = $request->student_id;
+                            $notification->user_id = $uId;
+                            $notification->case_id = $request->update_id;
+                            $notification->case_type = 1; // 1 : Case Management Meeting, 2: Parent Review Session                        
+                            $notification->updated_by = $user->id;
+                            $notification->save();
+                        }
                     }
                 }
             }
@@ -260,13 +263,16 @@ class CaseNoteController extends Controller
                         if($notification)
                             continue;                        
 
-                        $notification = new Notification;
-                        $notification->student_id = $request->student_id;
-                        $notification->user_id = $uId;
-                        $notification->case_id = $request->update_id;
-                        $notification->case_type = 2; // 1 : Case Management Meeting, 2: Parent Review Session                        
-                        $notification->updated_by = $user->id;
-                        $notification->save();
+                        if($uId)
+                        {                            
+                            $notification = new Notification;
+                            $notification->student_id = $request->student_id;
+                            $notification->user_id = $uId;
+                            $notification->case_id = $request->update_id;
+                            $notification->case_type = 2; // 1 : Case Management Meeting, 2: Parent Review Session                        
+                            $notification->updated_by = $user->id;
+                            $notification->save();
+                        }
                     }
                 }
             }
@@ -325,15 +331,19 @@ class CaseNoteController extends Controller
                         $notification = Notification::where('student_id',$request->student_id)->where('user_id',$uId)->where('case_id',$request->update_id)->where('case_type',1)->where('updated_by',$user->id)->where('deleted_at',null)->first();
 
                         if($notification)
-                            continue;                        
+                            continue;               
 
-                        $notification = new Notification;
-                        $notification->student_id = $request->student_id;
-                        $notification->user_id = $uId ?? 0;
-                        $notification->case_id = $request->update_id;
-                        $notification->case_type = 3; // 1 : Case Management Meeting, 2: Parent Review Session, 3: Comments                        
-                        $notification->updated_by = $user->id;
-                        $notification->save();
+                        if($uId)
+                        {                            
+                            $notification = new Notification;
+                            $notification->student_id = $request->student_id;
+                            $notification->user_id = $uId;
+                            $notification->case_id = $request->update_id;
+                            $notification->case_type = 3; // 1 : Case Management Meeting, 2: Parent Review Session, 3: Comments                        
+                            $notification->updated_by = $user->id;
+                            $notification->save();
+                        }            
+
                     }
                 }
             }
