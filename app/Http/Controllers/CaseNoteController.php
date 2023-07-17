@@ -169,29 +169,43 @@ class CaseNoteController extends Controller
                 $notIds = [];                
                 $str = $request->description;
                 $count = 0;
-                $strCount = substr_count($str, 'href="');                
+                $strCount = substr_count($str, 'href="');   
+                $occurrences = [];             
 
                 while($strCount > 0)
                 {                    
                     $temp = preg_match('~href="\K\d+~', $str, $out) ? $out[0] : '';
-                    $notIds[$count] = $temp;
+                    if ($temp) {
+                        $notIds[$count] = $temp;
+                        $occurrences[$temp] = isset($occurrences[$temp]) ? $occurrences[$temp] + 1 : 1;
+                        $count++;
+                    }
                     
                     $tempWord = 'href="'.$temp.'"';
+
+                    $str = preg_replace('~' . preg_quote($tempWord, '~') . '~i', 'asd' . time(), $str, 1);
                     
-                    $str = str_ireplace($tempWord, 'asd', $str);
-                    
-                    $strCount--;
-                    $count++;
+                    $strCount--;                    
                 }
 
                 if(count($notIds))
                 {
-                    foreach($notIds as $uId)
+                    foreach($occurrences as $uId => $occurrenceCount)
                     {                        
-                        $notification = Notification::where('student_id',$request->student_id)->where('user_id',$uId)->where('case_id',$request->update_id)->where('case_type',1)->where('updated_by',$user->id)->where('deleted_at',null)->first();
+                        if ($uId === '') {
+                            continue;
+                        }
 
-                        if($notification)
-                            continue;                        
+                        $notificationCount = Notification::where('student_id', $request->student_id)
+                                    ->where('user_id', $uId)
+                                    ->where('case_id', $request->update_id)
+                                    ->where('case_type', 1) // 1 for Case Management Meeting
+                                    ->where('deleted_at', null)
+                                    ->count();
+
+                        if($notificationCount >= $occurrenceCount){
+                            continue;               
+                        }                                                                  
 
                         if($uId)
                         {                            
@@ -239,29 +253,44 @@ class CaseNoteController extends Controller
                 $notIds = [];                
                 $str = $request->description;
                 $count = 0;
-                $strCount = substr_count($str, 'href="');                
+                $strCount = substr_count($str, 'href="');      
+                $occurrences = [];          
 
                 while($strCount > 0)
                 {                    
                     $temp = preg_match('~href="\K\d+~', $str, $out) ? $out[0] : '';
-                    $notIds[$count] = $temp;
+
+                    if ($temp) {
+                        $notIds[$count] = $temp;
+                        $occurrences[$temp] = isset($occurrences[$temp]) ? $occurrences[$temp] + 1 : 1;
+                        $count++;
+                    }                    
                     
                     $tempWord = 'href="'.$temp.'"';
                     
-                    $str = str_ireplace($tempWord, 'asd', $str);
+                    $str = preg_replace('~' . preg_quote($tempWord, '~') . '~i', 'asd' . time(), $str, 1);
                     
-                    $strCount--;
-                    $count++;
+                    $strCount--;                    
                 }
 
                 if(count($notIds))
                 {
-                    foreach($notIds as $uId)
+                    foreach($occurrences as $uId => $occurrenceCount)
                     {                        
-                        $notification = Notification::where('student_id',$request->student_id)->where('user_id',$uId)->where('case_id',$request->update_id)->where('case_type',1)->where('updated_by',$user->id)->where('deleted_at',null)->first();
+                        if ($uId === '') {
+                            continue;
+                        }
 
-                        if($notification)
-                            continue;                        
+                        $notificationCount = Notification::where('student_id', $request->student_id)
+                                    ->where('user_id', $uId)
+                                    ->where('case_id', $request->update_id)
+                                    ->where('case_type', 2) // 2: parent review session
+                                    ->where('deleted_at', null)
+                                    ->count();
+
+                        if($notificationCount >= $occurrenceCount){
+                            continue;               
+                        }                                  
 
                         if($uId)
                         {                            
@@ -308,30 +337,44 @@ class CaseNoteController extends Controller
                 $notIds = [];                
                 $str = $request->comments;
                 $count = 0;
-                $strCount = substr_count($str, 'href="');                
+                $strCount = substr_count($str, 'href="');                 
+                $occurrences = [];               
 
                 while($strCount > 0)
                 {                    
-                    $temp = preg_match('~href="\K\d+~', $str, $out) ? $out[0] : '';
-                    $notIds[$count] = $temp;
+                    $temp = preg_match('~href="\K\d+~', $str, $out) ? $out[0] : '';                    
                     
-                    $tempWord = 'href="'.$temp.'"';
+                    if ($temp) {
+                        $notIds[$count] = $temp;
+                        $occurrences[$temp] = isset($occurrences[$temp]) ? $occurrences[$temp] + 1 : 1;
+                        $count++;
+                    }                    
                     
-                    $str = str_ireplace($tempWord, 'asd', $str);
+                    $tempWord = 'href="'.$temp.'"';                    
                     
-                    $strCount--;
-                    $count++;
+                    $str = preg_replace('~' . preg_quote($tempWord, '~') . '~i', 'asd' . time(), $str, 1);                    
+                    
+                    $strCount--;                    
                 }
 
                 if(count($notIds))
                 {
-                    \Log::info($notIds);
-                    foreach($notIds as $uId)
-                    {                        
-                        $notification = Notification::where('student_id',$request->student_id)->where('user_id',$uId)->where('case_id',$request->update_id)->where('case_type',1)->where('updated_by',$user->id)->where('deleted_at',null)->first();
+                    foreach($occurrences as $uId => $occurrenceCount)
+                    {                      
+                        if ($uId === '') {
+                            continue;
+                        }                          
 
-                        if($notification)
+                        $notificationCount = Notification::where('student_id', $request->student_id)
+                                    ->where('user_id', $uId)
+                                    ->where('case_id', $request->update_id)
+                                    ->where('case_type', 3) // 3 for comments
+                                    ->where('deleted_at', null)
+                                    ->count();                        
+
+                        if($notificationCount >= $occurrenceCount){
                             continue;               
+                        }
 
                         if($uId)
                         {                            
