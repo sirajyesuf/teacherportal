@@ -129,13 +129,16 @@ class TlsController extends Controller
 
         // $tls = Tls::where('id', '>', $request->id)->where('student_id', $model->student_id)->get();
 
-        $tls = Tls::where('date', '>', $model->date)->where('student_id', $model->student_id)->get();
+        if($model->date)
+        {
+            $tls = Tls::where('date', '>', $model->date)->where('student_id', $model->student_id)->get();
 
-        foreach ($tls as $item) {
-            if ($item->music_day > 0) {
-                $item->decrement('music_day', 1);
-            }
-        }       
+            foreach ($tls as $item) {
+                if ($item->music_day > 0) {
+                    $item->decrement('music_day', 1);
+                }
+            }       
+        }
                 
         if($model->delete()){
             $result = ['status' => true, 'message' => 'Delete successfully'];
