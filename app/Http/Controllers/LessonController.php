@@ -972,13 +972,14 @@ class LessonController extends Controller
         if(isset($request->student_id) && isset($request->update_id))
         {
             $lesson = Lesson::find($request->update_id);
+            $changed = false;
 
             if($lesson)
             {
-                if($lesson->created_by != $user->id && $user->role_type != '1')
-                {
-                    return response()->json(['message' => 'Only person who post can edit'], 422);
-                }
+                // if($lesson->created_by != $user->id && $user->role_type != '1')
+                // {
+                //     return response()->json(['message' => 'Only person who post can edit'], 422);
+                // }
             }
             else{
                 return response()->json(['message' => 'Lesson not found'], 422);
@@ -987,11 +988,18 @@ class LessonController extends Controller
             // Convert date to db date formate
             $lesson_date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
 
+            if($lesson->lesson_date != $lesson_date)
+            {
+                $changed = true;
+            }
+
             $lessonLog = LessonLog::where('student_id',$request->student_id)->where('lesson_date',$lesson_date)->where('deleted_at',null)->first();
+
+            $lessonLogNew = LessonLog::where('lesson_id', $request->update_id)->first();
 
             if(!$request->duplicate)
             {                    
-                if($lessonLog)
+                if($lessonLog && $changed)
                 {
                     $result = ['status' => true, 'match' => 1, 'data' => []];
                     return response()->json($result);
@@ -1059,18 +1067,18 @@ class LessonController extends Controller
             $r = $lesson->save();
 
             // lesson log entry : starts
-            if(!$lessonLog)
+            if(!$lessonLogNew)
             {
-                $lessonLog = new LessonLog;
+                $lessonLogNew = new LessonLog;
             }
-            $lessonLog->student_id = $request->student_id;
-            $lessonLog->hours = $request->duration;
-            $lessonLog->lesson_date = Carbon::parse($dt)->format('Y-m-d');
-            $lessonLog->program = 'SI/FT';
-            $lessonLog->created_by = $lessonLog->created_by ?? Auth::user()->id;
-            $lessonLog->lesson_id = $lesson->id;
-            $lessonLog->save();
-            $rl = $lessonLog->save();
+            $lessonLogNew->student_id = $request->student_id;
+            $lessonLogNew->hours = $request->duration;
+            $lessonLogNew->lesson_date = Carbon::parse($dt)->format('Y-m-d');
+            $lessonLogNew->program = 'SI/FT';
+            $lessonLogNew->created_by = $lessonLogNew->created_by ?? Auth::user()->id;
+            $lessonLogNew->lesson_id = $lesson->id;
+            $lessonLogNew->save();
+            $rl = $lessonLogNew->save();
 
             $totalHours = DB::table('add_hour_logs')
                    ->where('add_hour_logs.deleted_at',null)
@@ -1119,24 +1127,32 @@ class LessonController extends Controller
         if(isset($request->student_id) && isset($request->update_id))
         {
             $lesson = Lesson::find($request->update_id);
+            $changed = false;
 
             if($lesson)
             {
-                if($lesson->created_by != $user->id && $user->role_type != '1')
-                {
-                    return response()->json(['message' => 'Only person who post can edit'], 422);
-                }
+                // if($lesson->created_by != $user->id && $user->role_type != '1')
+                // {
+                //     return response()->json(['message' => 'Only person who post can edit'], 422);
+                // }
             }
             else{
                 return response()->json(['message' => 'Lesson not found'], 422);
             }
 
             // Convert date to db date formate
-            $lesson_date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
+            $lesson_date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');            
+
+            if($lesson->lesson_date != $lesson_date)
+            {
+                $changed = true;
+            }
 
             $lessonLog = LessonLog::where('student_id',$request->student_id)->where('lesson_date',$lesson_date)->where('deleted_at',null)->first();
 
-            if(!$request->duplicate)
+            $lessonLogNew = LessonLog::where('lesson_id', $request->update_id)->first();
+
+            if(!$request->duplicate && $changed)
             {                    
                 if($lessonLog)
                 {
@@ -1206,18 +1222,18 @@ class LessonController extends Controller
             $r = $lesson->save();
 
             // lesson log entry : starts
-            if(!$lessonLog)
+            if(!$lessonLogNew)
             {
-                $lessonLog = new LessonLog;
+                $lessonLogNew = new LessonLog;
             }
-            $lessonLog->student_id = $request->student_id;
-            $lessonLog->hours = $request->duration;
-            $lessonLog->lesson_date = Carbon::parse($dt)->format('Y-m-d');
-            $lessonLog->program = 'BT/Lang';
-            $lessonLog->created_by = $lessonLog->created_by ?? Auth::user()->id;
-            $lessonLog->lesson_id = $lesson->id;
-            $lessonLog->save();
-            $rl = $lessonLog->save();
+            $lessonLogNew->student_id = $request->student_id;
+            $lessonLogNew->hours = $request->duration;
+            $lessonLogNew->lesson_date = Carbon::parse($dt)->format('Y-m-d');
+            $lessonLogNew->program = 'BT/Lang';
+            $lessonLogNew->created_by = $lessonLogNew->created_by ?? Auth::user()->id;
+            $lessonLogNew->lesson_id = $lesson->id;
+            $lessonLogNew->save();
+            $rl = $lessonLogNew->save();
 
             $totalHours = DB::table('add_hour_logs')
                    ->where('add_hour_logs.deleted_at',null)
@@ -1268,10 +1284,10 @@ class LessonController extends Controller
 
             if($lesson)
             {
-                if($lesson->created_by != $user->id && $user->role_type != '1')
-                {
-                    return response()->json(['message' => 'Only person who post can edit'], 422);
-                }
+                // if($lesson->created_by != $user->id && $user->role_type != '1')
+                // {
+                //     return response()->json(['message' => 'Only person who post can edit'], 422);
+                // }
             }
             else{
                 return response()->json(['message' => 'Lesson not found'], 422);
@@ -1412,11 +1428,11 @@ class LessonController extends Controller
 
             if($lesson)
             {
-                if($lesson->created_by != $user->id && $user->role_type != '1')
-                {
-                    // return response()->json(['message' => 'Only person who post can edit'], 422);
-                    return redirect()->back()->with(['flash_message_error' => 'Only person who post can edit']);
-                }
+                // if($lesson->created_by != $user->id && $user->role_type != '1')
+                // {
+                //     // return response()->json(['message' => 'Only person who post can edit'], 422);
+                //     return redirect()->back()->with(['flash_message_error' => 'Only person who post can edit']);
+                // }
             }
             else{
                 return response()->json(['message' => 'Lesson not found'], 422);
