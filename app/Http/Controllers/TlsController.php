@@ -145,6 +145,42 @@ class TlsController extends Controller
         return response()->json($result);
     }
 
+    public function deleteMultiple(Request $request)
+    {
+        $selectedRowIds = $request->input('selectedRowIds');
+
+        if (empty($selectedRowIds)) {
+            return response()->json(['message' => 'No rows selected for deletion.'], 422);
+        }
+
+        $r = '';
+
+        // Find all selected rows
+        $selectedRows = Tls::whereIn('id', $selectedRowIds)->get();
+
+        // Perform the same deletion logic for each selected row as in the existing 'delete' method
+        foreach ($selectedRows as $selectedRow) {
+            $tls = Tls::where('date', '>', $selectedRow->date)
+                      ->where('student_id', $selectedRow->student_id)
+                      ->get();
+
+            foreach ($tls as $item) {
+                if ($item->music_day > 0) {
+                    $item->decrement('music_day', 1);
+                }
+            }
+
+            $r = $selectedRow->delete();            
+        }
+
+        if($r){
+            $result = ['status' => true, 'message' => 'Selected rows deleted successfully.'];
+        }else{
+            $result = ['status' => false, 'message' => 'Delete fail'];
+        }
+        return response()->json($result);        
+    }
+
     public function multiAdd(Request $request)
     {
         if($request->tpl_student_id)

@@ -56,3 +56,8 @@ p {
     background: none!important;
     padding: 0!important;
 }
+.tls-check, .tls-check-all{
+    position: relative!important;
+    margin-top: auto!important; 
+    margin-left: auto!important;
+}

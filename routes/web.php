@@ -103,6 +103,7 @@ Route::post('/tls/add', 'TlsController@add')->name('tls.add');
 Route::get('/tls/details', 'TlsController@details')->name('tls.details');
 Route::post('/tls/update', 'TlsController@update')->name('tls.update');
 Route::post('/tls/delete', 'TlsController@delete')->name('tls.delete');
+Route::post('/tls/delete-multiple', 'TlsController@deleteMultiple')->name('tls.delete.multiple');
 Route::post('/tls/multiAdd', 'TlsController@multiAdd')->name('tls.multiAdd');
 
 Route::get('/notification/read', 'NotificationController@readNotification')->name('notification.read');

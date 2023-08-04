@@ -987,7 +987,7 @@ class LessonController extends Controller
             // Convert date to db date formate
             $lesson_date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
 
-            $lessonLog = LessonLog::where('student_id',$request->student_id)->where('lesson_date',$lesson_date)->where('deleted_at',null)->first();
+            $lessonLog = LessonLog::where('student_id',$request->student_id)->where('lesson_date',$lesson_date)->where('program', 'SI/FT')->where('deleted_at',null)->first();
 
             if(!$request->duplicate)
             {                    
@@ -1134,7 +1134,7 @@ class LessonController extends Controller
             // Convert date to db date formate
             $lesson_date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
 
-            $lessonLog = LessonLog::where('student_id',$request->student_id)->where('lesson_date',$lesson_date)->where('deleted_at',null)->first();
+            $lessonLog = LessonLog::where('student_id',$request->student_id)->where('lesson_date',$lesson_date)->where('program', 'BT/Lang')->where('deleted_at',null)->first();
 
             if(!$request->duplicate)
             {                    
