@@ -103,9 +103,22 @@ Route::post('/tls/add', 'TlsController@add')->name('tls.add');
 Route::get('/tls/details', 'TlsController@details')->name('tls.details');
 Route::post('/tls/update', 'TlsController@update')->name('tls.update');
 Route::post('/tls/delete', 'TlsController@delete')->name('tls.delete');
+Route::post('/tls/delete-multiple', 'TlsController@deleteMultiple')->name('tls.delete.multiple');
 Route::post('/tls/multiAdd', 'TlsController@multiAdd')->name('tls.multiAdd');
 
+Route::get('/announcements', 'AnnouncementController@index')->name('announcements');
+Route::post('/announcements', 'AnnouncementController@index')->name('announcements.post');
+Route::get('/announcements/getRecipient', 'AnnouncementController@getRecipientName')->name('announcements.getname');
+Route::post('/announcements/addAll', 'AnnouncementController@addall')->name('announcements.addall');
+Route::post('/announcements/addIndividual', 'AnnouncementController@addIndividual')->name('announcements.addindividual');
+
+Route::get('/my-announcements', 'MyAnnouncementController@index')->name('my-announcements');
+Route::post('/my-announcements', 'MyAnnouncementController@index')->name('my-announcements.post');
+
 Route::get('/notification/read', 'NotificationController@readNotification')->name('notification.read');
+Route::get('/notification/announcements/read', 'NotificationController@readAnnNotification')->name('announcements.notification.read');
+
+Route::get('/export-attendance-excel/{studentId}', 'ExportAttendanceLogController@exportAttendanceExcel')->name('attendance.export');
 
 Route::get('/test', 'CaseNoteController@test')->name('test');
 

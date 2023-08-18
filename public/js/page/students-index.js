@@ -44,27 +44,30 @@ jQuery.browser = {};
 
             });
 
-            $(document).on('click','#navbarDropdown', function(e){                
+            $(document).on('click','#notificationDropdown', function(e){                
                 e.preventDefault();
 
                 $.ajax({
                     url: readNotiUrl,
-                    type: 'GET',                            
-                    // data: { id:userId, date:selectedDate, _token: $('meta[name=csrf-token]').attr('content')},
-                    // dataType: 'json',
-                    success: function(result) {
-                        if (result.status == true) {
-                            console.log('clear');
-                            // setTimeout(function() {                               
-                                
-                            // }, 500);
-
-                        } else {
-
-                        }
+                    type: 'GET',                                                
+                    success: function(result) {                        
                     },
                     error: function(error) {
-                        alert('Something went wrong!', 'error');                            
+                        console.error('Something went wrong!');                        
+                    }
+                }); // Ajax ends
+            });
+
+            $(document).on('click','#announcementDropdown', function(e){                
+                e.preventDefault();
+
+                $.ajax({
+                    url: readAnnNotiUrl,
+                    type: 'GET',                                                
+                    success: function(result) {                        
+                    },
+                    error: function(error) {
+                        console.error('read error');
                     }
                 }); // Ajax ends
             });
@@ -89,8 +92,6 @@ jQuery.browser = {};
                     
                     if(selectedDate)
                     {
-                        // destroyDatepicker();
-
                         $.ajax({
                             url: changeDateUrl,
                             type: 'POST',                            
@@ -101,15 +102,12 @@ jQuery.browser = {};
                                     var dt = '';
                                     dt += '<img src='+assetClock+' alt=""> ';
                                     dt += moment(selectedDate).format('DD MMM');
-                                    // console.log(dt);
-                                    var t = $( "a[data-id^="+userId+"]" ).html( dt );
-                                    // toastr.success('date update success');
-                                    // console.log(t);
+                                    
+                                    var t = $( "a[data-id^="+userId+"]" ).html( dt );                                    
                                     showMessage('success','Date update success');
-                                    // $('.jq-toast-wrap').remove();
+                                    
                                     setTimeout(function() {
-                                        window.location.reload(true);                                
-                                        // $('.jq-toast-wrap').remove();
+                                        window.location.reload(true);                                                                        
                                     }, 1500);
 
                                 } else {
@@ -117,7 +115,7 @@ jQuery.browser = {};
                                 }
                             },
                             error: function(error) {
-                                alert('Something went wrong!', 'error');                            
+                                console.error('Something went wrong!');                                
                             }
                         }); // Ajax ends
                     }                    

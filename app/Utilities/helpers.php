@@ -132,3 +132,9 @@ function getTimeAgo($carbonObject) {
         $carbonObject->diffForHumans()
     );
 }
+function removeHtmlTags($htmlContent) {
+    // Remove HTML tags from the content
+    $cleanedContent = strip_tags($htmlContent);
+
+    return $cleanedContent;
+}

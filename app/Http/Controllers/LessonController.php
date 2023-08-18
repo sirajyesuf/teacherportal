@@ -993,7 +993,8 @@ class LessonController extends Controller
                 $changed = true;
             }
 
-            $lessonLog = LessonLog::where('student_id',$request->student_id)->where('lesson_date',$lesson_date)->where('deleted_at',null)->first();
+            $lessonLog = LessonLog::where('student_id',$request->student_id)->where('lesson_date',$lesson_date)->where('program', 'SI/FT')->where('deleted_at',null)->first();
+
 
             $lessonLogNew = LessonLog::where('lesson_id', $request->update_id)->first();
 
@@ -1148,7 +1149,7 @@ class LessonController extends Controller
                 $changed = true;
             }
 
-            $lessonLog = LessonLog::where('student_id',$request->student_id)->where('lesson_date',$lesson_date)->where('deleted_at',null)->first();
+            $lessonLog = LessonLog::where('student_id',$request->student_id)->where('lesson_date',$lesson_date)->where('program', 'BT/Lang')->where('deleted_at',null)->first();
 
             $lessonLogNew = LessonLog::where('lesson_id', $request->update_id)->first();
 

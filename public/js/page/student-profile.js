@@ -21,6 +21,63 @@ $( document ).ready(function() {
       cssUrl
     ];
 
+    // Check All checkbox event
+    $(".tls-check-all").on("change", function() {
+        // Get the state of the "Check All" checkbox
+        var isChecked = $(this).prop("checked");
+        // Set all checkboxes in the table to the same state as "Check All" checkbox
+        $(".tls-check").prop("checked", isChecked);
+    });
+
+    // Individual checkbox event
+    $(".tls-check").on("change", function() {
+        // Check if all individual checkboxes are checked, then update the "Check All" checkbox
+        $(".tls-check-all").prop("checked", $(".tls-check:not(:checked)").length === 0);
+    });    
+
+    // Handle multiple row deletion when the delete button is clicked
+    $("#delete_selected_rows").click(function() {
+        var selectedRowIds = [];
+
+        // Get the IDs of selected rows
+        $("#tls_table .tls-check:checked").each(function() {
+            selectedRowIds.push($(this).data("id"));            
+        });
+
+        if (selectedRowIds.length > 0) {
+            if(confirm('Are you sure want to delete?')){
+                $.ajax({
+                    url: tlsMultiDeleteUrl,
+                    method: "POST",
+                    dataType: 'json',
+                    data: {
+                        selectedRowIds: selectedRowIds
+                    },
+                    success: function(response) {                                               
+                        if(response.status)
+                        {                            
+                            showMessage('success', response.message);                            
+                            $("#tls_table .tls-check:checked").closest("tr").remove();                            
+                            $(".tls-check-all").prop("checked", false);
+
+                            setTimeout(function() {
+                                location.reload();
+                            }, 1500);
+
+                        }else{                            
+                            showMessage('error', response.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {                                                
+                        showMessage('error', xhr.responseJSON.message);                        
+                    }
+                });
+            }
+        } else {
+            alert("Please select rows to delete.");
+        }
+    });
+
     $('body').on('click','.delete-student',function(){
         $('#delete_modal').modal('show');
     });
@@ -439,6 +496,7 @@ $( document ).ready(function() {
         $('#tls_form').attr('action',tlsAddUrl);
         tlsHtml = '';        
         tlsHtml += '<tr>';
+        tlsHtml += '<td><div class="form-check"><input type="checkbox" class="form-check-input tls-check" data-id="{{ $tls->id }}"></div></td>';
         tlsHtml += '<td><input type="date" placeholder="date" name="date"></td>';
         tlsHtml += '<td><input type="text" placeholder="Program" name="program"></td>';
         tlsHtml += '<td><input type="number" min="0" step="1" placeholder="Music Day" name="music_day"></td>';
@@ -459,6 +517,7 @@ $( document ).ready(function() {
         $('#tls_form').attr('action',tlsMultiAddUrl);
         tlsHtml = '';        
         tlsHtml += '<tr>';
+        tlsHtml += '<td><div class="form-check"><input type="checkbox" class="form-check-input tls-check" data-id="{{ $tls->id }}"></div></td>';
         tlsHtml += '<td><input type="date" placeholder="date" id="date_1" name="date[]"></td>';
         tlsHtml += '<td><input type="text" placeholder="Program" id="program_1" name="program[]"></td>';
         tlsHtml += '<td><input type="number" min="0" step="1" placeholder="Music Day" id="music_day_1" name="music_day[]"></td>';
@@ -466,6 +525,7 @@ $( document ).ready(function() {
         tlsHtml += '<td><input type="number" step="0.5" placeholder="Duration" id="duration_1" name="duration[]"></td>';
         tlsHtml += '<td></td></tr>';
         tlsHtml += '<tr>';
+        tlsHtml += '<td><div class="form-check"><input type="checkbox" class="form-check-input tls-check" data-id="{{ $tls->id }}"></div></td>';
         tlsHtml += '<td><input type="date" placeholder="date" id="date_2" name="date[]"></td>';
         tlsHtml += '<td><input type="text" placeholder="Program" id="program_2" name="program[]"></td>';
         tlsHtml += '<td><input type="number" min="0" step="1" placeholder="Music Day" id="music_day_2" name="music_day[]"></td>';
@@ -473,6 +533,7 @@ $( document ).ready(function() {
         tlsHtml += '<td><input type="number" step="0.5" placeholder="Duration" id="duration_2" name="duration[]"></td>';
         tlsHtml += '<td></td></tr>';
         tlsHtml += '<tr>';
+        tlsHtml += '<td><div class="form-check"><input type="checkbox" class="form-check-input tls-check" data-id="{{ $tls->id }}"></div></td>';
         tlsHtml += '<td><input type="date" placeholder="date" id="date_3" name="date[]"></td>';
         tlsHtml += '<td><input type="text" placeholder="Program" id="program_3" name="program[]"></td>';
         tlsHtml += '<td><input type="number" min="0" step="1" placeholder="Music Day" id="music_day_3" name="music_day[]"></td>';
@@ -480,6 +541,7 @@ $( document ).ready(function() {
         tlsHtml += '<td><input type="number" step="0.5" placeholder="Duration" id="duration_3" name="duration[]"></td>';
         tlsHtml += '<td></td></tr>';
         tlsHtml += '<tr>';
+        tlsHtml += '<td><div class="form-check"><input type="checkbox" class="form-check-input tls-check" data-id="{{ $tls->id }}"></div></td>';
         tlsHtml += '<td><input type="date" placeholder="date" id="date_4" name="date[]"></td>';
         tlsHtml += '<td><input type="text" placeholder="Program" id="program_4" name="program[]"></td>';
         tlsHtml += '<td><input type="number" min="0" step="1" placeholder="Music Day" id="music_day_4" name="music_day[]"></td>';
@@ -487,6 +549,7 @@ $( document ).ready(function() {
         tlsHtml += '<td><input type="number" step="0.5" placeholder="Duration" id="duration_4" name="duration[]"></td>';
         tlsHtml += '<td></td></tr>';
         tlsHtml += '<tr>';
+        tlsHtml += '<td><div class="form-check"><input type="checkbox" class="form-check-input tls-check" data-id="{{ $tls->id }}"></div></td>';
         tlsHtml += '<td><input type="date" placeholder="date" id="date_5" name="date[]"></td>';
         tlsHtml += '<td><input type="text" placeholder="Program" id="program_5" name="program[]"></td>';
         tlsHtml += '<td><input type="number" min="0" step="1" placeholder="Music Day" id="music_day_5" name="music_day[]"></td>';
@@ -494,6 +557,7 @@ $( document ).ready(function() {
         tlsHtml += '<td><input type="number" step="0.5" placeholder="Duration" id="duration_5" name="duration[]"></td>';
         tlsHtml += '<td></td></tr>';
         tlsHtml += '<tr>';
+        tlsHtml += '<td><div class="form-check"><input type="checkbox" class="form-check-input tls-check" data-id="{{ $tls->id }}"></div></td>';
         tlsHtml += '<td><input type="date" placeholder="date" id="date_6" name="date[]"></td>';
         tlsHtml += '<td><input type="text" placeholder="Program" id="program_6" name="program[]"></td>';
         tlsHtml += '<td><input type="number" min="0" step="1" placeholder="Music Day" id="music_day_6" name="music_day[]"></td>';
@@ -501,6 +565,7 @@ $( document ).ready(function() {
         tlsHtml += '<td><input type="number" step="0.5" placeholder="Duration" id="duration_6" name="duration[]"></td>';
         tlsHtml += '<td></td></tr>';
         tlsHtml += '<tr>';
+        tlsHtml += '<td><div class="form-check"><input type="checkbox" class="form-check-input tls-check" data-id="{{ $tls->id }}"></div></td>';
         tlsHtml += '<td><input type="date" placeholder="date" id="date_7" name="date[]"></td>';
         tlsHtml += '<td><input type="text" placeholder="Program" id="program_7" name="program[]"></td>';
         tlsHtml += '<td><input type="number" min="0" step="1" placeholder="Music Day" id="music_day_7" name="music_day[]"></td>';
@@ -508,6 +573,7 @@ $( document ).ready(function() {
         tlsHtml += '<td><input type="number" step="0.5" placeholder="Duration" id="duration_7" name="duration[]"></td>';
         tlsHtml += '<td></td></tr>';
         tlsHtml += '<tr>';
+        tlsHtml += '<td><div class="form-check"><input type="checkbox" class="form-check-input tls-check" data-id="{{ $tls->id }}"></div></td>';
         tlsHtml += '<td><input type="date" placeholder="date" id="date_8"name="date[]"></td>';
         tlsHtml += '<td><input type="text" placeholder="Program" id="program_8" name="program[]"></td>';
         tlsHtml += '<td><input type="number" min="0" step="1" placeholder="Music Day" id="music_day_8" name="music_day[]"></td>';
@@ -515,6 +581,7 @@ $( document ).ready(function() {
         tlsHtml += '<td><input type="number" step="0.5" placeholder="Duration" id="duration_8" name="duration[]"></td>';
         tlsHtml += '<td></td></tr>';
         tlsHtml += '<tr>';
+        tlsHtml += '<td><div class="form-check"><input type="checkbox" class="form-check-input tls-check" data-id="{{ $tls->id }}"></div></td>';
         tlsHtml += '<td><input type="date" placeholder="date" id="date_9" name="date[]"></td>';
         tlsHtml += '<td><input type="text" placeholder="Program" id="program_9" name="program[]"></td>';
         tlsHtml += '<td><input type="number" min="0" step="1" placeholder="Music Day" id="music_day_9" name="music_day[]"></td>';
@@ -522,6 +589,7 @@ $( document ).ready(function() {
         tlsHtml += '<td><input type="number" step="0.5" placeholder="Duration" id="duration_9" name="duration[]"></td>';
         tlsHtml += '<td></td></tr>';
         tlsHtml += '<tr>';
+        tlsHtml += '<td><div class="form-check"><input type="checkbox" class="form-check-input tls-check" data-id="{{ $tls->id }}"></div></td>';
         tlsHtml += '<td><input type="date" placeholder="date" id="date_10" name="date[]"></td>';
         tlsHtml += '<td><input type="text" placeholder="Program" id="program_10" name="program[]"></td>';
         tlsHtml += '<td><input type="number" min="0" step="1" placeholder="Music Day" id="music_day_10" name="music_day[]"></td>';
@@ -529,6 +597,7 @@ $( document ).ready(function() {
         tlsHtml += '<td><input type="number" step="0.5" placeholder="Duration" id="duration_10" name="duration[]"></td>';
         tlsHtml += '<td></td></tr>';
         tlsHtml += '<tr>';
+        tlsHtml += '<td><div class="form-check"><input type="checkbox" class="form-check-input tls-check" data-id="{{ $tls->id }}"></div></td>';
         tlsHtml += '<td><input type="date" placeholder="date" id="date_11" name="date[]"></td>';
         tlsHtml += '<td><input type="text" placeholder="Program" id="program_11" name="program[]"></td>';
         tlsHtml += '<td><input type="number" min="0" step="1" placeholder="Music Day" id="music_day_11" name="music_day[]"></td>';
@@ -536,6 +605,7 @@ $( document ).ready(function() {
         tlsHtml += '<td><input type="number" step="0.5" placeholder="Duration" id="duration_11" name="duration[]"></td>';
         tlsHtml += '<td></td></tr>';
         tlsHtml += '<tr>';
+        tlsHtml += '<td><div class="form-check"><input type="checkbox" class="form-check-input tls-check" data-id="{{ $tls->id }}"></div></td>';
         tlsHtml += '<td><input type="date" placeholder="date" id="date_12" name="date[]"></td>';
         tlsHtml += '<td><input type="text" placeholder="Program" id="program_12" name="program[]"></td>';
         tlsHtml += '<td><input type="number" min="0" step="1" placeholder="Music Day" id="music_day_12" name="music_day[]"></td>';
@@ -543,6 +613,7 @@ $( document ).ready(function() {
         tlsHtml += '<td><input type="number" step="0.5" placeholder="Duration" id="duration_12" name="duration[]"></td>';
         tlsHtml += '<td></td></tr>';
         tlsHtml += '<tr>';
+        tlsHtml += '<td><div class="form-check"><input type="checkbox" class="form-check-input tls-check" data-id="{{ $tls->id }}"></div></td>';
         tlsHtml += '<td><input type="date" placeholder="date" id="date_13" name="date[]"></td>';
         tlsHtml += '<td><input type="text" placeholder="Program" id="program_13" name="program[]"></td>';
         tlsHtml += '<td><input type="number" min="0" step="1" placeholder="Music Day" id="music_day_13" name="music_day[]"></td>';

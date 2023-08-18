@@ -10931,4 +10931,9 @@ a.text-dark:focus {
     border-color: #dee2e6;
   }
 }
-
+.mr-19{
+  margin-right: 19rem;
+}
+.mr-23{
+  margin-right: 23rem; 
+}

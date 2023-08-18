@@ -59,6 +59,7 @@
                             <input type="hidden" name="tpl_student_id" value="{{ $student->id}}">
                             <table id="tls_table">
                                 <tr>
+                                    <td><div class="form-check"><input type="checkbox" class="form-check-input tls-check-all"></div> Select All</td>
                                     <td>Date</td>
                                     <td>Program</td>
                                     <td>Music Day</td>
@@ -70,6 +71,7 @@
                                 @foreach($tlss as $ke => $tls)
                                     @if(in_array($tls->date, $lesson_date_array))
                                         <tr>
+                                            <td><div class="form-check"><input type="checkbox" class="form-check-input tls-check" data-id="{{ $tls->id }}"></div></td>
                                             <td class="blue-bg">{{longDateFormat($tls->date)}}</td>
                                             <td class="blue-bg">{{ $tls->program}}</td>
                                             <td class="blue-bg">{{ $tls->music_day}}</td>
@@ -84,6 +86,7 @@
                                         </tr>
                                     @else
                                         <tr>
+                                            <td><div class="form-check"><input type="checkbox" class="form-check-input tls-check" data-id="{{ $tls->id }}"></div></td>
                                             <td>{{longDateFormat($tls->date)}}</td>
                                             <td>{{ $tls->program}}</td>
                                             <td>{{ $tls->music_day}}</td>
@@ -105,12 +108,16 @@
                         <div class="action text-right">                            
                             <button type="button" class="btn btn-sm btn-save mt-1" id="add_tls">+</button>
                             <button type="button" class="btn btn-sm btn-save mt-1" id="add_tls_13">+13</button>
+                            <button type="button" class="btn btn-sm btn-save mt-1" id="delete_selected_rows">Delete Selected Rows</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-5">
                 <div class="student-rightprt">
+                    <div class="d-flex">                                        
+                        <a href="{{route('attendance.export',$student->id)}}" class="btn btn-save"><i class="fa fa-file-excel"></i> Download Attendace</a>
+                    </div>
                     <div class="hour-part">                        
                         <ul>
                             <li>
@@ -537,6 +544,7 @@
         var checkDateUrl = "{{ route('appointment.check') }}";
         var cssUrl = "{{ asset('css/page/student-profile.css') }}";
         var nameUpdateUrl = "{{ route('student.nameUpdate') }}";
+        var tlsMultiDeleteUrl = "{{ route('tls.delete.multiple') }}";
     </script>
     <script src="{{addPageJsLink('student-profile.js')}}"></script>
 @endsection

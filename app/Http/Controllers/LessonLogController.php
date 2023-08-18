@@ -11,6 +11,11 @@ use App\Student;
 
 class LessonLogController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');        
+    }
+    
     public function add(Request $request)
     {
         if($request->ajax()) 
@@ -40,6 +45,57 @@ class LessonLogController extends Controller
                 $logHour->notes = $request->lesson_note;
                 $logHour->created_by = Auth::user()->id;
                 $r = $logHour->save();
+
+                // // Get the student ID from the request
+                // $studentId = $request->add_lesson_log_id;
+
+                // // Get all the hours added by the student in ascending order of creation time (assuming created_at is used to determine order)
+                // $addedHours = DB::table('add_hour_logs')
+                //     ->where('deleted_at', null)
+                //     ->where('student_id', $studentId)
+                //     ->orderBy('created_at')
+                //     ->pluck('hours');
+
+                // // Get all the hours completed by the student in ascending order of creation time (assuming created_at is used to determine order)
+                // $completedHours = DB::table('lesson_hour_logs')
+                //     ->where('deleted_at', null)
+                //     ->where('student_id', $studentId)
+                //     ->orderBy('created_at')
+                //     ->pluck('hours');
+
+                // // Initialize variables to keep track of remaining and completed hours
+                // $remainingHours = 0;
+                // $completedTotalHours = 0;
+
+                // // Loop through the added hours to calculate the remaining and completed hours in batches
+                // foreach ($addedHours as $addedHour) {
+                //     // Calculate the remaining hours for the current batch
+                //     $remainingInBatch = max(0, $addedHour - $completedTotalHours);
+
+                //     // Add the remaining hours of the batch to the total remaining hours
+                //     $remainingHours += $remainingInBatch;
+
+                //     // Add the completed hours of the batch to the total completed hours
+                //     $completedTotalHours += ($addedHour - $remainingInBatch);
+
+                //     // Check if there are completed hours for the current batch
+                //     if (count($completedHours) > 0) {
+                //         // Get the first completed hour from the array and remove it
+                //         $completedHour = array_shift($completedHours);
+
+                //         // Deduct the completed hours from the current batch
+                //         $completedTotalHours -= $completedHour;
+                //     }
+                // }
+
+                // // Make the student a past student if all hours are completed in all batches
+                // $isPastStudent = ($remainingHours === 0) ? 1 : 0;
+
+                // // Update the student record with the remaining hours and past student status
+                // $student = Student::find($studentId);
+                // $student->remaining_hours = $remainingHours;
+                // $student->is_past = $isPastStudent;
+                // $student->save();
 
                 $totalHours = DB::table('add_hour_logs')
                        ->where('add_hour_logs.deleted_at',null)
