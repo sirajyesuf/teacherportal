@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Student;
 use App\CaseNote;
+use App\LogHour;
+use App\LessonLog;
 use App\CaseManagement;
 use App\ParentReview;
 use App\Comment;
@@ -16,6 +18,11 @@ use DB;
 
 class CaseNoteController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');        
+    }
+    
     public function index(Request $request)
     {
         $user = $caseNote = $finishedHours = $hoursRemaining = '';
@@ -23,21 +30,84 @@ class CaseNoteController extends Controller
         if($request->id)
         {
             $user = Student::find($request->id);
-            
-            $totalHours = DB::table('add_hour_logs')
-                       ->where('add_hour_logs.deleted_at',null)
-                       ->where('add_hour_logs.student_id',$request->id)
-                       ->sum('hours');
+            $studentId = $request->id;
 
-            $finishedHours = DB::table('lesson_hour_logs')
-                           ->where('lesson_hour_logs.deleted_at',null)
-                           ->where('lesson_hour_logs.student_id',$request->id)
-                           ->sum('hours');
+            // new code for time calculation
+            $addHourLogs = LogHour::where('student_id', $studentId)
+                ->orderBy('created_at')
+                ->get();
 
-            $hoursRemaining = $totalHours - $finishedHours;
+            $usedLessonLogs = []; // Keep track of used lesson logs
 
-            if($hoursRemaining < 0)
+            $exportData = [];
+
+            foreach ($addHourLogs as $addHourLog) {
+                $package = $addHourLog->notes.' ('.$addHourLog->hours.' hours)';
+                $remainingHours = $addHourLog->hours;
+
+                $lessonLogs = LessonLog::where('student_id', $studentId)
+                    ->where('hours', '>', 0)                
+                    ->whereNotIn('id', $usedLessonLogs) // Exclude used lesson logs
+                    ->orderBy('lesson_date')
+                    ->get();
+                
+                $data = [];
+                $completedHours = 0;
+
+                foreach ($lessonLogs as $log) {
+                    
+                    if ($remainingHours > 0) {
+                        $data[] = [
+                            'Date' => $log->lesson_date,
+                            'Lesson duration' => $log->hours . ' hr',
+                            'Program' => $log->program,
+                        ];
+                        $completedHours += $log->hours;
+                        $remainingHours -= $log->hours;
+                        $usedLessonLogs[] = $log->id; // Mark lesson log as used
+
+                        if($remainingHours <= 0){
+                            break;
+                        }
+                    }
+                }            
+
+                if (empty($data) && $remainingHours > 0) {
+                    $data[] = [
+                        'Date' => 'N/A',
+                        'Lesson duration' => '0 hr',
+                        'Program' => 'N/A',
+                    ];
+                }
+
+                if (!empty($data)) {
+                    $exportData[] = [
+                        'package' => $package,
+                        'completedHours' => $completedHours,
+                        'remainingHours' => ($remainingHours < 0) ? 0 : $remainingHours,
+                        'data' => $data,
+                    ];
+                }
+            }
+
+            if(count($exportData))
+            {            
+                $lastKey = array_key_last($exportData);
+                $lastRecord = $exportData[$lastKey];        
+                $finishedHours = $lastRecord['completedHours'];
+                $hoursRemaining = $lastRecord['remainingHours'];
+                $currentPackageNote = $lastRecord['package'];
+
+            } else {
+
+                $lessonLogsHour = LessonLog::where('student_id', $studentId)
+                    ->sum('hours');
+
+                $finishedHours = $lessonLogsHour;
                 $hoursRemaining = 0;
+                $currentPackageNote = '';
+            } 
+            // new code ends
 
 
             $casemgmts = CaseManagement::where('deleted_at',null)->where('student_id',$request->id)->orderBy('date','desc')->orderBy('created_at','desc')->get();

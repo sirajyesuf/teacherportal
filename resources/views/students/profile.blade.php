@@ -115,6 +115,9 @@
             </div>
             <div class="col-lg-5">
                 <div class="student-rightprt">
+                    <div class="d-flex">                                        
+                        <a href="{{route('attendance.export',$student->id)}}" class="btn btn-save"><i class="fa fa-file-excel"></i> Download Attendace</a>
+                    </div>
                     <div class="hour-part">                        
                         <ul>
                             <li>

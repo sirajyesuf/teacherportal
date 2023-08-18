@@ -1,6 +1,6 @@
 $( document ).ready(function() {
 
-    $(document).on('click','#navbarDropdown', function(e){
+    $(document).on('click','#notificationDropdown', function(e){
         e.preventDefault();
 
         $.ajax({
@@ -14,8 +14,26 @@ $( document ).ready(function() {
                 }
             },
             error: function(error) {
-                console.log(error)
-                // alert('Something went wrong!', 'error');                            
+                console.log(error)                
+            }
+        }); // Ajax ends
+    });
+
+    $(document).on('click','#announcementDropdown', function(e){                
+        e.preventDefault();
+
+        $.ajax({
+            url: readAnnNotiUrl,
+            type: 'GET',                                                
+            success: function(result) {
+                if (result.status == true) {                            
+                    
+                } else {
+                    console.error('read error');
+                }
+            },
+            error: function(error) {
+                console.error('read error');
             }
         }); // Ajax ends
     });

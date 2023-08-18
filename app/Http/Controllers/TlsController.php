@@ -11,6 +11,11 @@ use Auth;
 
 class TlsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');        
+    }
+    
     public function add(Request $request)
     {
         if($request->tpl_student_id)

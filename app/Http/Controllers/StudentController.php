@@ -8,6 +8,10 @@ use App\User;
 use App\Student;
 use App\Tls;
 use App\Notification;
+use App\LogHour;
+use App\LessonLog;
+use App\Announcement;
+use App\AnnouncementRecipient;
 use Carbon\Carbon;
 use Auth;
 use DB;
@@ -22,6 +26,8 @@ class StudentController extends Controller
 
     public function pastStudent(Request $request)
     {
+        $user = auth()->user();
+
         $notifications = Notification::query()
                     ->leftjoin('users','notifications.updated_by','users.id')
                     ->leftjoin('students','notifications.student_id','students.id')
@@ -41,6 +47,19 @@ class StudentController extends Controller
                     ->orderBy('notifications.created_at','desc')                    
                     ->count();
 
+        $announcementsNots = Announcement::join('announcement_recipients','announcements.id','announcement_recipients.announcement_id')
+                    ->join('users','announcement_recipients.user_id','users.id')
+                    ->where('announcement_recipients.user_id',$user->id)
+                    ->select('announcement_recipients.id as anrId','users.*','announcements.*','announcement_recipients.*','announcements.id as id')
+                    ->orderBy('announcements.created_at','desc')
+                    ->limit(10)
+                    ->get();   
+
+        // Unread Annoucement Count
+        $unreadCount = AnnouncementRecipient::where('user_id', $user->id)
+                    ->where('read', false)
+                    ->count();
+
         $users = Student::past()->orderBy('name','ASC')->search($request->q)->paginate(20000);
 
         $users->appends (array ('q' => $request->q));
@@ -50,7 +69,7 @@ class StudentController extends Controller
         if(isset($request->q))
             $q = $request->q;           
 
-        return view('students.past-students', compact('users','q','notifications','unReadNotificationCount'));
+        return view('students.past-students', compact('users','q','notifications','unReadNotificationCount','announcementsNots','unreadCount'));
     }
 
     public function create()
@@ -146,17 +165,7 @@ class StudentController extends Controller
                        ->where('add_hour_logs.student_id',$student->id)
                        ->select('add_hour_logs.id as aId','add_hour_logs.hours','add_hour_logs.created_at','add_hour_logs.notes','students.name')
                        ->orderBy('add_hour_logs.created_at','desc')
-                       ->paginate(8,['*'], 'added');        
-
-        // $totalHours = DB::table('add_hour_logs')
-        //                ->where('add_hour_logs.deleted_at',null)
-        //                ->where('add_hour_logs.student_id',$student->id)
-        //                ->sum('hours');
-
-        // $finishedHours = DB::table('lesson_hour_logs')
-        //                ->where('lesson_hour_logs.deleted_at',null)
-        //                ->where('lesson_hour_logs.student_id',$student->id)
-        //                ->sum('hours');
+                       ->paginate(8,['*'], 'added');                
 
         // for blue background of tls
         $lesson_date_array = DB::table('lesson_hour_logs')
@@ -165,55 +174,85 @@ class StudentController extends Controller
                         ->pluck('lesson_date')
                         ->toArray();
 
-        // $hoursRemaining = $totalHours - $finishedHours;
-
-
         // Get the student ID from the request
-        $studentId = $student->id;
+        $studentId = $student->id;        
 
-        // Get all the hours added by the student in ascending order of creation time (assuming created_at is used to determine order)
-        $addedLogHours = DB::table('add_hour_logs')
-            ->where('deleted_at', null)
-            ->where('student_id', $studentId)
+        // new code
+        $addHourLogs = LogHour::where('student_id', $studentId)
             ->orderBy('created_at')
-            ->pluck('hours')
-            ->map(function ($hour) {
-                return (int)$hour;
-            })
-            ->toArray();
+            ->get();
 
-        // Get all the hours completed by the student in ascending order of creation time (assuming created_at is used to determine order)
-        $completedHours = DB::table('lesson_hour_logs')
-            ->where('deleted_at', null)
-            ->where('student_id', $studentId)
-            ->orderBy('created_at')
-            ->pluck('hours')
-            ->map(function ($hour) {
-                return (int)$hour;
-            })
-            ->toArray();
+        $usedLessonLogs = []; // Keep track of used lesson logs
 
-        // Initialize arrays to keep track of remaining and completed hours for each batch
-        $remainingHoursBatch = [];
-        $completedHoursBatch = [];
+        $exportData = [];
 
-        // Calculate the remaining and completed hours for each batch
-        foreach ($addedLogHours as $index => $addedHour) {
-            // Calculate the completed hours for the current batch
-            $completedInBatch = min($addedHour, isset($completedHours[$index]) ? $completedHours[$index] : 0);
-            $completedHoursBatch[] = $completedInBatch;
+        foreach ($addHourLogs as $addHourLog) {
+            $package = $addHourLog->notes.' ('.$addHourLog->hours.' hours)';
+            $remainingHours = $addHourLog->hours;
 
-            // Calculate the remaining hours for the current batch
-            $remainingInBatch = max(0, $addedHour - $completedInBatch);
-            $remainingHoursBatch[] = $remainingInBatch;
+            $lessonLogs = LessonLog::where('student_id', $studentId)
+                ->where('hours', '>', 0)                
+                ->whereNotIn('id', $usedLessonLogs) // Exclude used lesson logs
+                ->orderBy('lesson_date')
+                ->get();
+            
+            $data = [];
+            $completedHours = 0;
+
+            foreach ($lessonLogs as $log) {
+                
+                if ($remainingHours > 0) {
+                    $data[] = [
+                        'Date' => $log->lesson_date,
+                        'Lesson duration' => $log->hours . ' hr',
+                        'Program' => $log->program,
+                    ];
+                    $completedHours += $log->hours;
+                    $remainingHours -= $log->hours;
+                    $usedLessonLogs[] = $log->id; // Mark lesson log as used
+
+                    if($remainingHours <= 0){
+                        break;
+                    }
+                }
+            }            
+
+            if (empty($data) && $remainingHours > 0) {
+                $data[] = [
+                    'Date' => 'N/A',
+                    'Lesson duration' => '0 hr',
+                    'Program' => 'N/A',
+                ];
+            }
+
+            if (!empty($data)) {
+                $exportData[] = [
+                    'package' => $package,
+                    'completedHours' => $completedHours,
+                    'remainingHours' => ($remainingHours < 0) ? 0 : $remainingHours,
+                    'data' => $data,
+                ];
+            }
         }
 
-        // Calculate the total remaining hours and total completed hours across all batches
-        $remainingHours = array_sum($remainingHoursBatch);
-        $completedTotalHours = array_sum($completedHoursBatch);
+        if(count($exportData))
+        {            
+            $lastKey = array_key_last($exportData);
+            $lastRecord = $exportData[$lastKey];        
+            $finishedHours = $lastRecord['completedHours'];
+            $hoursRemaining = $lastRecord['remainingHours'];
+            $currentPackageNote = $lastRecord['package'];
 
-        $finishedHours = $completedTotalHours;
-        $hoursRemaining = $remainingHours;
+        } else {
+
+            $lessonLogsHour = LessonLog::where('student_id', $studentId)
+                ->sum('hours');
+
+            $finishedHours = $lessonLogsHour;
+            $hoursRemaining = 0;
+            $currentPackageNote = '';
+        }        
+        // new code ends
 
         $tlss = DB::table('tls')
                ->join('students','tls.student_id','students.id')
@@ -221,13 +260,9 @@ class StudentController extends Controller
                ->where('tls.student_id',$student->id)
                ->select('tls.*')
                ->orderBy('tls.date','asc')
-               ->get();
-        \Log::info('hoursRemaining');
-        \Log::info($hoursRemaining);
-        if($hoursRemaining < 0) 
-            $hoursRemaining = 0;                       
+               ->get();                          
 
-        return view('students.profile',compact('student','completeHours','addedHours','hoursRemaining','finishedHours','tlss','lesson_date_array'));
+        return view('students.profile',compact('student','completeHours','addedHours','hoursRemaining','finishedHours','tlss','lesson_date_array','currentPackageNote'));
     }
 
     public function descriptionUpdate(Request $request)
