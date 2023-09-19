@@ -1044,13 +1044,16 @@ class LessonController extends Controller
                                     if($notification)
                                         continue;                        
 
-                                    $notification = new Notification;
-                                    $notification->student_id = $request->student_id;
-                                    $notification->user_id = $uId;
-                                    $notification->case_id = $request->update_id;
-                                    $notification->case_type = 4; // 1 : Case Management Meeting, 2: Parent Review Session, 3: comments, 4: SI/FT
-                                    $notification->updated_by = Auth::user()->id;
-                                    $notification->save();
+                                    if($uId)
+                                    {
+                                        $notification = new Notification;
+                                        $notification->student_id = $request->student_id;
+                                        $notification->user_id = $uId;
+                                        $notification->case_id = $request->update_id;
+                                        $notification->case_type = 4; // 1 : Case Management Meeting, 2: Parent Review Session, 3: comments, 4: SI/FT
+                                        $notification->updated_by = Auth::user()->id;
+                                        $notification->save();
+                                    }
                                 }
                             }
                         }                            
@@ -1199,13 +1202,16 @@ class LessonController extends Controller
                                     if($notification)
                                         continue;                        
 
-                                    $notification = new Notification;
-                                    $notification->student_id = $request->student_id;
-                                    $notification->user_id = $uId;
-                                    $notification->case_id = $request->update_id;
-                                    $notification->case_type = 5; // 1 : Case Management Meeting, 2: Parent Review Session, 3: comments, 4: SI/FT, 5: BT/Lang
-                                    $notification->updated_by = Auth::user()->id;
-                                    $notification->save();
+                                    if($uId)
+                                    {                                        
+                                        $notification = new Notification;
+                                        $notification->student_id = $request->student_id;
+                                        $notification->user_id = $uId;
+                                        $notification->case_id = $request->update_id;
+                                        $notification->case_type = 5; // 1 : Case Management Meeting, 2: Parent Review Session, 3: comments, 4: SI/FT, 5: BT/Lang
+                                        $notification->updated_by = Auth::user()->id;
+                                        $notification->save();
+                                    }
                                 }
                             }
                         }                        
@@ -1345,13 +1351,16 @@ class LessonController extends Controller
                                     if($notification)
                                         continue;                        
 
-                                    $notification = new Notification;
-                                    $notification->student_id = $request->student_id;
-                                    $notification->user_id = $uId;
-                                    $notification->case_id = $request->update_id;
-                                    $notification->case_type = 7; // 1 : Case Management Meeting, 2: Parent Review Session, 3: comments, 4: SI/FT, 5: BT/Lang, 6: IM, 7: Sand
-                                    $notification->updated_by = Auth::user()->id;
-                                    $notification->save();
+                                    if($uId)
+                                    {                                        
+                                        $notification = new Notification;
+                                        $notification->student_id = $request->student_id;
+                                        $notification->user_id = $uId;
+                                        $notification->case_id = $request->update_id;
+                                        $notification->case_type = 7; // 1 : Case Management Meeting, 2: Parent Review Session, 3: comments, 4: SI/FT, 5: BT/Lang, 6: IM, 7: Sand
+                                        $notification->updated_by = Auth::user()->id;
+                                        $notification->save();
+                                    }
                                 }
                             }
                         }                        
@@ -1476,13 +1485,16 @@ class LessonController extends Controller
                                     if($notification)
                                         continue;                        
 
-                                    $notification = new Notification;
-                                    $notification->student_id = $lesson->student_id;
-                                    $notification->user_id = $uId;
-                                    $notification->case_id = $request->update_id;
-                                    $notification->case_type = 6; // 1 : Case Management Meeting, 2: Parent Review Session, 3: comments, 4: SI/FT, 5: BT/Lang, 6: IM
-                                    $notification->updated_by = Auth::user()->id;
-                                    $notification->save();
+                                    if($uId)
+                                    {                                        
+                                        $notification = new Notification;
+                                        $notification->student_id = $lesson->student_id;
+                                        $notification->user_id = $uId;
+                                        $notification->case_id = $request->update_id;
+                                        $notification->case_type = 6; // 1 : Case Management Meeting, 2: Parent Review Session, 3: comments, 4: SI/FT, 5: BT/Lang, 6: IM
+                                        $notification->updated_by = Auth::user()->id;
+                                        $notification->save();
+                                    }
                                 }
                             }                            
                         }                        
