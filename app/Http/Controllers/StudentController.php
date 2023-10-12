@@ -233,17 +233,61 @@ class StudentController extends Controller
                     'data' => $data,
                 ];
             }
-        }
+        }       
 
         if(count($exportData))
-        {            
-            $lastKey = array_key_last($exportData);
-            $lastRecord = $exportData[$lastKey];        
-            $finishedHours = $lastRecord['completedHours'];
-            $hoursRemaining = $lastRecord['remainingHours'];
-            $currentPackageNote = $lastRecord['package'];
+        {   
+            if(count($exportData) == 1)
+            {
+                $lastKey = array_key_last($exportData);
+                $lastRecord = $exportData[$lastKey];        
+                $finishedHours = $lastRecord['completedHours'];
+                $hoursRemaining = $lastRecord['remainingHours'];
+                $currentPackageNote = $lastRecord['package'];                
+            }   
+            else{
+                $tmpArray = '';
+                $flag = 0;
+                foreach($exportData as $k => $d)
+                {
+                    if($d['completedHours'] == 0)
+                    {
+                        $flag = 1;
 
-        } else {
+                        if($k == 0)
+                        {
+                            $tmpArray = $exportData[$k];
+                        }else{
+                            $tmpArray = $exportData[$k-1];
+                        }
+                        if($tmpArray['remainingHours'] > 0)
+                        {
+                            $finishedHours = $tmpArray['completedHours'];
+                            $hoursRemaining = $tmpArray['remainingHours'];
+                            $currentPackageNote = $tmpArray['package'];
+                            break;
+                        }
+                        else{
+                            $tmpArray = $exportData[$k];
+                            $finishedHours = $tmpArray['completedHours'];
+                            $hoursRemaining = $tmpArray['remainingHours'];
+                            $currentPackageNote = $tmpArray['package'];
+                            break;
+                        }
+                    }
+                }
+
+                if(!$flag)
+                {
+                    $lastKey = array_key_last($exportData);
+                    $lastRecord = $exportData[$lastKey];        
+                    $finishedHours = $lastRecord['completedHours'];
+                    $hoursRemaining = $lastRecord['remainingHours'];
+                    $currentPackageNote = $lastRecord['package'];
+                }
+            }  
+
+        } else {           
 
             $lessonLogsHour = LessonLog::where('student_id', $studentId)
                 ->sum('hours');
