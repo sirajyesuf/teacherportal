@@ -304,7 +304,13 @@ class StudentController extends Controller
                ->where('tls.student_id',$student->id)
                ->select('tls.*')
                ->orderBy('tls.date','asc')
-               ->get();                          
+               ->get();               
+
+        // new code added to update previous student remaining hours
+        $stud = Student::find($student->id);
+        $stud->remaining_hours = $hoursRemaining;        
+        $stud->save();           
+        // new code added to update previous student remaining hours : ends
 
         return view('students.profile',compact('student','completeHours','addedHours','hoursRemaining','finishedHours','tlss','lesson_date_array','currentPackageNote'));
     }
