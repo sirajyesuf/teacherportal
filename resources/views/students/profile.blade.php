@@ -19,7 +19,7 @@
                     @csrf
                     <input type="hidden" name="student_id" value="{{ $student->id}}">
                     <div class="note-upper">
-                        @php 
+                        @php
                             $t = colorOfDate($student->appointment_date);
                             if($student->is_appointment_done)
                                 $colClass = 'newgreen-bg';
@@ -28,21 +28,21 @@
                             elseif($t == 2)
                                 $colClass = 'newyellow-bg';
                             elseif($t == 4)
-                                $colClass = 'newred-bg'; 
+                                $colClass = 'newred-bg';
                             else
-                            {                                
-                                $colClass = 'grey-bg'; 
+                            {
+                                $colClass = 'grey-bg';
                             }
                         @endphp
                         <ul>
                             <li class="s_btndlt"><a href="javascript:void(0)" class="delete-student"><img class="delete-img" src="{{ asset('images/delete-button.svg') }}" width="28" /></a></li>
-                            <li class="d-flex align-items-center"><h2 id="studentName">{{$student->name}}</h2><a href="javascript:void(0)" data-student-id="{{$student->id}}" class="edit_student ml-2"><img src="{{ asset('images/edit.svg')}}" alt="" height="18"></a></li>                            
+                            <li class="d-flex align-items-center"><h2 id="studentName">{{$student->name}}</h2><a href="javascript:void(0)" data-student-id="{{$student->id}}" class="edit_student ml-2"><img src="{{ asset('images/edit.svg')}}" alt="" height="18"></a></li>
                             <li class="s_btnsave"><button type="submit" class="orange-bg"><img src="{{ asset('images/download2.png')}}" height="20"> Save</button></li>
                             <li class="s_case"><a href="{{ route('casenotes',$student->id) }}" class="dark-blue"><img src="{{ asset('images/folder-shared.svg')}}" alt=""> View case notes</a></li>
                             <li class="s_btnview"><a href="{{ route('lesson',$student->id)}}" class="dark-blue"><img src="{{ asset('images/description.svg')}}" alt=""> View Lesson</a></li>
                             <li class="s_btndate"><input id="appointment_date" class="" type="hidden" /><a class="home-picker-profile {{$colClass}}" data-id="{{ $student->id }} "href="#">{{ ($student->appointment_date)?longDateFormat($student->appointment_date):"Due Date"}} </a></li>
                             @if($student->appointment_date)
-                                <input type="checkbox" name="appointment-date" data-check-id="{{$student->id}}" class="bg-none black ml-2 checked" {{($student->is_appointment_done)?"checked disabled":""}}/>                                    
+                                <input type="checkbox" name="appointment-date" data-check-id="{{$student->id}}" class="bg-none black ml-2 checked" {{($student->is_appointment_done)?"checked disabled":""}}/>
                             @endif
                         </ul>
                     </div>
@@ -76,12 +76,12 @@
                                             <td class="blue-bg">{{ $tls->program}}</td>
                                             <td class="blue-bg">{{ $tls->music_day}}</td>
                                             <td class="blue-bg">{{ $tls->music_prog}}</td>
-                                            <td class="blue-bg">{{ $tls->duration}} Mins</td>  
+                                            <td class="blue-bg">{{ $tls->duration}} Mins</td>
                                             <td class="blue-bg">
                                                 <div class="d-flex-action">
                                                     <a href="javascript:void(0)" class="edit_tls" data-id="{{$tls->id}}"><img src="{{ asset('images/edit.svg')}}" alt="" height="18"></a>
                                                     <a href="javascript:void(0)" class="delete_tls" data-id="{{$tls->id}}"><img src="{{ asset('images/delete.svg')}}" alt=""></a>
-                                                </div>                          
+                                                </div>
                                             </td>
                                         </tr>
                                     @else
@@ -91,21 +91,21 @@
                                             <td>{{ $tls->program}}</td>
                                             <td>{{ $tls->music_day}}</td>
                                             <td>{{ $tls->music_prog}}</td>
-                                            <td>{{ $tls->duration}} Mins</td>  
+                                            <td>{{ $tls->duration}} Mins</td>
                                             <td class="">
                                                 <div class="d-flex-action">
                                                     <a href="javascript:void(0)" class="edit_tls" data-id="{{$tls->id}}"><img src="{{ asset('images/edit.svg')}}" alt="" height="18"></a>
                                                     <a href="javascript:void(0)" class="delete_tls" data-id="{{$tls->id}}"><img src="{{ asset('images/delete.svg')}}" alt=""></a>
-                                                </div>                          
+                                                </div>
                                             </td>
                                         </tr>
                                     @endif
                                 @endforeach
                                 @endif
-                                
+
                             </table>
                         </form>
-                        <div class="action text-right">                            
+                        <div class="action text-right">
                             <button type="button" class="btn btn-sm btn-save mt-1" id="add_tls">+</button>
                             <button type="button" class="btn btn-sm btn-save mt-1" id="add_tls_13">+13</button>
                             <button type="button" class="btn btn-sm btn-save mt-1" id="delete_selected_rows">Delete Selected Rows</button>
@@ -115,10 +115,10 @@
             </div>
             <div class="col-lg-5">
                 <div class="student-rightprt">
-                    <div class="d-flex">                                        
-                        <a href="{{route('attendance.export',$student->id)}}" class="btn btn-save"><i class="fa fa-file-excel"></i> Download Attendace</a>
+                    <div class="d-flex">
+                        <a href="{{route('attendance.export',$student->id)}}" class="btn btn-save"><i class="fa fa-file-excel"></i> Download Attendance</a>
                     </div>
-                    <div class="hour-part">                        
+                    <div class="hour-part">
                         <ul>
                             <li>
                                 <h2>{{ $hoursRemaining }}</h2>
@@ -132,15 +132,15 @@
                     </div>
 
                     <div class="hour-links">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">                            
+                        <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item">
-                                <div class="nav-link active align-items-center d-flex" data-toggle="tab" href="#lesson_log" role="tab" aria-controls="lesson_log" aria-selected="true">                                    
+                                <div class="nav-link active align-items-center d-flex" data-toggle="tab" href="#lesson_log" role="tab" aria-controls="lesson_log" aria-selected="true">
                                     <a href="javascript:void(0)" class="mr-2 add-btn add_lesson_log align-items-center d-flex d-inline-flex justify-content-center" data-toggle="modal" data-target="#add_lesson_hour_modal"><img src="{{ asset('images/circle-2.svg')}}" class="add_log" alt="Add lesson log"></a>
                                     <a class="" id="lesson_log-tab" >Lesson Log</a>
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <div class="nav-link align-items-center d-flex" data-toggle="tab" href="#add_hour" role="tab" aria-controls="add_hour" aria-selected="false">                                
+                                <div class="nav-link align-items-center d-flex" data-toggle="tab" href="#add_hour" role="tab" aria-controls="add_hour" aria-selected="false">
                                 <a href="javascript:void(0)" class="mr-2 add-btn align-items-center d-flex d-inline-flex justify-content-center add_hour_log" data-toggle="modal" data-target="#add_hour_log_modal"><img src="{{ asset('images/circle-2.svg')}}" class="add_log" alt="Add Hour"></a>
                                 <a class="" id="add_hour-tab" >Add Hours Log</a>
                             </li>
@@ -172,7 +172,7 @@
                             @endif
                         </div>
                         <div class="tab-pane fade" id="add_hour" role="tabpanel" aria-labelledby="add_hour-tab">
-                            
+
                             @if($addedHours)
                                 @foreach($addedHours as $key => $ah)
                                 <div class="hour-box addhour-bg">
@@ -188,17 +188,17 @@
                                     <a href="javascript:void(0)" data-id="{{ $ah->aId }}" class="edit_add_hour"><img src="{{ asset('images/edit.svg')}}" height="20"></a>
                                     <a href="javascript:void(0)" data-id="{{ $ah->aId }}" class="delete_add_hour ml-1"><img src="{{ asset('images/delete.svg')}}" height="20"></a>
                                 </div>
-                                @endforeach                                    
+                                @endforeach
                             {{ $addedHours->links() }}
                             @endif
                         </div>
                     </div>
 
-                    
+
                 </div>
             </div>
-        </div>             
-    </div>            
+        </div>
+    </div>
 </main>
 
 {{-- Start : for edit student --}}
@@ -213,13 +213,13 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">                
+            <div class="modal-body">
                 <input type="hidden" id="editStudentId" name="id" value="{{ $student->id }}">
                 <div class="form-group">
                     <label for="studentName" class="col-form-label">Name:</label>
                     <input type="text" name="name" id="edit_name" class="form-control">
                     <span class="error"></span>
-                </div>                
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-save orange-bg">Save</button>
@@ -233,7 +233,7 @@
 
 {{-- Start : Delete Confirmation Modal --}}
 <div class="modal" tabindex="-1" role="dialog" id="delete_modal">
-    <div class="modal-dialog" role="document">        
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Delete Student</h5>
@@ -241,17 +241,17 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">                
+            <div class="modal-body">
                 <input type="hidden" id="delete_id" value="{{ $student->id }}">
                 <div class="form-group">
                     <label for="add_lesson_hour" class="col-form-label">Are you Sure you want to delete this item?</label>
-                </div>                
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-save del-student">Delete</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
-        </div>        
+        </div>
     </div>
 </div>
 {{-- Ends : Delete Confirmation Modal --}}
@@ -268,7 +268,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">                
+            <div class="modal-body">
                 <input type="hidden" name="add_lesson_log_id" value="{{ $student->id }}">
                 <div class="form-group">
                     <label for="add_lesson_hour" class="col-form-label">Hours to Add:</label>
@@ -305,7 +305,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">                                
+            <div class="modal-body">
                 <div class="form-group">
                     <label for="add_lesson_hour" class="col-form-label">Hours to Add:</label>
                     <input type="number" step="0.5" name="add_lesson_hour" class="form-control" id="edit_add_hour">
@@ -339,18 +339,18 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">                
+            <div class="modal-body">
                 <input type="hidden" name="add_log_student_id" value="{{ $student->id }}">
                 <input type="hidden" name="duplicate" id="duplicate" value="0">
                 <div class="row">
                     <div class="col-sm-12">
                     <div class="form-group">
                         <label for="trainer_name" class="col-form-label">Trainer Name:</label>
-                        <select id="trainer_name" name="name" class="form-control"></select>                    
+                        <select id="trainer_name" name="name" class="form-control"></select>
                         <span class="error"></span>
-                    </div>          
                     </div>
-                </div>      
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">
@@ -361,7 +361,7 @@
                                 <option value="2">BT</option>
                             </select> --}}
                             <span class="error"></span>
-                        </div>           
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -370,7 +370,7 @@
                             <label for="add_log_hour" class="col-form-label">Hours</label>
                             <input type="number" step="0.25" name="add_log_hour" class="form-control" id="add_log_hour">
                             <span class="error"></span>
-                        </div>           
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -379,9 +379,9 @@
                             <label for="lesson_date" class="col-form-label">Date</label>
                             <input type="text" name="lesson_date" class="form-control datePicker" id="lesson_date">
                             <span class="error"></span>
-                        </div>           
+                        </div>
                     </div>
-                </div>     
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-save">Save</button>
@@ -405,34 +405,34 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">                
+            <div class="modal-body">
                 <input type="hidden" name="edit_lesson_log_id" id="edit_lesson_log_id" value="">
                 <input type="hidden" name="duplicate" id="edit_duplicate" value="0">
                 <div class="row">
                     <div class="col-sm-12">
                     <div class="form-group">
                         <label for="edit_trainer_name" class="col-form-label">Trainer Name:</label>
-                        <select id="edit_trainer_name" name="name" class="form-control"></select>                    
+                        <select id="edit_trainer_name" name="name" class="form-control"></select>
                         <span class="error"></span>
-                    </div>          
                     </div>
-                </div>  
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label for="edit_program" class="col-form-label">Program:</label>
                             <input type="text" name="program" class="form-control" id="edit_program">
                             <span class="error"></span>
-                        </div>           
+                        </div>
                     </div>
-                </div>    
+                </div>
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label for="edit_log_hour" class="col-form-label">Hours</label>
                             <input type="number" step="0.25" name="add_log_hour" class="form-control" id="edit_lesson_log_hour">
                             <span class="error"></span>
-                        </div>           
+                        </div>
                     </div>
                 </div>
                 <div class="row">
@@ -441,9 +441,9 @@
                             <label for="edit_lesson_date" class="col-form-label">Date</label>
                             <input type="text" name="lesson_date" class="form-control datePicker" id="edit_lesson_date">
                             <span class="error"></span>
-                        </div>           
+                        </div>
                     </div>
-                </div>     
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-save">Save</button>
@@ -467,7 +467,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">                
+            <div class="modal-body">
                 <input type="hidden" name="update_id" id="update_id" value="">
                 <div class="form-group">
                     <label for="date" class="col-form-label">Date:</label>
@@ -493,7 +493,7 @@
                     <label for="duration" class="col-form-label">Duration:</label>
                     <input type="number" step="0.5" name="duration" class="form-control" id="duration">
                     <span class="error"></span>
-                </div>                
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="submit" class="btn btn-save orange-bg">Save</button>
