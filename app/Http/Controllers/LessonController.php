@@ -1085,23 +1085,27 @@ class LessonController extends Controller
             $lessonLogNew->save();
             $rl = $lessonLogNew->save();
 
-            // $totalHours = DB::table('add_hour_logs')
-            //        ->where('add_hour_logs.deleted_at',null)
-            //        ->where('add_hour_logs.student_id',$request->student_id)
-            //        ->sum('hours');
+            // old code to count remaining hour
+            $totalHours = DB::table('add_hour_logs')
+                   ->where('add_hour_logs.deleted_at',null)
+                   ->where('add_hour_logs.student_id',$request->student_id)
+                   ->sum('hours');
 
-            // $finishedHours = DB::table('lesson_hour_logs')
-            //                ->where('lesson_hour_logs.deleted_at',null)
-            //                ->where('lesson_hour_logs.student_id',$request->student_id)
-            //                ->sum('hours');
+            $finishedHours = DB::table('lesson_hour_logs')
+                           ->where('lesson_hour_logs.deleted_at',null)
+                           ->where('lesson_hour_logs.student_id',$request->student_id)
+                           ->sum('hours');
 
-            // $hoursRemaining = $totalHours - $finishedHours;
+            $hoursRemaining = $totalHours - $finishedHours;
 
-            // if($hoursRemaining < 0)
-            //     $hoursRemaining = 0;
+            if($hoursRemaining < 0)
+                $hoursRemaining = 0;
+            // old code to count remaining hour ends
 
-            $lessonService = new LessonService;
-            $hoursRemaining = $lessonService->getRemainingHour($request->student_id);
+            // new code 
+            // $lessonService = new LessonService;
+            // $hoursRemaining = $lessonService->getRemainingHour($request->student_id);
+            // new code ends
 
             $student = Student::find($request->student_id);
             $student->remaining_hours = $hoursRemaining;
@@ -1246,23 +1250,27 @@ class LessonController extends Controller
             $lessonLogNew->save();
             $rl = $lessonLogNew->save();
 
-            // $totalHours = DB::table('add_hour_logs')
-            //        ->where('add_hour_logs.deleted_at',null)
-            //        ->where('add_hour_logs.student_id',$request->student_id)
-            //        ->sum('hours');
+            // old code to count remaining hour
+            $totalHours = DB::table('add_hour_logs')
+                   ->where('add_hour_logs.deleted_at',null)
+                   ->where('add_hour_logs.student_id',$request->student_id)
+                   ->sum('hours');
 
-            // $finishedHours = DB::table('lesson_hour_logs')
-            //                ->where('lesson_hour_logs.deleted_at',null)
-            //                ->where('lesson_hour_logs.student_id',$request->student_id)
-            //                ->sum('hours');
+            $finishedHours = DB::table('lesson_hour_logs')
+                           ->where('lesson_hour_logs.deleted_at',null)
+                           ->where('lesson_hour_logs.student_id',$request->student_id)
+                           ->sum('hours');
 
-            // $hoursRemaining = $totalHours - $finishedHours;
+            $hoursRemaining = $totalHours - $finishedHours;
 
-            // if($hoursRemaining < 0)
-            //     $hoursRemaining = 0;
+            if($hoursRemaining < 0)
+                $hoursRemaining = 0;
+            // old code to count remaining hour ends
 
-            $lessonService = new LessonService;
-            $hoursRemaining = $lessonService->getRemainingHour($request->student_id);
+            // new code
+            // $lessonService = new LessonService;
+            // $hoursRemaining = $lessonService->getRemainingHour($request->student_id);
+            // new code ends
 
             $student = Student::find($request->student_id);
             $student->remaining_hours = $hoursRemaining;
@@ -1518,23 +1526,27 @@ class LessonController extends Controller
             $lesson->updated_by = Auth::user()->id;
             $r = $lesson->save();
 
-            // $totalHours = DB::table('add_hour_logs')
-            //        ->where('add_hour_logs.deleted_at',null)
-            //        ->where('add_hour_logs.student_id',$request->student_id)
-            //        ->sum('hours');
+            // old code to count remaining hour
+            $totalHours = DB::table('add_hour_logs')
+                   ->where('add_hour_logs.deleted_at',null)
+                   ->where('add_hour_logs.student_id',$request->student_id)
+                   ->sum('hours');
 
-            // $finishedHours = DB::table('lesson_hour_logs')
-            //                ->where('lesson_hour_logs.deleted_at',null)
-            //                ->where('lesson_hour_logs.student_id',$request->student_id)
-            //                ->sum('hours');
+            $finishedHours = DB::table('lesson_hour_logs')
+                           ->where('lesson_hour_logs.deleted_at',null)
+                           ->where('lesson_hour_logs.student_id',$request->student_id)
+                           ->sum('hours');
 
-            // $hoursRemaining = $totalHours - $finishedHours;
+            $hoursRemaining = $totalHours - $finishedHours;
 
-            // if($hoursRemaining < 0)
-            //     $hoursRemaining = 0;
+            if($hoursRemaining < 0)
+                $hoursRemaining = 0;
+            // old code to count remaining hour ends
 
-            $lessonService = new LessonService;
-            $hoursRemaining = $lessonService->getRemainingHour($request->student_id);
+            // new code
+            // $lessonService = new LessonService;
+            // $hoursRemaining = $lessonService->getRemainingHour($request->student_id);
+            // new code ends
 
             $student = Student::find($request->student_id);
 

@@ -177,125 +177,143 @@ class StudentController extends Controller
         // Get the student ID from the request
         $studentId = $student->id;        
 
+        // old code for time calculation
+        $totalHours = DB::table('add_hour_logs')
+                       ->where('add_hour_logs.deleted_at',null)
+                       ->where('add_hour_logs.student_id',$studentId)
+                       ->sum('hours');
+
+        $finishedHours = DB::table('lesson_hour_logs')
+                       ->where('lesson_hour_logs.deleted_at',null)
+                       ->where('lesson_hour_logs.student_id',$studentId)
+                       ->sum('hours');
+
+        $hoursRemaining = $totalHours - $finishedHours;
+
+        if($hoursRemaining < 0)
+            $hoursRemaining = 0;  
+
+        // old code ends
+
         // new code
-        $addHourLogs = LogHour::where('student_id', $studentId)
-            ->orderBy('created_at')
-            ->get();
+        // $addHourLogs = LogHour::where('student_id', $studentId)
+        //     ->orderBy('created_at')
+        //     ->get();
 
-        $usedLessonLogs = []; // Keep track of used lesson logs
+        // $usedLessonLogs = []; // Keep track of used lesson logs
 
-        $exportData = [];
+        // $exportData = [];
 
-        foreach ($addHourLogs as $addHourLog) {
-            $package = $addHourLog->notes.' ('.$addHourLog->hours.' hours)';
-            $remainingHours = $addHourLog->hours;
+        // foreach ($addHourLogs as $addHourLog) {
+        //     $package = $addHourLog->notes.' ('.$addHourLog->hours.' hours)';
+        //     $remainingHours = $addHourLog->hours;
 
-            $lessonLogs = LessonLog::where('student_id', $studentId)
-                ->where('hours', '>', 0)                
-                ->whereNotIn('id', $usedLessonLogs) // Exclude used lesson logs
-                ->orderBy('lesson_date')
-                ->get();
+        //     $lessonLogs = LessonLog::where('student_id', $studentId)
+        //         ->where('hours', '>', 0)                
+        //         ->whereNotIn('id', $usedLessonLogs) // Exclude used lesson logs
+        //         ->orderBy('lesson_date')
+        //         ->get();
             
-            $data = [];
-            $completedHours = 0;
+        //     $data = [];
+        //     $completedHours = 0;
 
-            foreach ($lessonLogs as $log) {
+        //     foreach ($lessonLogs as $log) {
                 
-                if ($remainingHours > 0) {
-                    $data[] = [
-                        'Date' => $log->lesson_date,
-                        'Lesson duration' => $log->hours . ' hr',
-                        'Program' => $log->program,
-                    ];
-                    $completedHours += $log->hours;
-                    $remainingHours -= $log->hours;
-                    $usedLessonLogs[] = $log->id; // Mark lesson log as used
+        //         if ($remainingHours > 0) {
+        //             $data[] = [
+        //                 'Date' => $log->lesson_date,
+        //                 'Lesson duration' => $log->hours . ' hr',
+        //                 'Program' => $log->program,
+        //             ];
+        //             $completedHours += $log->hours;
+        //             $remainingHours -= $log->hours;
+        //             $usedLessonLogs[] = $log->id; // Mark lesson log as used
 
-                    if($remainingHours <= 0){
-                        break;
-                    }
-                }
-            }            
+        //             if($remainingHours <= 0){
+        //                 break;
+        //             }
+        //         }
+        //     }            
 
-            if (empty($data) && $remainingHours > 0) {
-                $data[] = [
-                    'Date' => 'N/A',
-                    'Lesson duration' => '0 hr',
-                    'Program' => 'N/A',
-                ];
-            }
+        //     if (empty($data) && $remainingHours > 0) {
+        //         $data[] = [
+        //             'Date' => 'N/A',
+        //             'Lesson duration' => '0 hr',
+        //             'Program' => 'N/A',
+        //         ];
+        //     }
 
-            if (!empty($data)) {
-                $exportData[] = [
-                    'package' => $package,
-                    'completedHours' => $completedHours,
-                    'remainingHours' => ($remainingHours < 0) ? 0 : $remainingHours,
-                    'data' => $data,
-                ];
-            }
-        }       
+        //     if (!empty($data)) {
+        //         $exportData[] = [
+        //             'package' => $package,
+        //             'completedHours' => $completedHours,
+        //             'remainingHours' => ($remainingHours < 0) ? 0 : $remainingHours,
+        //             'data' => $data,
+        //         ];
+        //     }
+        // }       
 
-        if(count($exportData))
-        {   
-            if(count($exportData) == 1)
-            {
-                $lastKey = array_key_last($exportData);
-                $lastRecord = $exportData[$lastKey];        
-                $finishedHours = $lastRecord['completedHours'];
-                $hoursRemaining = $lastRecord['remainingHours'];
-                $currentPackageNote = $lastRecord['package'];                
-            }   
-            else{
-                $tmpArray = '';
-                $flag = 0;
-                foreach($exportData as $k => $d)
-                {
-                    if($d['completedHours'] == 0)
-                    {
-                        $flag = 1;
+        // if(count($exportData))
+        // {   
+        //     if(count($exportData) == 1)
+        //     {
+        //         $lastKey = array_key_last($exportData);
+        //         $lastRecord = $exportData[$lastKey];        
+        //         $finishedHours = $lastRecord['completedHours'];
+        //         $hoursRemaining = $lastRecord['remainingHours'];
+        //         $currentPackageNote = $lastRecord['package'];                
+        //     }   
+        //     else{
+        //         $tmpArray = '';
+        //         $flag = 0;
+        //         foreach($exportData as $k => $d)
+        //         {
+        //             if($d['completedHours'] == 0)
+        //             {
+        //                 $flag = 1;
 
-                        if($k == 0)
-                        {
-                            $tmpArray = $exportData[$k];
-                        }else{
-                            $tmpArray = $exportData[$k-1];
-                        }
-                        if($tmpArray['remainingHours'] > 0)
-                        {
-                            $finishedHours = $tmpArray['completedHours'];
-                            $hoursRemaining = $tmpArray['remainingHours'];
-                            $currentPackageNote = $tmpArray['package'];
-                            break;
-                        }
-                        else{
-                            $tmpArray = $exportData[$k];
-                            $finishedHours = $tmpArray['completedHours'];
-                            $hoursRemaining = $tmpArray['remainingHours'];
-                            $currentPackageNote = $tmpArray['package'];
-                            break;
-                        }
-                    }
-                }
+        //                 if($k == 0)
+        //                 {
+        //                     $tmpArray = $exportData[$k];
+        //                 }else{
+        //                     $tmpArray = $exportData[$k-1];
+        //                 }
+        //                 if($tmpArray['remainingHours'] > 0)
+        //                 {
+        //                     $finishedHours = $tmpArray['completedHours'];
+        //                     $hoursRemaining = $tmpArray['remainingHours'];
+        //                     $currentPackageNote = $tmpArray['package'];
+        //                     break;
+        //                 }
+        //                 else{
+        //                     $tmpArray = $exportData[$k];
+        //                     $finishedHours = $tmpArray['completedHours'];
+        //                     $hoursRemaining = $tmpArray['remainingHours'];
+        //                     $currentPackageNote = $tmpArray['package'];
+        //                     break;
+        //                 }
+        //             }
+        //         }
 
-                if(!$flag)
-                {
-                    $lastKey = array_key_last($exportData);
-                    $lastRecord = $exportData[$lastKey];        
-                    $finishedHours = $lastRecord['completedHours'];
-                    $hoursRemaining = $lastRecord['remainingHours'];
-                    $currentPackageNote = $lastRecord['package'];
-                }
-            }  
+        //         if(!$flag)
+        //         {
+        //             $lastKey = array_key_last($exportData);
+        //             $lastRecord = $exportData[$lastKey];        
+        //             $finishedHours = $lastRecord['completedHours'];
+        //             $hoursRemaining = $lastRecord['remainingHours'];
+        //             $currentPackageNote = $lastRecord['package'];
+        //         }
+        //     }  
 
-        } else {           
+        // } else {           
 
-            $lessonLogsHour = LessonLog::where('student_id', $studentId)
-                ->sum('hours');
+        //     $lessonLogsHour = LessonLog::where('student_id', $studentId)
+        //         ->sum('hours');
 
-            $finishedHours = $lessonLogsHour;
-            $hoursRemaining = 0;
-            $currentPackageNote = '';
-        }        
+        //     $finishedHours = $lessonLogsHour;
+        //     $hoursRemaining = 0;
+        //     $currentPackageNote = '';
+        // }        
         // new code ends
 
         $tlss = DB::table('tls')
@@ -308,11 +326,15 @@ class StudentController extends Controller
 
         // new code added to update previous student remaining hours
         $stud = Student::find($student->id);
+        if($hoursRemaining == 0)
+        {
+            $stud->is_past = 1;                    
+        }
         $stud->remaining_hours = $hoursRemaining;        
         $stud->save();           
         // new code added to update previous student remaining hours : ends
 
-        return view('students.profile',compact('student','completeHours','addedHours','hoursRemaining','finishedHours','tlss','lesson_date_array','currentPackageNote'));
+        return view('students.profile',compact('student','completeHours','addedHours','hoursRemaining','finishedHours','tlss','lesson_date_array'));
     }
 
     public function descriptionUpdate(Request $request)
