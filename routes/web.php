@@ -48,7 +48,7 @@ Route::post('/student/name/update', 'StudentController@nameUpdate')->name('stude
 
 
 Route::get('/lesson/{id}', 'LessonController@index')->name('lesson');
-Route::post('/lesson', 'LessonController@index')->name('lesson.post');
+Route::get('/lesson', 'LessonController@index')->name('lesson.post');
 
 Route::get('/lesson-bt/{id}', 'LessonController@btIndex')->name('lesson-bt');
 Route::post('/lesson-bt', 'LessonController@btIndex')->name('lesson-bt.post');
