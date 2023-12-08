@@ -64,8 +64,8 @@
                     @endif
                 </ul>
             </div>
-            <form action="{{ route('lesson.post')}}" method="POST">
-                @csrf
+            <form action="{{ route('lesson.post')}}" method="get">
+                {{-- @csrf --}}
                 <input type="hidden" name="id" value="{{ $user->id}}">
                 <div class="search-box">
                     <input type="search" name="q" placeholder="" value="{{ $q }}">
@@ -84,7 +84,11 @@
 
         <div class="lesson-main">
             {!! $html !!}
+
         </div>                             
+        <div class="mt-1">                
+            {{ $lessons->appends(['q' => $q, 'id' => $id])->links() }}
+        </div>
     </div>            
 </main>
 

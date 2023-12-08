@@ -27,13 +27,16 @@ class LessonController extends Controller
         $lessons = $user = '';
 
         $q = '';
-        if(isset($request->q))
-            $q = $request->q;
+        if(isset($request->q)){
+            $q = $request->q;            
+        }
         
         if($request->id)
         {
             $user = Student::find($request->id);
-            $lessons = Lesson::where('student_id',$user->id)->where('template_id',1)->where('lesson_json','like','%'.$q.'%')->where('deleted_at',null)->orderBy('lesson_date','desc')->orderBy('id','desc')->get();
+            $lessons = Lesson::where('student_id',$user->id)->where('template_id',1)->where('lesson_json','like','%'.$q.'%')->where('deleted_at',null)->orderBy('lesson_date','desc')->orderBy('id','desc')->paginate(2);
+
+            $id = $request->id;
         }
 
         if($lessons)
@@ -150,7 +153,7 @@ class LessonController extends Controller
             }
         }
 
-        return view('lessons.index',compact('user','lessons','html','q'));
+        return view('lessons.index',compact('user','lessons','html','q','id'));
     }
 
     public function btIndex(Request $request)
