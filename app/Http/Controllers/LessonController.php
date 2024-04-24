@@ -167,7 +167,8 @@ class LessonController extends Controller
         if($request->id)
         {
             $user = Student::find($request->id);
-            $lessons = Lesson::where('student_id',$user->id)->where('template_id',2)->where('lesson_json','like','%'.$q.'%')->where('deleted_at',null)->orderBy('lesson_date','desc')->orderBy('id','desc')->get();
+            $lessons = Lesson::where('student_id',$user->id)->where('template_id',2)->where('lesson_json','like','%'.$q.'%')->where('deleted_at',null)->orderBy('lesson_date','desc')->orderBy('id','desc')->paginate(4);
+            $id = $request->id;
         }
 
         if($lessons)
@@ -235,7 +236,7 @@ class LessonController extends Controller
             }
         }
 
-        return view('lessons.bt-index',compact('user','lessons','html','q'));
+        return view('lessons.bt-index',compact('user','lessons','html','q','id'));
     }
 
     public function sandIndex(Request $request)
@@ -249,7 +250,8 @@ class LessonController extends Controller
         if($request->id)
         {
             $user = Student::find($request->id);
-            $lessons = Lesson::where('student_id',$user->id)->where('template_id',4)->where('lesson_json','like','%'.$q.'%')->where('deleted_at',null)->orderBy('lesson_date','desc')->orderBy('id','desc')->get();
+            $lessons = Lesson::where('student_id',$user->id)->where('template_id',4)->where('lesson_json','like','%'.$q.'%')->where('deleted_at',null)->orderBy('lesson_date','desc')->orderBy('id','desc')->paginate(4);
+            $id = $request->id;
         }
 
         if($lessons)
@@ -312,7 +314,7 @@ class LessonController extends Controller
             }
         }
 
-        return view('lessons.sand-index',compact('user','lessons','html','q'));
+        return view('lessons.sand-index',compact('user','lessons','html','q','id'));
     }
 
     public function imIndex(Request $request)
@@ -326,7 +328,8 @@ class LessonController extends Controller
         if($request->id)
         {
             $user = Student::find($request->id);
-            $lessons = Lesson::where('student_id',$user->id)->where('template_id',3)->where('lesson_json','like','%'.$q.'%')->where('deleted_at',null)->orderBy('lesson_date','desc')->orderBy('id','desc')->get();
+            $lessons = Lesson::where('student_id',$user->id)->where('template_id',3)->where('lesson_json','like','%'.$q.'%')->where('deleted_at',null)->orderBy('lesson_date','desc')->orderBy('id','desc')->paginate(4);
+            $id = $request->id;
         }
 
         if($lessons)
@@ -688,7 +691,7 @@ class LessonController extends Controller
             }
         }
 
-        return view('lessons.im-index',compact('user','lessons','html','q'));
+        return view('lessons.im-index',compact('user','lessons','html','q','id'));
     }
 
     public function templateChoice(Student $student)
