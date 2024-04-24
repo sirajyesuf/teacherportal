@@ -85,6 +85,9 @@
 
         <div class="lesson-main">
             {!! $html !!}            
+        </div>
+        <div class="mt-1">                
+            {{ $lessons->appends(['q' => $q, 'id' => $id])->links() }}
         </div>                             
     </div>            
 </main>

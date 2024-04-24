@@ -155,7 +155,10 @@ $( document ).ready(function() {
         // Update the value of each textarea element with the data from its corresponding CKEditor instance
         for (var i = 0; i < textareas.length; i++) {
             var textarea = textareas[i];
-            CKEDITOR.instances[textarea.id].updateElement();
+            var instance = CKEDITOR.instances[textarea.id];
+            if (instance) {
+                instance.updateElement();
+            }
         }
         // serialize the form data
         var formData = form.serialize();
