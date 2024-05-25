@@ -29,7 +29,7 @@
                             style="margin-left: 20px; border-radius: 10px" href="#" id="notificationDropdown"
                             role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
                                 src="{{ asset('images/bell.svg') }}" class="bellcolor" height="20" alt=""
-                                style=""> Notification 
+                                style=""> Notification
                                 @if ($unReadNotificationCount)
                                     <span class="badge badge-light nCount">
                                         {{ $unReadNotificationCount }}
@@ -63,14 +63,14 @@
                                     ?>
                                     @if ($notify->is_read)
                                         @if ($notify->case_type > 3)
-                                            <a class="dropdown-item pt-2 pb-2" href="{{ $route }}"><span
+                                            <a class="dropdown-item notification-item pt-2 pb-2" href="{{ $route }}" data-id="{{$notify->id}}"><span
                                                     class="font-weight-bold">{{ $notify->first_name }}</span> has tagged
                                                 you in a comment under <span
                                                     class="font-weight-bold">{{ $notify->name }}</span>'s lesson notes.
                                                 <div class="time-ago">{{ getTimeAgo($notify->created_at) }}</div>
                                             </a>
                                         @else
-                                            <a class="dropdown-item pt-2 pb-2" href="{{ $route }}"><span
+                                            <a class="dropdown-item notification-item pt-2 pb-2" href="{{ $route }}" data-id="{{$notify->id}}"><span
                                                     class="font-weight-bold">{{ $notify->first_name }}</span> has tagged
                                                 you in a comment under <span
                                                     class="font-weight-bold">{{ $notify->name }}</span>'s case notes. <div
@@ -78,14 +78,14 @@
                                         @endif
                                     @else
                                         @if ($notify->case_type > 3)
-                                            <a class="dropdown-item-unread pt-2 pb-2" href="{{ $route }}"><span
+                                            <a class="dropdown-item-unread notification-item pt-2 pb-2" href="{{ $route }}" data-id="{{$notify->id}}"><span
                                                     class="font-weight-bold">{{ $notify->first_name }}</span> has tagged
                                                 you in a comment under <span
                                                     class="font-weight-bold">{{ $notify->name }}</span>'s lesson notes.
                                                 <div class="time-ago">{{ getTimeAgo($notify->created_at) }}</div>
                                             </a>
                                         @else
-                                            <a class="dropdown-item-unread pt-2 pb-2" href="{{ $route }}"><span
+                                            <a class="dropdown-item-unread notification-item pt-2 pb-2" href="{{ $route }}" data-id="{{$notify->id}}"><span
                                                     class="font-weight-bold">{{ $notify->first_name }}</span> has tagged
                                                 you in a comment under <span
                                                     class="font-weight-bold">{{ $notify->name }}</span>'s case notes. <div
@@ -102,7 +102,7 @@
                             style="margin-left: 20px; border-radius: 10px" href="#" id="announcementDropdown"
                             role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
                                 src="{{ asset('images/bell.svg') }}" class="bellcolor" height="20" alt=""
-                                style=""> Announcement 
+                                style=""> Announcement
                                 @if ($unreadCount)
                                     <span class="badge badge-light nCount">
                                     {{ $unreadCount }}
@@ -131,7 +131,7 @@
                                                     @php
                                                         $recipients = App\Announcement::find($anncenotify->id)->recipients;
                                                         $recipientNames = [];
-                                                        
+
                                                         foreach ($recipients as $recipient) {
                                                             if ($recipient->user->id == auth()->user()->id) {
                                                                 $recipientNames[] = 'you';
@@ -139,9 +139,9 @@
                                                                 $recipientNames[] = $recipient->user->first_name;
                                                             }
                                                         }
-                                                        
+
                                                         $recipientCount = count($recipientNames);
-                                                        
+
                                                         if ($recipientCount === 1) {
                                                             $recipientList = $recipientNames[0];
                                                         } else {
@@ -168,7 +168,7 @@
                                                     @php
                                                         $recipients = App\Announcement::find($anncenotify->id)->recipients;
                                                         $recipientNames = [];
-                                                        
+
                                                         foreach ($recipients as $recipient) {
                                                             if ($recipient->user->id == auth()->user()->id) {
                                                                 $recipientNames[] = 'you';
@@ -176,9 +176,9 @@
                                                                 $recipientNames[] = $recipient->user->first_name;
                                                             }
                                                         }
-                                                        
+
                                                         $recipientCount = count($recipientNames);
-                                                        
+
                                                         if ($recipientCount === 1) {
                                                             $recipientList = $recipientNames[0];
                                                         } else {
@@ -198,7 +198,7 @@
                             @endif
                         </div>
                     </div>
-                </div>               
+                </div>
             </div>
             <div class="header-middle mr-23">
                 <p>Name List</p>
@@ -212,7 +212,7 @@
             <p class="d-sm-none">Name List</p>
             <div class="header-addbtn">
                 <ul>
-                    <li><a href="{{ route('student.create') }}"><img src="{{ asset('images/add-circle-outline.svg')}}" alt=""> Add Student</a></li>                    
+                    <li><a href="{{ route('student.create') }}"><img src="{{ asset('images/add-circle-outline.svg')}}" alt=""> Add Student</a></li>
                 </ul>
                 <form action="{{ route('home.post') }}" method="POST">
                     @csrf
@@ -238,7 +238,7 @@
         <div class="main-part">
             <div class="row">
                 @foreach($users as $key => $user)
-                <div class="col-md-4">                    
+                <div class="col-md-4">
                     <div class="main-secleft">
                         <div class="student-box">
                             <div class="row">
@@ -248,20 +248,20 @@
                                         <p><h4><img src="images/clock.svg" alt=""> {{ decimalToHHmm($user->remaining_hours) }}</h4></p>
                                     </div>
                                 </div>
-                                @php 
+                                @php
                                     $t = colorOfDate($user->appointment_date);
-                                    if($user->is_appointment_done)                                    
+                                    if($user->is_appointment_done)
                                         $colClass = 'newgreen';
                                     elseif($t == 3)
                                         $colClass = 'newblue';
                                     elseif($t == 2)
                                         $colClass = 'newyellow';
                                     elseif($t == 4)
-                                        $colClass = 'newred'; 
+                                        $colClass = 'newred';
                                     else
                                     {
                                         $user->appointment_date = '';
-                                        $colClass = 'grey'; 
+                                        $colClass = 'grey';
                                     }
                                 @endphp
                                 <div class="col-md-5 d-flex align-items-center">
@@ -271,14 +271,14 @@
                                 <div class="col-md-3 d-flex pl-0 align-items-center">
                                     <span class="{{$colClass}}"><input id="hiddenDate_{{$user->id}}" class="datePickerInput" type="hidden" /><a class="home-picker" data-id="{{ $user->id }}"><img src="{{ asset('images/alarm-3.svg')}}" class="filter-{{$colClass}}" alt=""> {{ shortDateFormat($user->appointment_date)}}</a></span>
                                     @if($user->appointment_date)
-                                    <input type="checkbox" name="appointment-date" data-check-id="{{$user->id}}" class="bg-none black ml-2 checked" {{($user->is_appointment_done)?"checked disabled":""}}/>                                    
+                                    <input type="checkbox" name="appointment-date" data-check-id="{{$user->id}}" class="bg-none black ml-2 checked" {{($user->is_appointment_done)?"checked disabled":""}}/>
                                     @endif
-                                    
+
                                 </div>
                             </div>
-                        </div>                        
-                    </div>                    
-                </div>                
+                        </div>
+                    </div>
+                </div>
                 @endforeach
             </div>
             {{ $users->links() }}
@@ -289,11 +289,12 @@
 
 @section('scripts')
     <script type="text/javascript">
-        var changeDateUrl = "{{ route('appointment.update') }}";   
-        var checkDateUrl = "{{ route('appointment.check') }}";   
-        var assetClock = "{{ asset("images/alarm-3.svg")}}";     
+        var changeDateUrl = "{{ route('appointment.update') }}";
+        var checkDateUrl = "{{ route('appointment.check') }}";
+        var assetClock = "{{ asset("images/alarm-3.svg")}}";
         var readNotiUrl = "{{ route('notification.read') }}";
         var readAnnNotiUrl = "{{ route('announcements.notification.read') }}";
+        var readSingleNotiUrl = "{{ route('notification.single.read')}}";
     </script>
 @endsection
 

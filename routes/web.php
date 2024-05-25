@@ -117,6 +117,7 @@ Route::post('/my-announcements', 'MyAnnouncementController@index')->name('my-ann
 
 Route::get('/notification/read', 'NotificationController@readNotification')->name('notification.read');
 Route::get('/notification/announcements/read', 'NotificationController@readAnnNotification')->name('announcements.notification.read');
+Route::post('/notification/single/read', 'NotificationController@readSingleNotification')->name('notification.single.read');
 
 Route::get('/export-attendance-excel/{studentId}', 'ExportAttendanceLogController@exportAttendanceExcel')->name('attendance.export');
 

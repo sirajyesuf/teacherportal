@@ -14,57 +14,75 @@ jQuery.browser = {};
             showMessage('success',studentCreated);
         }
 
-        $(document).ready(function(){    
-            initDatePicker();        
+        $(document).ready(function(){
+            initDatePicker();
 
             $('body').on('click','.home-picker',function (e) {
-                var id = $(this).attr('data-id');       
-                userId = id;                    
-                $('#hiddenDate_'+id).datepicker("show");                
+                var id = $(this).attr('data-id');
+                userId = id;
+                $('#hiddenDate_'+id).datepicker("show");
             });
 
             $(document).on('click','.checked', function(){
                 var checkId = $(this).attr('data-check-id');
-                                 
+
                 $.ajax({
                     url: checkDateUrl,
                     type: 'POST',
                     data: { id:checkId,_token: $('meta[name=csrf-token]').attr('content')},
                     dataType: 'json',
-                    success: function(result) {                    
-                                   
+                    success: function(result) {
+
                         showMessage('success',result.message);
                         setTimeout(function() {
                             location.reload();
                         }, 1500);
                     }
-                }); 
+                });
 
-            return;               
+            return;
 
             });
 
-            $(document).on('click','#notificationDropdown', function(e){                
-                e.preventDefault();
+            // $(document).on('click','#notificationDropdown', function(e){
+            //     e.preventDefault();
+
+            //     $.ajax({
+            //         url: readNotiUrl,
+            //         type: 'GET',
+            //         success: function(result) {
+            //         },
+            //         error: function(error) {
+            //             console.error('Something went wrong!');
+            //         }
+            //     }); // Ajax ends
+            // });
+
+            $(document).on('click','.notification-item', function(){
+                var noteId = $(this).data('id');
 
                 $.ajax({
-                    url: readNotiUrl,
-                    type: 'GET',                                                
-                    success: function(result) {                        
+                    url: readSingleNotiUrl,
+                    type: 'POST',
+                    data: {
+                        id: noteId
+                    },
+                    dataType: 'json',
+                    success: function(result) {
                     },
                     error: function(error) {
-                        console.error('Something went wrong!');                        
+                        console.error('Something went wrong!');
                     }
                 }); // Ajax ends
             });
 
-            $(document).on('click','#announcementDropdown', function(e){                
+            $(document).on('click','#announcementDropdown', function(e){
                 e.preventDefault();
 
                 $.ajax({
                     url: readAnnNotiUrl,
-                    type: 'GET',                                                
-                    success: function(result) {                        
+                    type: 'GET',
+                    success: function(result) {
                     },
                     error: function(error) {
                         console.error('read error');
@@ -77,9 +95,9 @@ jQuery.browser = {};
         function destroyDatepicker(){
             $('.datePickerInput').datepicker("destroy");
             $(".datePickerInput").removeClass("hasDatepicker");
-            $('#ui-datepicker-div').remove();            
+            $('#ui-datepicker-div').remove();
         }
-        
+
         function initDatePicker()
         {
             $('.datePickerInput').datepicker({
@@ -89,25 +107,25 @@ jQuery.browser = {};
                 dateFormat: 'yy-mm-dd',
                 firstDay: 1,
                 onClose: function(selectedDate,object) {
-                    
+
                     if(selectedDate)
                     {
                         $.ajax({
                             url: changeDateUrl,
-                            type: 'POST',                            
+                            type: 'POST',
                             data: { id:userId, date:selectedDate, _token: $('meta[name=csrf-token]').attr('content')},
-                            dataType: 'json',                            
+                            dataType: 'json',
                             success: function(result) {
                                 if (result.status == true) {
                                     var dt = '';
                                     dt += '<img src='+assetClock+' alt=""> ';
                                     dt += moment(selectedDate).format('DD MMM');
-                                    
-                                    var t = $( "a[data-id^="+userId+"]" ).html( dt );                                    
+
+                                    var t = $( "a[data-id^="+userId+"]" ).html( dt );
                                     showMessage('success','Date update success');
-                                    
+
                                     setTimeout(function() {
-                                        window.location.reload(true);                                                                        
+                                        window.location.reload(true);
                                     }, 1500);
 
                                 } else {
@@ -115,10 +133,10 @@ jQuery.browser = {};
                                 }
                             },
                             error: function(error) {
-                                console.error('Something went wrong!');                                
+                                console.error('Something went wrong!');
                             }
                         }); // Ajax ends
-                    }                    
+                    }
                 } // onClose Ends
             });
         }

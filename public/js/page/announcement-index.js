@@ -1,9 +1,9 @@
 $( document ).ready(function() {
 
-	function initDatePicker(){        
+	function initDatePicker(){
         $('.datePicker').datepicker({
             dateFormat: "dd M yy",
-            altFormat: "dd M yy",   
+            altFormat: "dd M yy",
 
         });
         $('.datePicker').datepicker('setDate', new Date());
@@ -31,50 +31,68 @@ $( document ).ready(function() {
                 };
             },
         },
-    });  
+    });
 
     $('#announcementall').on('hidden.bs.modal', function(e) {
-        $('.error').html("");      
+        $('.error').html("");
         $('#announcementallForm')[0].reset();
         $('.datePicker').datepicker('setDate', new Date());
         CKEDITOR.instances.content.setData('');
     })
 
     $('#announcementInd').on('hidden.bs.modal', function(e) {
-        $('.error').html("");      
+        $('.error').html("");
         $('#announcementindiForm')[0].reset();
         $("#recipients").val(null).trigger('change');
         CKEDITOR.instances.content1.setData('');
         $('.datePicker').datepicker('setDate', new Date());
     })
 
-    $(document).on('click','#notificationDropdown', function(e){
-        e.preventDefault();
+    // $(document).on('click','#notificationDropdown', function(e){
+    //     e.preventDefault();
+
+    //     $.ajax({
+    //         url: readNotiUrl,
+    //         type: 'GET',
+    //         success: function(result) {
+    //             if (result.status == true) {
+
+    //             } else {
+
+    //             }
+    //         },
+    //         error: function(error) {
+    //             console.log(error)
+    //         }
+    //     }); // Ajax ends
+    // });
+
+    $(document).on('click','.notification-item', function(){
+        var noteId = $(this).data('id');
 
         $.ajax({
-            url: readNotiUrl,
-            type: 'GET',                                        
+            url: readSingleNotiUrl,
+            type: 'POST',
+            data: {
+                id: noteId
+            },
+            dataType: 'json',
             success: function(result) {
-                if (result.status == true) {
-
-                } else {
-
-                }
             },
             error: function(error) {
-                console.log(error)                
+                console.error('Something went wrong!');
             }
         }); // Ajax ends
     });
 
-    $(document).on('click','#announcementDropdown', function(e){                
+    $(document).on('click','#announcementDropdown', function(e){
         e.preventDefault();
 
         $.ajax({
             url: readAnnNotiUrl,
-            type: 'GET',                                                
+            type: 'GET',
             success: function(result) {
-                if (result.status == true) {                            
+                if (result.status == true) {
                     console.log('read success');
                 } else {
                     console.error('read error');
@@ -84,13 +102,13 @@ $( document ).ready(function() {
                 console.error('read error');
             }
         }); // Ajax ends
-    });    
+    });
 
     $('#announcementallForm').submit(function(event) {
-        event.preventDefault();        
+        event.preventDefault();
         var $this = $(this);
 
-        for ( instance in CKEDITOR.instances ) {        	
+        for ( instance in CKEDITOR.instances ) {
             CKEDITOR.instances[instance].updateElement();
         }
 
@@ -108,7 +126,7 @@ $( document ).ready(function() {
                     $this[0].reset();
                     showMessage('success',result.message);
                     $('#announcementall').modal('hide');
-                    $('.error').html("");                        
+                    $('.error').html("");
                     setTimeout(function() {
                         location.reload();
                     }, 1500);
@@ -117,24 +135,24 @@ $( document ).ready(function() {
                     first_input = "";
                     $('.error').html("");
                     $.each(result.message, function(key) {
-                        if(first_input=="") first_input=key;                        
+                        if(first_input=="") first_input=key;
                         $('#'+key).closest('.fg').find('.error').html(result.message[key]);
-                        $('#announcementallForm').find("#"+first_input).focus();                        
+                        $('#announcementallForm').find("#"+first_input).focus();
                     });
                 }
             },
             error: function(error) {
                 $($this).find('button[type="submit"]').prop('disabled', false);
-                alert('Something went wrong!', 'error');                
+                alert('Something went wrong!', 'error');
             }
         });
     });
 
     $('#announcementindiForm').submit(function(event) {
-        event.preventDefault();        
+        event.preventDefault();
         var $this = $(this);
 
-        for ( instance in CKEDITOR.instances ) {            
+        for ( instance in CKEDITOR.instances ) {
             CKEDITOR.instances[instance].updateElement();
         }
 
@@ -152,10 +170,10 @@ $( document ).ready(function() {
                     $this[0].reset();
                     showMessage('success',result.message);
                     $('#announcementInd').modal('hide');
-                    $('.error').html(""); 
+                    $('.error').html("");
                     setTimeout(function() {
                         location.reload();
-                    }, 1500);                       
+                    }, 1500);
 
                 } else {
                     first_input = "";
@@ -165,16 +183,16 @@ $( document ).ready(function() {
                         if(key == 'date')
                         {
                             $('#date1').closest('.fg').find('.error').html(result.message[key]);
-                            $('#announcementindiForm').find("#date1").focus();                            
+                            $('#announcementindiForm').find("#date1").focus();
                         } else if(key == 'trainer') {
                             $('#trainer1').closest('.fg').find('.error').html(result.message[key]);
-                            $('#announcementindiForm').find("#trainer1").focus();                            
+                            $('#announcementindiForm').find("#trainer1").focus();
                         } else if(key == 'title') {
                             $('#title1').closest('.fg').find('.error').html(result.message[key]);
-                            $('#announcementindiForm').find("#title1").focus();                            
+                            $('#announcementindiForm').find("#title1").focus();
                         } else if(key == 'content') {
                             $('#content1').closest('.fg').find('.error').html(result.message[key]);
-                            $('#announcementindiForm').find("#content1").focus();                            
+                            $('#announcementindiForm').find("#content1").focus();
                         } else {
                             $('#'+key).closest('.fg').find('.error').html(result.message[key]);
                             $('#announcementindiForm').find("#"+first_input).focus();
@@ -184,7 +202,7 @@ $( document ).ready(function() {
             },
             error: function(error) {
                 $($this).find('button[type="submit"]').prop('disabled', false);
-                alert('Something went wrong!', 'error');                
+                alert('Something went wrong!', 'error');
             }
         });
     });

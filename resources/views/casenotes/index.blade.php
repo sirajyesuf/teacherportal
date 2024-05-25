@@ -11,7 +11,7 @@
 @section('content')
 
 @if(session()->has('dataUpdated'))
-    
+
     <script>
         var successMsg = "{{ \Session::get('dataUpdated') }}";
     </script>
@@ -22,7 +22,7 @@
     </script>
 @endif
 
-@if(session()->has('updateFail'))    
+@if(session()->has('updateFail'))
     <script>
         var updateFailed = "{{ \Session::get('updateFail') }}";;
     </script>
@@ -35,10 +35,10 @@
 
 <main class="note-wrapper">
     <div class="home-btn">
-        <a href="{{ route('home') }}"><img src="{{ asset('images/home.svg')}}" alt=""><span class="ml-1">Home</span></a>                
+        <a href="{{ route('home') }}"><img src="{{ asset('images/home.svg')}}" alt=""><span class="ml-1">Home</span></a>
     </div>
     <div class="note-main">
-        <div class="note-upper">        
+        <div class="note-upper">
             <ul>
             	{{-- <li><h2>{{ (isset($user->name))?$user->name:'' }}</h2></li> --}}
                 @if(isset($user->id))
@@ -53,8 +53,8 @@
                 </div>
                 </li>
                 {{-- <li><button type="submit"><img src="{{ asset('images/download.svg')}}" alt=""> Save</button> </li> --}}
-                <li><a href="{{ route('lesson',$user->id) }}" class="dark-blue"><img src="{{ asset('images/description.svg')}}" alt=""> View Lesson</a></li>                        
-                @endif                       
+                <li><a href="{{ route('lesson',$user->id) }}" class="dark-blue"><img src="{{ asset('images/description.svg')}}" alt=""> View Lesson</a></li>
+                @endif
                 <div class="hour-part">
                     <ul>
                         <li>
@@ -74,14 +74,14 @@
                 {{-- Case Management Meeting --}}
 
                 <div class="col-md-12">
-                    @if($data)
-                    @foreach($data as $key => $obj)
+                    @if($paginatedData)
+                    @foreach($paginatedData as $key => $obj)
                         @if($obj->getTable() == 'case_management_meeting')
                             <form action="{{ route("casenote.updateCmm") }}" class="cmmform" method="POST">
                             @csrf
                             <input type="hidden" name="student_id" value="{{ $user->id }}" />
                             <input type="hidden" name="update_id" value="{{ $obj->id }}" />
-                            
+
                             <div class="lesson-table pl-lg-2" id="{{"casemg".$obj->id}}">
                                 <div class="save-btn">
                                     <button type="submit" class="orange-bg"><img src="{{ asset('images/download2.png')}}" height="20"> Save</button>
@@ -109,7 +109,7 @@
                                                 <option value="start" {{ ($obj->package == "start")?"selected":"" }}>Start pkg</option>
                                                 <option value="mid" {{ ($obj->package == "mid")?"selected":"" }}>Mid pkg</option>
                                                 <option value="end" {{ ($obj->package == "end")?"selected":"" }}>End pkg</option>
-                                            </select>                                                                        
+                                            </select>
                                         </td>
                                         <td>
                                             <div class="d-flex">
@@ -134,7 +134,7 @@
                             @csrf
                             <input type="hidden" name="student_id" value="{{ $user->id }}" />
                             <input type="hidden" name="update_id" value="{{ $obj->id }}" />
-                            
+
                             <div class="lesson-table pl-lg-2" id="{{"parentreview".$obj->id}}">
                                 <div class="save-btn">
                                     <button type="submit" class="orange-bg"><img src="{{ asset('images/download2.png')}}" height="20"> Save</button>
@@ -157,7 +157,7 @@
                                         </td>
                                         <td class="addhour-bg">
                                             <span>Parent Review Session</span>
-                                        </td>                                
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td colspan="3">
@@ -172,7 +172,7 @@
                             @csrf
                             <input type="hidden" name="student_id" value="{{ $user->id }}" />
                             <input type="hidden" name="update_id" value="{{ $obj->id }}" />
-                            
+
                             <div class="lesson-table pl-lg-2" id="{{"comm".$obj->id}}">
                                 <div class="save-btn">
                                     <button type="submit" class="orange-bg"><img src="{{ asset('images/download2.png')}}" height="20"> Save</button>
@@ -192,12 +192,12 @@
                                                 {{-- <input type="text" class="" name="trainer" placeholder="Trainer:" value="{{ $obj->user->first_name ?? '' }}" style="background: {{ $obj->user->color }};" readonly> --}}
                                                 <span style="background:{{ $obj->user->color ?? ''}};">{{ $obj->user->first_name ?? '' }}</span>
                                             </div>
-                                        </td>     
+                                        </td>
                                         <td class="lightgrey-bg">
                                             <span>Comments</span>
-                                        </td>                           
+                                        </td>
                                     </tr>
-                                    
+
                                     <tr>
                                         <td colspan="3">
                                             {{-- <textarea name="comments" rows="45" id="comments" class="ckeditor">{{ $comment->comments }}</textarea> --}}
@@ -210,16 +210,20 @@
                         @endif
                     @endforeach
                     @endif
+                    <!-- Pagination Links -->
+                    <div class="d-flex pl-lg-2 pt-3">
+                        {!! $paginatedData->links() !!}
+                    </div>
                 </div>
             </div>
-        </div>                
-    </div>            
+        </div>
+    </div>
 
 </main>
 
 {{-- Start : Delete Confirmation Modal --}}
 <div class="modal" tabindex="-1" role="dialog" id="delete_modal">
-    <div class="modal-dialog" role="document">        
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Delete Confirmation</h5>
@@ -227,17 +231,17 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">                
-                <input type="hidden" id="delete_id">                
+            <div class="modal-body">
+                <input type="hidden" id="delete_id">
                 <div class="form-group">
                     <label for="" class="col-form-label">Are you Sure you want to delete this item?</label>
-                </div>                
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="submit" id="confirm" class="btn btn-save del-confirm">Delete</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
             </div>
-        </div>        
+        </div>
     </div>
 </div>
 {{-- Ends : Delete Confirmation Modal --}}
@@ -245,7 +249,7 @@
 @endsection
 
 @section('pagejs')
-    <script type="text/javascript">        
+    <script type="text/javascript">
         var addCmmUrl = "{{ route('casenote.addCmm') }}";
         var addPrsUrl = "{{ route('casenote.addPrs') }}";
         var addComUrl = "{{ route('casenote.addCom') }}";

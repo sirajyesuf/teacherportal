@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use App\User;
 use App\Student;
 use App\CaseNote;
@@ -20,12 +22,13 @@ class CaseNoteController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');        
+        $this->middleware('auth');
     }
-    
+
     public function index(Request $request)
     {
         $user = $caseNote = $finishedHours = $hoursRemaining = '';
+        $data = collect(); // Initialize as an empty collection
 
         if($request->id)
         {
@@ -46,7 +49,7 @@ class CaseNoteController extends Controller
             $hoursRemaining = $totalHours - $finishedHours;
 
             if($hoursRemaining < 0)
-                $hoursRemaining = 0;  
+                $hoursRemaining = 0;
 
             // old code ends
 
@@ -64,16 +67,16 @@ class CaseNoteController extends Controller
             //     $remainingHours = $addHourLog->hours;
 
             //     $lessonLogs = LessonLog::where('student_id', $studentId)
-            //         ->where('hours', '>', 0)                
+            //         ->where('hours', '>', 0)
             //         ->whereNotIn('id', $usedLessonLogs) // Exclude used lesson logs
             //         ->orderBy('lesson_date')
             //         ->get();
-                
+
             //     $data = [];
             //     $completedHours = 0;
 
             //     foreach ($lessonLogs as $log) {
-                    
+
             //         if ($remainingHours > 0) {
             //             $data[] = [
             //                 'Date' => $log->lesson_date,
@@ -88,7 +91,7 @@ class CaseNoteController extends Controller
             //                 break;
             //             }
             //         }
-            //     }            
+            //     }
 
             //     if (empty($data) && $remainingHours > 0) {
             //         $data[] = [
@@ -109,9 +112,9 @@ class CaseNoteController extends Controller
             // }
 
             // if(count($exportData))
-            // {            
+            // {
             //     $lastKey = array_key_last($exportData);
-            //     $lastRecord = $exportData[$lastKey];        
+            //     $lastRecord = $exportData[$lastKey];
             //     $finishedHours = $lastRecord['completedHours'];
             //     $hoursRemaining = $lastRecord['remainingHours'];
             //     $currentPackageNote = $lastRecord['package'];
@@ -124,7 +127,7 @@ class CaseNoteController extends Controller
             //     $finishedHours = $lessonLogsHour;
             //     $hoursRemaining = 0;
             //     $currentPackageNote = '';
-            // } 
+            // }
             // new code ends
 
 
@@ -138,13 +141,26 @@ class CaseNoteController extends Controller
 
         }
 
-        return view('casenotes.index',compact('data','user','caseNote','finishedHours','hoursRemaining','casemgmts','parentreviews','comments'));
+        // Paginate the merged collection
+        $perPage = 10;
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $currentItems = $data->slice(($currentPage - 1) * $perPage, $perPage)->all();
+
+        $paginatedData = new LengthAwarePaginator(
+            $currentItems,
+            $data->count(),
+            $perPage,
+            $currentPage,
+            ['path' => $request->url(), 'query' => $request->query()]
+        );
+
+        return view('casenotes.index',compact('paginatedData','user','caseNote','finishedHours','hoursRemaining','casemgmts','parentreviews','comments'));
     }
 
     public function update(Request $request)
     {
         $casenote = CaseNote::where('student_id',$request->student_id)->where('deleted_at',null)->first();
-        
+
         if(!$casenote)
             $casenote = new CaseNote;
         $casenote->student_id = $request->student_id;
@@ -154,7 +170,7 @@ class CaseNoteController extends Controller
         $r = $casenote->save();
 
         if($r)
-        {            
+        {
             toastr()->success('Note updated Successfully');
             return redirect()->back();
         }
@@ -190,7 +206,7 @@ class CaseNoteController extends Controller
     }
 
     public function addPrs(Request $request)
-    {   
+    {
         $user = auth()->user();
 
         $parentReview = new ParentReview;
@@ -254,32 +270,32 @@ class CaseNoteController extends Controller
 
             if($request->description)
             {
-                $notIds = [];                
+                $notIds = [];
                 $str = $request->description;
                 $count = 0;
-                $strCount = substr_count($str, 'href="');   
-                $occurrences = [];             
+                $strCount = substr_count($str, 'href="');
+                $occurrences = [];
 
                 while($strCount > 0)
-                {                    
+                {
                     $temp = preg_match('~href="\K\d+~', $str, $out) ? $out[0] : '';
                     if ($temp) {
                         $notIds[$count] = $temp;
                         $occurrences[$temp] = isset($occurrences[$temp]) ? $occurrences[$temp] + 1 : 1;
                         $count++;
                     }
-                    
+
                     $tempWord = 'href="'.$temp.'"';
 
                     $str = preg_replace('~' . preg_quote($tempWord, '~') . '~i', 'asd' . time(), $str, 1);
-                    
-                    $strCount--;                    
+
+                    $strCount--;
                 }
 
                 if(count($notIds))
                 {
                     foreach($occurrences as $uId => $occurrenceCount)
-                    {                        
+                    {
                         if ($uId === '') {
                             continue;
                         }
@@ -292,16 +308,16 @@ class CaseNoteController extends Controller
                                     ->count();
 
                         if($notificationCount >= $occurrenceCount){
-                            continue;               
-                        }                                                                  
+                            continue;
+                        }
 
                         if($uId)
-                        {                            
+                        {
                             $notification = new Notification;
                             $notification->student_id = $request->student_id;
                             $notification->user_id = $uId;
                             $notification->case_id = $request->update_id;
-                            $notification->case_type = 1; // 1 : Case Management Meeting, 2: Parent Review Session                        
+                            $notification->case_type = 1; // 1 : Case Management Meeting, 2: Parent Review Session
                             $notification->updated_by = $user->id;
                             $notification->save();
                         }
@@ -314,10 +330,10 @@ class CaseNoteController extends Controller
         if($r)
         {
             session(['dataUpdated' => 'Case Management Meeting saved']);
-            return back();            
+            return back();
         }
         else
-        {            
+        {
             session(['updateFail' => 'An error has occurred please try again later.']);
             return back();
         }
@@ -331,40 +347,40 @@ class CaseNoteController extends Controller
         if($request->update_id)
         {
             $parentRw = ParentReview::find($request->update_id);
-            $parentRw->date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');            
+            $parentRw->date = Carbon::createFromFormat('d-m-Y', $request->date)->format('Y-m-d');
             $parentRw->description = $request->description;
             $parentRw->updated_by = $user->id;
             $r = $parentRw->save();
 
             if($request->description)
             {
-                $notIds = [];                
+                $notIds = [];
                 $str = $request->description;
                 $count = 0;
-                $strCount = substr_count($str, 'href="');      
-                $occurrences = [];          
+                $strCount = substr_count($str, 'href="');
+                $occurrences = [];
 
                 while($strCount > 0)
-                {                    
+                {
                     $temp = preg_match('~href="\K\d+~', $str, $out) ? $out[0] : '';
 
                     if ($temp) {
                         $notIds[$count] = $temp;
                         $occurrences[$temp] = isset($occurrences[$temp]) ? $occurrences[$temp] + 1 : 1;
                         $count++;
-                    }                    
-                    
+                    }
+
                     $tempWord = 'href="'.$temp.'"';
-                    
+
                     $str = preg_replace('~' . preg_quote($tempWord, '~') . '~i', 'asd' . time(), $str, 1);
-                    
-                    $strCount--;                    
+
+                    $strCount--;
                 }
 
                 if(count($notIds))
                 {
                     foreach($occurrences as $uId => $occurrenceCount)
-                    {                        
+                    {
                         if ($uId === '') {
                             continue;
                         }
@@ -377,16 +393,16 @@ class CaseNoteController extends Controller
                                     ->count();
 
                         if($notificationCount >= $occurrenceCount){
-                            continue;               
-                        }                                  
+                            continue;
+                        }
 
                         if($uId)
-                        {                            
+                        {
                             $notification = new Notification;
                             $notification->student_id = $request->student_id;
                             $notification->user_id = $uId;
                             $notification->case_id = $request->update_id;
-                            $notification->case_type = 2; // 1 : Case Management Meeting, 2: Parent Review Session                        
+                            $notification->case_type = 2; // 1 : Case Management Meeting, 2: Parent Review Session
                             $notification->updated_by = $user->id;
                             $notification->save();
                         }
@@ -403,7 +419,7 @@ class CaseNoteController extends Controller
         else
         {
             session(['updateFail' => 'An error has occurred please try again later.']);
-            return back();            
+            return back();
         }
     }
 
@@ -422,58 +438,58 @@ class CaseNoteController extends Controller
 
             if($request->comments)
             {
-                $notIds = [];                
+                $notIds = [];
                 $str = $request->comments;
                 $count = 0;
-                $strCount = substr_count($str, 'href="');                 
-                $occurrences = [];               
+                $strCount = substr_count($str, 'href="');
+                $occurrences = [];
 
                 while($strCount > 0)
-                {                    
-                    $temp = preg_match('~href="\K\d+~', $str, $out) ? $out[0] : '';                    
-                    
+                {
+                    $temp = preg_match('~href="\K\d+~', $str, $out) ? $out[0] : '';
+
                     if ($temp) {
                         $notIds[$count] = $temp;
                         $occurrences[$temp] = isset($occurrences[$temp]) ? $occurrences[$temp] + 1 : 1;
                         $count++;
-                    }                    
-                    
-                    $tempWord = 'href="'.$temp.'"';                    
-                    
-                    $str = preg_replace('~' . preg_quote($tempWord, '~') . '~i', 'asd' . time(), $str, 1);                    
-                    
-                    $strCount--;                    
+                    }
+
+                    $tempWord = 'href="'.$temp.'"';
+
+                    $str = preg_replace('~' . preg_quote($tempWord, '~') . '~i', 'asd' . time(), $str, 1);
+
+                    $strCount--;
                 }
 
                 if(count($notIds))
                 {
                     foreach($occurrences as $uId => $occurrenceCount)
-                    {                      
+                    {
                         if ($uId === '') {
                             continue;
-                        }                          
+                        }
 
                         $notificationCount = Notification::where('student_id', $request->student_id)
                                     ->where('user_id', $uId)
                                     ->where('case_id', $request->update_id)
                                     ->where('case_type', 3) // 3 for comments
                                     ->where('deleted_at', null)
-                                    ->count();                        
+                                    ->count();
 
                         if($notificationCount >= $occurrenceCount){
-                            continue;               
+                            continue;
                         }
 
                         if($uId)
-                        {                            
+                        {
                             $notification = new Notification;
                             $notification->student_id = $request->student_id;
                             $notification->user_id = $uId;
                             $notification->case_id = $request->update_id;
-                            $notification->case_type = 3; // 1 : Case Management Meeting, 2: Parent Review Session, 3: Comments                        
+                            $notification->case_type = 3; // 1 : Case Management Meeting, 2: Parent Review Session, 3: Comments
                             $notification->updated_by = $user->id;
                             $notification->save();
-                        }            
+                        }
 
                     }
                 }
@@ -481,7 +497,7 @@ class CaseNoteController extends Controller
         }
 
         if($r)
-        {       
+        {
             session(['dataUpdated' => 'Comments saved']);
             return back();
         }
@@ -493,11 +509,11 @@ class CaseNoteController extends Controller
     }
 
     public function deleteCmm(Request $request)
-    {       
+    {
 
-        $model = CaseManagement::find($request->id);                
+        $model = CaseManagement::find($request->id);
         $model->updated_by = Auth::user()->id;
-        $model->deleted_at = Carbon::now();        
+        $model->deleted_at = Carbon::now();
 
         if($model->save()){
             $result = ['status' => true, 'message' => 'Delete successfully'];
@@ -509,11 +525,11 @@ class CaseNoteController extends Controller
     }
 
     public function deletePrs(Request $request)
-    {          
+    {
 
-        $model = ParentReview::find($request->id);                
+        $model = ParentReview::find($request->id);
         $model->updated_by = Auth::user()->id;
-        $model->deleted_at = Carbon::now();        
+        $model->deleted_at = Carbon::now();
 
         if($model->save()){
             $result = ['status' => true, 'message' => 'Delete successfully'];
@@ -524,11 +540,11 @@ class CaseNoteController extends Controller
     }
 
     public function deleteCom(Request $request)
-    {       
+    {
 
-        $model = Comment::find($request->id);                
+        $model = Comment::find($request->id);
         $model->updated_by = Auth::user()->id;
-        $model->deleted_at = Carbon::now();        
+        $model->deleted_at = Carbon::now();
 
         if($model->save()){
             $result = ['status' => true, 'message' => 'Delete successfully'];
@@ -545,7 +561,7 @@ class CaseNoteController extends Controller
         $comment = Comment::all();
 
         $data = $casenote->concat($parentReview);
-        $data = $data->concat($comment);        
+        $data = $data->concat($comment);
         $data = $data->sortByDesc('date');
 
         return view('data',compact('data'));

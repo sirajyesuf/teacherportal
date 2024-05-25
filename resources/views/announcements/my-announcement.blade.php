@@ -68,14 +68,14 @@
                                     ?>
                                     @if ($notify->is_read)
                                         @if ($notify->case_type > 3)
-                                            <a class="dropdown-item pt-2 pb-2" href="{{ $route }}"><span
+                                            <a class="dropdown-item notification-item pt-2 pb-2" href="{{ $route }}" data-id="{{$notify->id}}"><span
                                                     class="font-weight-bold">{{ $notify->first_name }}</span> has tagged
                                                 you in a comment under <span
                                                     class="font-weight-bold">{{ $notify->name }}</span>'s lesson notes.
                                                 <div class="time-ago">{{ getTimeAgo($notify->created_at) }}</div>
                                             </a>
                                         @else
-                                            <a class="dropdown-item pt-2 pb-2" href="{{ $route }}"><span
+                                            <a class="dropdown-item notification-item pt-2 pb-2" href="{{ $route }}" data-id="{{$notify->id}}"><span
                                                     class="font-weight-bold">{{ $notify->first_name }}</span> has tagged
                                                 you in a comment under <span
                                                     class="font-weight-bold">{{ $notify->name }}</span>'s case notes. <div
@@ -83,14 +83,14 @@
                                         @endif
                                     @else
                                         @if ($notify->case_type > 3)
-                                            <a class="dropdown-item-unread pt-2 pb-2" href="{{ $route }}"><span
+                                            <a class="dropdown-item-unread notification-item pt-2 pb-2" href="{{ $route }}" data-id="{{$notify->id}}"><span
                                                     class="font-weight-bold">{{ $notify->first_name }}</span> has tagged
                                                 you in a comment under <span
                                                     class="font-weight-bold">{{ $notify->name }}</span>'s lesson notes.
                                                 <div class="time-ago">{{ getTimeAgo($notify->created_at) }}</div>
                                             </a>
                                         @else
-                                            <a class="dropdown-item-unread pt-2 pb-2" href="{{ $route }}"><span
+                                            <a class="dropdown-item-unread notification-item pt-2 pb-2" href="{{ $route }}" data-id="{{$notify->id}}"><span
                                                     class="font-weight-bold">{{ $notify->first_name }}</span> has tagged
                                                 you in a comment under <span
                                                     class="font-weight-bold">{{ $notify->name }}</span>'s case notes. <div
@@ -107,7 +107,7 @@
                             style="margin-left: 20px; border-radius: 10px" href="#" id="announcementDropdown"
                             role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
                                 src="{{ asset('images/bell.svg') }}" class="bellcolor" height="20" alt=""
-                                style=""> Announcement 
+                                style=""> Announcement
                                 @if ($unreadCount)
                                     <span class="badge badge-light nCount">
                                         {{ $unreadCount }}
@@ -136,7 +136,7 @@
                                                     @php
                                                         $recipients = App\Announcement::find($anncenotify->id)->recipients;
                                                         $recipientNames = [];
-                                                        
+
                                                         foreach ($recipients as $recipient) {
                                                             if ($recipient->user->id == auth()->user()->id) {
                                                                 $recipientNames[] = 'you';
@@ -144,9 +144,9 @@
                                                                 $recipientNames[] = $recipient->user->first_name;
                                                             }
                                                         }
-                                                        
+
                                                         $recipientCount = count($recipientNames);
-                                                        
+
                                                         if ($recipientCount === 1) {
                                                             $recipientList = $recipientNames[0];
                                                         } else {
@@ -173,7 +173,7 @@
                                                     @php
                                                         $recipients = App\Announcement::find($anncenotify->id)->recipients;
                                                         $recipientNames = [];
-                                                        
+
                                                         foreach ($recipients as $recipient) {
                                                             if ($recipient->user->id == auth()->user()->id) {
                                                                 $recipientNames[] = 'you';
@@ -181,9 +181,9 @@
                                                                 $recipientNames[] = $recipient->user->first_name;
                                                             }
                                                         }
-                                                        
+
                                                         $recipientCount = count($recipientNames);
-                                                        
+
                                                         if ($recipientCount === 1) {
                                                             $recipientList = $recipientNames[0];
                                                         } else {
@@ -440,6 +440,7 @@
         var readNotiUrl = "{{ route('notification.read') }}";
         var getRecipientName = "{{ route('announcements.getname') }}";
         var readAnnNotiUrl = "{{ route('announcements.notification.read') }}";
+        var readSingleNotiUrl = "{{ route('notification.single.read')}}";
     </script>
     <script src="{{ addPageJsLink('announcement-index.js') }}"></script>
 @endsection
