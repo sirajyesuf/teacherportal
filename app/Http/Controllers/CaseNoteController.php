@@ -24,8 +24,23 @@ class CaseNoteController extends Controller
         $this->middleware('auth');
     }
 
-        public function index(Request $request)
+    protected function readNotification($request)
     {
+        $notificationID = $request->query("notification_id", null);
+        if ($notificationID) {
+            Notification::query()
+                ->where("notifications.id", $notificationID)
+                ->where("notifications.deleted_at", null)
+                ->where("notifications.is_read", 0)
+                ->update(["notifications.is_read" => 1]);
+        }
+    }
+
+    public function index(Request $request)
+    {
+
+
+        // dd($request->id);
 
         $perPage = 5;
 
@@ -165,6 +180,11 @@ class CaseNoteController extends Controller
 
         }
 
+
+        $this->readNotification($request);
+
+
+        // dd($user);
 
 
         return view(
