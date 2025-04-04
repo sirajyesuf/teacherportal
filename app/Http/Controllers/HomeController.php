@@ -28,9 +28,9 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(Request $request)
-    {       
+    {
         $user = auth()->user();
-        
+
         $users = Student::current()->orderBy('name','ASC')->search($request->q)->paginate(20000);
 
         $notifications = Notification::query()
@@ -38,7 +38,7 @@ class HomeController extends Controller
                     ->leftjoin('students','notifications.student_id','students.id')
                     ->where('notifications.user_id',$user->id)
                     ->where('notifications.deleted_at',null)
-                    ->select('users.first_name','students.name','notifications.student_id','notifications.is_read','notifications.case_id','notifications.case_type','notifications.created_at')
+                    ->select('users.first_name','students.name','notifications.student_id','notifications.is_read','notifications.case_id','notifications.case_type','notifications.created_at','notifications.id')
                     ->orderBy('notifications.created_at','desc')
                     ->limit(10)
                     ->get();
@@ -48,9 +48,9 @@ class HomeController extends Controller
                     ->where('notifications.user_id',$user->id)
                     ->where('notifications.deleted_at',null)
                     ->where('notifications.is_read',0)
-                    ->select('users.first_name','notifications.student_id','notifications.created_at')
-                    ->orderBy('notifications.created_at','desc')                    
-                    ->count();  
+                    ->select('users.first_name','notifications.student_id','notifications.created_at','notifications.id')
+                    ->orderBy('notifications.created_at','desc')
+                    ->count();
 
         $announcementsNots = Announcement::join('announcement_recipients','announcements.id','announcement_recipients.announcement_id')
                     ->join('users','announcement_recipients.user_id','users.id')
@@ -63,14 +63,14 @@ class HomeController extends Controller
         // Unread Annoucement Count
         $unreadCount = AnnouncementRecipient::where('user_id', $user->id)
                     ->where('read', false)
-                    ->count();      
+                    ->count();
 
         $users->appends (array ('q' => $request->q));
 
         $q = '';
 
         if(isset($request->q))
-            $q = $request->q;           
+            $q = $request->q;
 
         return view('students.index', compact('users','notifications','unReadNotificationCount','announcementsNots','unreadCount','q'));
     }
