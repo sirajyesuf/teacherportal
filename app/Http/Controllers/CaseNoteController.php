@@ -17,6 +17,7 @@ use App\Notification;
 use Carbon\Carbon;
 use Auth;
 use DB;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class CaseNoteController extends Controller
 {
@@ -25,31 +26,54 @@ class CaseNoteController extends Controller
         $this->middleware('auth');
     }
 
+    protected function readNotification($request)
+    {
+        $notificationID = $request->query("notification_id", null);
+        if ($notificationID) {
+            Notification::query()
+                ->where("notifications.id", $notificationID)
+                ->where("notifications.deleted_at", null)
+                ->where("notifications.is_read", 0)
+                ->update(["notifications.is_read" => 1]);
+        }
+    }
+
     public function index(Request $request)
     {
-        $user = $caseNote = $finishedHours = $hoursRemaining = '';
-        $data = collect(); // Initialize as an empty collection
 
-        if($request->id)
-        {
+
+
+        // dd($request->id);
+
+        $perPage = 5;
+
+        $user = $caseNote = $finishedHours = $hoursRemaining = "";
+
+        $q = "";
+        if (isset($request->q)) {
+            $q = $request->q;
+        }
+
+        if ($request->id) {
             $user = Student::find($request->id);
             $studentId = $request->id;
 
             // old code for time calculation
-            $totalHours = DB::table('add_hour_logs')
-                           ->where('add_hour_logs.deleted_at',null)
-                           ->where('add_hour_logs.student_id',$studentId)
-                           ->sum('hours');
+            $totalHours = DB::table("add_hour_logs")
+                ->where("add_hour_logs.deleted_at", null)
+                ->where("add_hour_logs.student_id", $studentId)
+                ->sum("hours");
 
-            $finishedHours = DB::table('lesson_hour_logs')
-                           ->where('lesson_hour_logs.deleted_at',null)
-                           ->where('lesson_hour_logs.student_id',$studentId)
-                           ->sum('hours');
+            $finishedHours = DB::table("lesson_hour_logs")
+                ->where("lesson_hour_logs.deleted_at", null)
+                ->where("lesson_hour_logs.student_id", $studentId)
+                ->sum("hours");
 
             $hoursRemaining = $totalHours - $finishedHours;
 
-            if($hoursRemaining < 0)
+            if ($hoursRemaining < 0) {
                 $hoursRemaining = 0;
+            }
 
             // old code ends
 
@@ -130,32 +154,60 @@ class CaseNoteController extends Controller
             // }
             // new code ends
 
-
-            $casemgmts = CaseManagement::where('deleted_at',null)->where('student_id',$request->id)->orderBy('date','desc')->orderBy('created_at','desc')->get();
-            $parentreviews = ParentReview::where('deleted_at',null)->where('student_id',$request->id)->orderBy('date','desc')->orderBy('created_at','desc')->get();
-            $comments = Comment::where('deleted_at',null)->where('student_id',$request->id)->orderBy('date','desc')->orderBy('created_at','desc')->get();
+            $casemgmts = CaseManagement::where("deleted_at", null)
+                ->where("student_id", $request->id)
+                ->orderBy("date", "desc")
+                ->orderBy("created_at", "desc")
+                ->get();
+            $parentreviews = ParentReview::where("deleted_at", null)
+                ->where("student_id", $request->id)
+                ->orderBy("date", "desc")
+                ->orderBy("created_at", "desc")
+                ->get();
+            $comments = Comment::where("deleted_at", null)
+                ->where("student_id", $request->id)
+                ->orderBy("date", "desc")
+                ->orderBy("created_at", "desc")
+                ->get();
 
             $data = $casemgmts->concat($parentreviews);
             $data = $data->concat($comments);
-            $data = $data->sortByDesc('created_at')->sortByDesc('date');
+            $data = $data->sortByDesc("created_at")->sortByDesc("date");
+
+            // Manual pagination
+            $currentPage = LengthAwarePaginator::resolveCurrentPage();
+            $currentItems = $data->slice(($currentPage - 1) * $perPage, $perPage)->all();
+            $paginatedData = new LengthAwarePaginator($currentItems, $data->count(), $perPage);
+            $data = $paginatedData->setPath(route('casenotes',['id' => $studentId])); // Set the pagination URL
+
 
         }
 
-        // Paginate the merged collection
-        $perPage = 10;
-        $currentPage = LengthAwarePaginator::resolveCurrentPage();
-        $currentItems = $data->slice(($currentPage - 1) * $perPage, $perPage)->all();
 
-        $paginatedData = new LengthAwarePaginator(
-            $currentItems,
-            $data->count(),
-            $perPage,
-            $currentPage,
-            ['path' => $request->url(), 'query' => $request->query()]
+        $this->readNotification($request);
+
+
+        // dd($user);
+
+
+        return view(
+            "casenotes.index",
+            compact(
+                "data",
+                "user",
+                "caseNote",
+                "finishedHours",
+                "hoursRemaining",
+                "casemgmts",
+                "parentreviews",
+                "comments",
+                "q",
+                "studentId"
+            )
         );
-
-        return view('casenotes.index',compact('paginatedData','user','caseNote','finishedHours','hoursRemaining','casemgmts','parentreviews','comments'));
     }
+
+
 
     public function update(Request $request)
     {

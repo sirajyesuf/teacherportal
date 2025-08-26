@@ -217,6 +217,10 @@
                 </div>
             </div>
         </div>
+        {{-- pagination --}}
+        <div class="mt-2">
+            {{ $data->appends(['q' => $q, 'id' => $studentId])->links() }}
+        </div>
     </div>
 
 </main>

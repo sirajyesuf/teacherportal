@@ -46,7 +46,6 @@ jQuery.browser = {};
 
             // $(document).on('click','#notificationDropdown', function(e){
             //     e.preventDefault();
-
             //     $.ajax({
             //         url: readNotiUrl,
             //         type: 'GET',
@@ -75,6 +74,7 @@ jQuery.browser = {};
                     }
                 }); // Ajax ends
             });
+
 
             $(document).on('click','#announcementDropdown', function(e){
                 e.preventDefault();

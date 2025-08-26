@@ -48,7 +48,7 @@ class HomeController extends Controller
                     ->where('notifications.user_id',$user->id)
                     ->where('notifications.deleted_at',null)
                     ->where('notifications.is_read',0)
-                    ->select('users.first_name','notifications.student_id','notifications.created_at')
+                    ->select('users.first_name','notifications.student_id','notifications.created_at','notifications.id')
                     ->orderBy('notifications.created_at','desc')
                     ->count();
 
