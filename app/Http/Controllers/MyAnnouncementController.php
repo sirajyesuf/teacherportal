@@ -13,7 +13,7 @@ class MyAnnouncementController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth');        
+        $this->middleware('auth');
     }
 
     public function index(Request $request)
@@ -25,7 +25,7 @@ class MyAnnouncementController extends Controller
                     ->leftjoin('students','notifications.student_id','students.id')
                     ->where('notifications.user_id',Auth::user()->id)
                     ->where('notifications.deleted_at',null)
-                    ->select('users.first_name','students.name','notifications.student_id','notifications.is_read','notifications.case_id','notifications.case_type','notifications.created_at')
+                    ->select('users.first_name','students.name','notifications.student_id','notifications.is_read','notifications.case_id','notifications.case_type','notifications.created_at', 'notifications.id')
                     ->orderBy('notifications.created_at','desc')
                     ->limit(10)
                     ->get();
@@ -36,8 +36,8 @@ class MyAnnouncementController extends Controller
                     ->where('notifications.deleted_at',null)
                     ->where('notifications.is_read',0)
                     ->select('users.first_name','notifications.student_id','notifications.created_at')
-                    ->orderBy('notifications.created_at','desc')                    
-                    ->count();     
+                    ->orderBy('notifications.created_at','desc')
+                    ->count();
 
         $announcementsNots = Announcement::join('announcement_recipients','announcements.id','announcement_recipients.announcement_id')
                     ->join('users','announcement_recipients.user_id','users.id')
@@ -45,7 +45,7 @@ class MyAnnouncementController extends Controller
                     ->select('announcement_recipients.id as anrId','users.*','announcements.*','announcement_recipients.*','announcements.id as id')
                     ->orderBy('announcements.created_at','desc')
                     ->limit(10)
-                    ->get();   
+                    ->get();
 
         // Unread Annoucement Count
         $unreadCount = AnnouncementRecipient::where('user_id', $user->id)
@@ -59,12 +59,12 @@ class MyAnnouncementController extends Controller
                     ->orWhere('content', 'like', '%' . $request->q . '%');
             })
             ->latest()
-            ->get();        
+            ->get();
 
         $q = '';
 
         if(isset($request->q))
-            $q = $request->q; 
+            $q = $request->q;
 
         return view('announcements.my-announcement',compact('notifications','unReadNotificationCount','announcementsNots','unreadCount','announcementsbyUser','q'));
     }
