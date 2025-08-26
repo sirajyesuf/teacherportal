@@ -210,6 +210,10 @@
                         @endif
                     @endforeach
                     @endif
+                    <!-- Pagination Links -->
+                    <div class="d-flex pl-lg-2 pt-3">
+                        {!! $data->links() !!}
+                    </div>
                 </div>
             </div>
         </div>

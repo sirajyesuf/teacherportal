@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 use App\User;
 use App\Student;
 use App\CaseNote;
@@ -15,7 +17,6 @@ use App\Notification;
 use Carbon\Carbon;
 use Auth;
 use DB;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class CaseNoteController extends Controller
 {
@@ -38,6 +39,7 @@ class CaseNoteController extends Controller
 
     public function index(Request $request)
     {
+
 
 
         // dd($request->id);
@@ -181,7 +183,7 @@ class CaseNoteController extends Controller
         }
 
 
-        $this->readNotification($request);
+        // $this->readNotification($request);
 
 
         // dd($user);

@@ -28,13 +28,13 @@
         <div class="header-area">
             <div class="header-left">
                 <div class="d-flex align-items-center">
-                    <img src="{{ asset('images/logo.png') }}" width="182" height="89" />                
+                    <img src="{{ asset('images/logo.png') }}" width="182" height="89" />
                     <div class="dropdown">
                         <a class="btn-save {{ $unReadNotificationCount ? 'bg-danger' : 'bg-secondary' }}"
                             style="margin-left: 20px; border-radius: 10px" href="#" id="notificationDropdown"
                             role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
                                 src="{{ asset('images/bell.svg') }}" class="bellcolor" height="20" alt=""
-                                style=""> Notification 
+                                style=""> Notification
                                 @if ($unReadNotificationCount)
                                     <span class="badge badge-light nCount">
                                         {{ $unReadNotificationCount }}
@@ -68,13 +68,13 @@
                                     ?>
                                     @if ($notify->is_read)
                                         @if ($notify->case_type > 3)
-                                            <a class="dropdown-item pt-2 pb-2" href="{{ $route }}"><span
+                                            <a class="dropdown-item notification-item pt-2 pb-2" href="{{ $route }}" data-id="{{$notify->id}}"><span
                                                     class="font-weight-bold">{{ $notify->first_name }}</span> has tagged
                                                 you in a comment under <span
                                                     class="font-weight-bold">{{ $notify->name }}</span>'s lesson notes.
                                                 <div class="time-ago">{{ getTimeAgo($notify->created_at) }}</div></a>
                                         @else
-                                            <a class="dropdown-item pt-2 pb-2" href="{{ $route }}"><span
+                                            <a class="dropdown-item notification-item pt-2 pb-2" href="{{ $route }}" data-id="{{$notify->id}}"><span
                                                     class="font-weight-bold">{{ $notify->first_name }}</span> has tagged
                                                 you in a comment under <span
                                                     class="font-weight-bold">{{ $notify->name }}</span>'s case notes. <div
@@ -82,13 +82,13 @@
                                         @endif
                                     @else
                                         @if ($notify->case_type > 3)
-                                            <a class="dropdown-item-unread pt-2 pb-2" href="{{ $route }}"><span
+                                            <a class="dropdown-item-unread notification-item pt-2 pb-2" href="{{ $route }}" data-id="{{$notify->id}}"><span
                                                     class="font-weight-bold">{{ $notify->first_name }}</span> has tagged
                                                 you in a comment under <span
                                                     class="font-weight-bold">{{ $notify->name }}</span>'s lesson notes.
                                                 <div class="time-ago">{{ getTimeAgo($notify->created_at) }}</div></a>
                                         @else
-                                            <a class="dropdown-item-unread pt-2 pb-2" href="{{ $route }}"><span
+                                            <a class="dropdown-item-unread notification-item pt-2 pb-2" href="{{ $route }}" data-id="{{$notify->id}}"><span
                                                     class="font-weight-bold">{{ $notify->first_name }}</span> has tagged
                                                 you in a comment under <span
                                                     class="font-weight-bold">{{ $notify->name }}</span>'s case notes. <div
@@ -105,7 +105,7 @@
                             style="margin-left: 20px; border-radius: 10px" href="#" id="announcementDropdown"
                             role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img
                                 src="{{ asset('images/bell.svg') }}" class="bellcolor" height="20" alt=""
-                                style=""> Announcement 
+                                style=""> Announcement
                                 @if ($unreadCount)
                                     <span class="badge badge-light nCount">
                                         {{ $unreadCount }}
@@ -115,7 +115,7 @@
 
                         <div class="dropdown-menu" aria-labelledby="announcementDropdown">
                             @if ($announcementsNots)
-                                @foreach ($announcementsNots as $key => $anncenotify)                                    
+                                @foreach ($announcementsNots as $key => $anncenotify)
                                     @if ($key == 0)
                                     @else
                                         <div class="dropdown-divider"></div>
@@ -161,7 +161,7 @@
                                         </a>
                                     @else
                                         <a class="dropdown-item-unread pt-2 pb-2" href="{{ $routeA }}"
-                                            style="white-space: normal;">                                            
+                                            style="white-space: normal;">
                                             <span class="font-weight-bold">{{ $anncenotify->user->first_name }}</span>
                                             announced to
                                             <span>
@@ -192,7 +192,7 @@
                                                     {{ $recipientList }}
                                                 @endif
                                             </span>
-                                            <div>{{ $anncenotify->title }}</div>                                            
+                                            <div>{{ $anncenotify->title }}</div>
                                             <div>{!! removeHtmlTags(\Str::limit($anncenotify->content, $limit = 40, $end = '...')) !!}</div>
                                             <div class="time-ago">{{ getTimeAgo($anncenotify->created_at) }}</div>
                                         </a>
@@ -439,6 +439,7 @@
         var readNotiUrl = "{{ route('notification.read') }}";
         var getRecipientName = "{{ route('announcements.getname') }}";
         var readAnnNotiUrl = "{{ route('announcements.notification.read') }}";
+        var readSingleNotiUrl = "{{ route('notification.single.read')}}";
     </script>
     <script src="{{ addPageJsLink('announcement-index.js') }}"></script>
 @endsection

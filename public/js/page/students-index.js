@@ -46,7 +46,6 @@ jQuery.browser = {};
 
             // $(document).on('click','#notificationDropdown', function(e){
             //     e.preventDefault();
-
             //     $.ajax({
             //         url: readNotiUrl,
             //         type: 'GET',
@@ -57,6 +56,25 @@ jQuery.browser = {};
             //         }
             //     }); // Ajax ends
             // });
+
+            $(document).on('click','.notification-item', function(){
+                var noteId = $(this).data('id');
+
+                $.ajax({
+                    url: readSingleNotiUrl,
+                    type: 'POST',
+                    data: {
+                        id: noteId
+                    },
+                    dataType: 'json',
+                    success: function(result) {
+                    },
+                    error: function(error) {
+                        console.error('Something went wrong!');
+                    }
+                }); // Ajax ends
+            });
+
 
             $(document).on('click','#announcementDropdown', function(e){
                 e.preventDefault();

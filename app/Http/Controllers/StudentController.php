@@ -33,7 +33,7 @@ class StudentController extends Controller
                     ->leftjoin('students','notifications.student_id','students.id')
                     ->where('notifications.user_id',Auth::user()->id)
                     ->where('notifications.deleted_at',null)
-                    ->select('users.first_name','students.name','notifications.student_id','notifications.is_read','notifications.case_id','notifications.case_type','notifications.created_at')
+                    ->select('users.first_name','students.name','notifications.student_id','notifications.is_read','notifications.case_id','notifications.case_type','notifications.created_at', 'notifications.id')
                     ->orderBy('notifications.created_at','desc')
                     ->limit(10)
                     ->get();
@@ -44,7 +44,7 @@ class StudentController extends Controller
                     ->where('notifications.deleted_at',null)
                     ->where('notifications.is_read',0)
                     ->select('users.first_name','notifications.student_id','notifications.created_at')
-                    ->orderBy('notifications.created_at','desc')                    
+                    ->orderBy('notifications.created_at','desc')
                     ->count();
 
         $announcementsNots = Announcement::join('announcement_recipients','announcements.id','announcement_recipients.announcement_id')
@@ -53,7 +53,7 @@ class StudentController extends Controller
                     ->select('announcement_recipients.id as anrId','users.*','announcements.*','announcement_recipients.*','announcements.id as id')
                     ->orderBy('announcements.created_at','desc')
                     ->limit(10)
-                    ->get();   
+                    ->get();
 
         // Unread Annoucement Count
         $unreadCount = AnnouncementRecipient::where('user_id', $user->id)
@@ -67,7 +67,7 @@ class StudentController extends Controller
         $q = '';
 
         if(isset($request->q))
-            $q = $request->q;           
+            $q = $request->q;
 
         return view('students.past-students', compact('users','q','notifications','unReadNotificationCount','announcementsNots','unreadCount'));
     }
@@ -82,7 +82,7 @@ class StudentController extends Controller
         $this->validator($request->all())->validate();
 
         $user = Student::create($request->all());
-        
+
         if($user)
         {
             session(['successMsg' => 'Student created Successfully']);
@@ -97,7 +97,7 @@ class StudentController extends Controller
 
     public function delete(Request $request)
     {
-        $model = Student::find($request->id);                
+        $model = Student::find($request->id);
         $model->updated_by = Auth::user()->id;
         $model->deleted_at = Carbon::now();
         if($model->save()){
@@ -111,7 +111,7 @@ class StudentController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],            
+            'name' => ['required', 'string', 'max:255'],
         ]);
     }
 
@@ -165,7 +165,7 @@ class StudentController extends Controller
                        ->where('add_hour_logs.student_id',$student->id)
                        ->select('add_hour_logs.id as aId','add_hour_logs.hours','add_hour_logs.created_at','add_hour_logs.notes','students.name')
                        ->orderBy('add_hour_logs.created_at','desc')
-                       ->paginate(8,['*'], 'added');                
+                       ->paginate(8,['*'], 'added');
 
         // for blue background of tls
         $lesson_date_array = DB::table('lesson_hour_logs')
@@ -175,7 +175,7 @@ class StudentController extends Controller
                         ->toArray();
 
         // Get the student ID from the request
-        $studentId = $student->id;        
+        $studentId = $student->id;
 
         // old code for time calculation
         $totalHours = DB::table('add_hour_logs')
@@ -191,7 +191,7 @@ class StudentController extends Controller
         $hoursRemaining = $totalHours - $finishedHours;
 
         if($hoursRemaining < 0)
-            $hoursRemaining = 0;  
+            $hoursRemaining = 0;
 
         // old code ends
 
@@ -209,16 +209,16 @@ class StudentController extends Controller
         //     $remainingHours = $addHourLog->hours;
 
         //     $lessonLogs = LessonLog::where('student_id', $studentId)
-        //         ->where('hours', '>', 0)                
+        //         ->where('hours', '>', 0)
         //         ->whereNotIn('id', $usedLessonLogs) // Exclude used lesson logs
         //         ->orderBy('lesson_date')
         //         ->get();
-            
+
         //     $data = [];
         //     $completedHours = 0;
 
         //     foreach ($lessonLogs as $log) {
-                
+
         //         if ($remainingHours > 0) {
         //             $data[] = [
         //                 'Date' => $log->lesson_date,
@@ -233,7 +233,7 @@ class StudentController extends Controller
         //                 break;
         //             }
         //         }
-        //     }            
+        //     }
 
         //     if (empty($data) && $remainingHours > 0) {
         //         $data[] = [
@@ -251,18 +251,18 @@ class StudentController extends Controller
         //             'data' => $data,
         //         ];
         //     }
-        // }       
+        // }
 
         // if(count($exportData))
-        // {   
+        // {
         //     if(count($exportData) == 1)
         //     {
         //         $lastKey = array_key_last($exportData);
-        //         $lastRecord = $exportData[$lastKey];        
+        //         $lastRecord = $exportData[$lastKey];
         //         $finishedHours = $lastRecord['completedHours'];
         //         $hoursRemaining = $lastRecord['remainingHours'];
-        //         $currentPackageNote = $lastRecord['package'];                
-        //     }   
+        //         $currentPackageNote = $lastRecord['package'];
+        //     }
         //     else{
         //         $tmpArray = '';
         //         $flag = 0;
@@ -298,14 +298,14 @@ class StudentController extends Controller
         //         if(!$flag)
         //         {
         //             $lastKey = array_key_last($exportData);
-        //             $lastRecord = $exportData[$lastKey];        
+        //             $lastRecord = $exportData[$lastKey];
         //             $finishedHours = $lastRecord['completedHours'];
         //             $hoursRemaining = $lastRecord['remainingHours'];
         //             $currentPackageNote = $lastRecord['package'];
         //         }
-        //     }  
+        //     }
 
-        // } else {           
+        // } else {
 
         //     $lessonLogsHour = LessonLog::where('student_id', $studentId)
         //         ->sum('hours');
@@ -313,7 +313,7 @@ class StudentController extends Controller
         //     $finishedHours = $lessonLogsHour;
         //     $hoursRemaining = 0;
         //     $currentPackageNote = '';
-        // }        
+        // }
         // new code ends
 
         $tlss = DB::table('tls')
@@ -322,16 +322,16 @@ class StudentController extends Controller
                ->where('tls.student_id',$student->id)
                ->select('tls.*')
                ->orderBy('tls.date','asc')
-               ->get();               
+               ->get();
 
         // new code added to update previous student remaining hours
         $stud = Student::find($student->id);
         if($hoursRemaining == 0)
         {
-            $stud->is_past = 1;                    
+            $stud->is_past = 1;
         }
-        $stud->remaining_hours = $hoursRemaining;        
-        $stud->save();           
+        $stud->remaining_hours = $hoursRemaining;
+        $stud->save();
         // new code added to update previous student remaining hours : ends
 
         return view('students.profile',compact('student','completeHours','addedHours','hoursRemaining','finishedHours','tlss','lesson_date_array'));
@@ -347,11 +347,11 @@ class StudentController extends Controller
             $r = $student->save();
 
             if($r)
-            {            
+            {
                 $request->session()->flash('message.level', 'success');
                 $request->session()->flash('message.content', 'Profile description updated Successfully!');
                 return redirect()->back();
-            }           
+            }
         }
         toastr()->error('An error has occurred please try again later.');
         return back();
@@ -362,17 +362,17 @@ class StudentController extends Controller
         if($request->id)
         {
             $user = Student::find($request->id);
-            $user->is_appointment_done = 1; 
+            $user->is_appointment_done = 1;
             $user->updated_by = Auth::user()->id;
             $r = $user->save();
 
             if($r)
-            {                
+            {
                 $result = ['status' => true, 'message' => 'Appointment marked completed', 'data' => []];
                 return response()->json($result);
             }
             else
-            {                
+            {
                 $result = ['status' => false, 'message' => 'An error has occurred please try again later.', 'data' => []];
                 return response()->json($result);
             }
@@ -385,12 +385,12 @@ class StudentController extends Controller
     {
         if($request->ajax()) {
             $rules = array(
-                'name' => 'required|max:50',                
+                'name' => 'required|max:50',
             );
             $validator = Validator::make($request->all(), $rules);
             if($validator->fails()){
                 $result = ['status' => false, 'message' => $validator->errors(), 'data' => []];
-            }else{                
+            }else{
                 $student = Student::findOrFail($request->id);
                 $student->name = $request->name;
                 $r = $student->save();
@@ -403,6 +403,6 @@ class StudentController extends Controller
                 }
             }
             return response()->json($result);
-        }        
+        }
     }
 }
