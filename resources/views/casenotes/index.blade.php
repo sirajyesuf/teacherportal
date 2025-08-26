@@ -74,8 +74,8 @@
                 {{-- Case Management Meeting --}}
 
                 <div class="col-md-12">
-                    @if($paginatedData)
-                    @foreach($paginatedData as $key => $obj)
+                    @if($data)
+                    @foreach($data as $key => $obj)
                         @if($obj->getTable() == 'case_management_meeting')
                             <form action="{{ route("casenote.updateCmm") }}" class="cmmform" method="POST">
                             @csrf
@@ -212,7 +212,7 @@
                     @endif
                     <!-- Pagination Links -->
                     <div class="d-flex pl-lg-2 pt-3">
-                        {!! $paginatedData->links() !!}
+                        {!! $data->links() !!}
                     </div>
                 </div>
             </div>

@@ -37,7 +37,7 @@
                                 @endif
                             </a>
 
-                        {{-- <div class="dropdown-menu" aria-labelledby="notificationDropdown">
+                        <div class="dropdown-menu" aria-labelledby="notificationDropdown">
                             @if ($notifications)
                                 @foreach ($notifications as $key => $notify)
                                     @if ($key == 0)
@@ -94,133 +94,10 @@
                                     @endif
                                 @endforeach
                             @endif
-                        </div> --}}
-
-                        <div class="dropdown-menu" aria-labelledby="notificationDropdown">
-                            @if ($notifications)
-                                @foreach ($notifications as $key => $notify)
-                                    @if ($key == 0)
-                                    @else
-                                        <div class="dropdown-divider"></div>
-                                    @endif
-
-
-                                    <?php if ($notify->case_type == 1) {
-                                        $route =
-                                            route(
-                                                "casenotes",
-                                                $notify->student_id
-                                            ) .
-                                            "?notification_id=" .
-                                            $notify->id .
-                                            "#casemg" .
-                                            $notify->case_id;
-                                    } elseif ($notify->case_type == 2) {
-                                        $route =
-                                            route(
-                                                "casenotes",
-                                                $notify->student_id
-                                            ) .
-                                            "?notification_id=" .
-                                            $notify->id .
-                                            "#parentreview" .
-                                            $notify->case_id;
-                                    } elseif ($notify->case_type == 3) {
-                                        $route =
-                                            route(
-                                                "casenotes",
-                                                $notify->student_id
-                                            ) .
-                                            "?notification_id=" .
-                                            $notify->id .
-                                            "#comm" .
-                                            $notify->case_id;
-                                    } elseif ($notify->case_type == 4) {
-                                        $route =
-                                            route(
-                                                "lesson",
-                                                $notify->student_id
-                                            ) .
-                                            "?notification_id=" .
-                                            $notify->id .
-                                            "#sift" .
-                                            $notify->case_id;
-                                    } elseif ($notify->case_type == 5) {
-                                        $route =
-                                            route(
-                                                "lesson-bt",
-                                                $notify->student_id
-                                            ) .
-                                            "?notification_id=" .
-                                            $notify->id .
-                                            "#btlang" .
-                                            $notify->case_id;
-                                    } elseif ($notify->case_type == 6) {
-                                        $route =
-                                            route(
-                                                "lesson-im",
-                                                $notify->student_id
-                                            ) .
-                                            "?notification_id=" .
-                                            $notify->id .
-                                            "#im" .
-                                            $notify->case_id;
-                                    } elseif ($notify->case_type == 7) {
-                                        $route =
-                                            route(
-                                                "lesson-sand",
-                                                $notify->student_id
-                                            ) .
-                                            "?notification_id=" .
-                                            $notify->id .
-                                            "#sand" .
-                                            $notify->case_id;
-                                    } ?>
-
-
-
-                                    @if ($notify->is_read)
-                                        @if ($notify->case_type > 3)
-                                            <a class="dropdown-item pt-2 pb-2" href="{{ $route }}"><span
-                                                    class="font-weight-bold">{{ $notify->first_name }}</span> has tagged
-                                                you in a comment under <span
-                                                    class="font-weight-bold">{{ $notify->name }}</span>'s lesson notes.
-                                                <div class="time-ago">{{ getTimeAgo($notify->created_at) }}</div>
-
-                                            </a>
-                                        @else
-                                            <a class="dropdown-item pt-2 pb-2" href="{{ $route }}"><span
-                                                    class="font-weight-bold">{{ $notify->first_name }}</span> has tagged
-                                                you in a comment under <span
-                                                    class="font-weight-bold">{{ $notify->name }}</span>'s case notes. <div
-                                                    class="time-ago">{{ getTimeAgo($notify->created_at) }}</div>
-
-                                            </a>
-                                        @endif
-                                    @else
-                                        @if ($notify->case_type > 3)
-                                            <a class="dropdown-item-unread pt-2 pb-2" href="{{ $route }}"><span
-                                                    class="font-weight-bold">{{ $notify->first_name }}</span> has tagged
-                                                you in a comment under <span
-                                                    class="font-weight-bold">{{ $notify->name }}</span>'s lesson notes.
-                                                <div class="time-ago">{{ getTimeAgo($notify->created_at) }}</div>
-
-
-                                            </a>
-                                        @else
-                                            <a class="dropdown-item-unread pt-2 pb-2" href="{{ $route }}"><span
-                                                    class="font-weight-bold">{{ $notify->first_name }}</span> has tagged
-                                                you in a comment under <span
-                                                    class="font-weight-bold">{{ $notify->name }}</span>'s case notes. <div
-                                                    class="time-ago">{{ getTimeAgo($notify->created_at) }}</div>
-
-                                            </a>
-                                        @endif
-                                    @endif
-                                @endforeach
-                            @endif
                         </div>
                     </div>
+
+
                     <div class="dropdown">
                         {{-- Announcement Notification --}}
                         <a class="btn-save {{ $unreadCount ? 'bg-danger' : 'bg-secondary' }}"

@@ -17,7 +17,6 @@ use App\Notification;
 use Carbon\Carbon;
 use Auth;
 use DB;
-use Illuminate\Pagination\LengthAwarePaginator;
 
 class CaseNoteController extends Controller
 {
@@ -184,7 +183,7 @@ class CaseNoteController extends Controller
         }
 
 
-        $this->readNotification($request);
+        // $this->readNotification($request);
 
 
         // dd($user);
