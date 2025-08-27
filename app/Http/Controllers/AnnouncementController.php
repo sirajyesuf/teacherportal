@@ -18,8 +18,24 @@ class AnnouncementController extends Controller
         $this->middleware('auth');        
     }
 
+    protected function readAnnouncement($request){
+
+        $uId = auth()->user()->id;
+
+        $announcementID = (int) $request->query("announcement_id", null);        
+
+        if ($announcementID) {
+            AnnouncementRecipient::where("id",$announcementID)
+            ->where("user_id", $uId)
+            ->where("read", 0)
+            ->update(["read" => 1]);
+        }
+    }
+
     public function index(Request $request)
     {
+        $this->readAnnouncement($request);
+
         $user = auth()->user();
 
         $notifications = Notification::query()
@@ -27,6 +43,7 @@ class AnnouncementController extends Controller
                     ->leftjoin('students','notifications.student_id','students.id')
                     ->where('notifications.user_id',Auth::user()->id)
                     ->where('notifications.deleted_at',null)
+                    ->where('notifications.is_read',0)
                     ->select('users.first_name','students.name','notifications.student_id','notifications.is_read','notifications.case_id','notifications.case_type','notifications.created_at')
                     ->orderBy('notifications.created_at','desc')
                     ->limit(10)
@@ -44,15 +61,30 @@ class AnnouncementController extends Controller
         $announcementsNots = Announcement::join('announcement_recipients','announcements.id','announcement_recipients.announcement_id')
                     ->join('users','announcement_recipients.user_id','users.id')
                     ->where('announcement_recipients.user_id',$user->id)
+                    ->where('announcement_recipients.read',0)
                     ->select('announcement_recipients.id as anrId','users.*','announcements.*','announcement_recipients.*','announcements.id as id')
                     ->orderBy('announcements.created_at','desc')
                     ->limit(10)
                     ->get();
 
-        // Unread Annoucement Count
-        $unreadCount = AnnouncementRecipient::where('user_id', $user->id)
-                    ->where('read', false)
-                    ->count();        
+       // Unread Annoucement Count
+       $unreadCount = Announcement::join(
+            "announcement_recipients",
+            "announcements.id",
+            "announcement_recipients.announcement_id")
+            ->join("users", "announcement_recipients.user_id", "users.id")
+            ->where("announcement_recipients.user_id", $user->id)
+            ->where("announcement_recipients.read", 0)
+            ->select(
+                "announcement_recipients.id as anrId",
+                "users.*",
+                "announcements.*",
+                "announcement_recipients.*",
+                "announcements.id as id"
+            )
+            
+            ->orderBy("announcements.created_at", "desc")
+            ->count();      
         
         $announcements = $user->receivedAnnouncements()
             ->whereHas('announcement', function ($query) use ($request) {
