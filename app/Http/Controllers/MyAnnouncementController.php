@@ -26,6 +26,7 @@ class MyAnnouncementController extends Controller
                     ->where('notifications.user_id',Auth::user()->id)
                     ->where('notifications.deleted_at',null)
                     ->select('users.first_name','students.name','notifications.student_id','notifications.is_read','notifications.case_id','notifications.case_type','notifications.created_at', 'notifications.id')
+                    ->orderBy('notifications.is_read','asc')
                     ->orderBy('notifications.created_at','desc')
                     ->limit(10)
                     ->get();
@@ -43,6 +44,7 @@ class MyAnnouncementController extends Controller
                     ->join('users','announcement_recipients.user_id','users.id')
                     ->where('announcement_recipients.user_id',$user->id)
                     ->select('announcement_recipients.id as anrId','users.*','announcements.*','announcement_recipients.*','announcements.id as id')
+                    ->orderBy('announcement_recipients.read','asc')
                     ->orderBy('announcements.created_at','desc')
                     ->limit(10)
                     ->get();

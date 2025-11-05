@@ -16,11 +16,11 @@ class StaffController extends Controller
         $this->middleware('auth');
         $this->middleware('isAdmin')->only('index');
     }
-    
+
     public function index(Request $request)
     {
         $user = auth()->user();
-        
+
         $notifications = Notification::query()
                     ->leftjoin('users','notifications.updated_by','users.id')
                     ->leftjoin('students','notifications.student_id','students.id')
@@ -37,16 +37,17 @@ class StaffController extends Controller
                     ->where('notifications.deleted_at',null)
                     ->where('notifications.is_read',0)
                     ->select('users.first_name','notifications.student_id','notifications.created_at')
-                    ->orderBy('notifications.created_at','desc')                    
+                    ->orderBy('notifications.created_at','desc')
                     ->count();
 
         $announcementsNots = Announcement::join('announcement_recipients','announcements.id','announcement_recipients.announcement_id')
                     ->join('users','announcement_recipients.user_id','users.id')
                     ->where('announcement_recipients.user_id',$user->id)
                     ->select('announcement_recipients.id as anrId','users.*','announcements.*','announcement_recipients.*','announcements.id as id')
+                    ->orderBy('announcement_recipients.read','asc')
                     ->orderBy('announcements.created_at','desc')
                     ->limit(10)
-                    ->get();   
+                    ->get();
 
         // Unread Annoucement Count
         $unreadCount = AnnouncementRecipient::where('user_id', $user->id)

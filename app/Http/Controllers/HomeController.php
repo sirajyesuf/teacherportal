@@ -41,7 +41,6 @@ class HomeController extends Controller
             ->leftjoin("students", "notifications.student_id", "students.id")
             ->where("notifications.user_id", $user->id)
             ->where("notifications.deleted_at", null)
-            // ->where("notifications.is_read", 0)
             ->select(
                 "users.first_name",
                 "students.name",
@@ -52,6 +51,7 @@ class HomeController extends Controller
                 "notifications.created_at",
                 "notifications.id"
             )
+            ->orderBy("notifications.is_read", "asc")
             ->orderBy("notifications.created_at", "desc")
             ->limit(10)
             ->get();
@@ -77,7 +77,6 @@ class HomeController extends Controller
             "announcement_recipients.announcement_id")
             ->join("users", "announcement_recipients.user_id", "users.id")
             ->where("announcement_recipients.user_id", $user->id)
-            // ->where("announcement_recipients.read", 0)
             ->select(
                 "announcement_recipients.id as anrId",
                 "users.*",
@@ -85,7 +84,7 @@ class HomeController extends Controller
                 "announcement_recipients.*",
                 "announcements.id as id"
             )
-            
+            ->orderBy("announcement_recipients.read", "asc")
             ->orderBy("announcements.created_at", "desc")
             ->limit(10)
             ->get();

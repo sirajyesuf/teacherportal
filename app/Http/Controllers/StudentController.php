@@ -33,8 +33,8 @@ class StudentController extends Controller
                     ->leftjoin('students','notifications.student_id','students.id')
                     ->where('notifications.user_id',Auth::user()->id)
                     ->where('notifications.deleted_at',null)
-                    ->where('notifications.is_read',0)
-                    ->select('users.first_name','students.name','notifications.student_id','notifications.is_read','notifications.case_id','notifications.case_type','notifications.created_at')
+                    ->select('users.first_name','students.name','notifications.student_id','notifications.is_read','notifications.case_id','notifications.case_type','notifications.created_at','notifications.id')
+                    ->orderBy('notifications.is_read','asc')
                     ->orderBy('notifications.created_at','desc')
                     ->limit(10)
                     ->get();

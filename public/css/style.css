@@ -1307,6 +1307,19 @@ div.nav-link{
 
 .header-area .dropdown-menu{padding: 0;height: 435px; overflow: hidden; overflow-y: auto; width: 300px;}
 .header-area .dropdown-item{white-space: break-spaces;font-size: 12px;}
+.header-area .dropdown-item-unread {
+    display: block;
+    width: 100%;
+    padding: 0rem 1.5rem;
+    clear: both;
+    font-weight: 400;
+    color: #212529;
+    text-align: inherit;
+    white-space: normal;
+    background-color: #fceed3;
+    border: 0;
+    font-size: 12px;
+}
 
 
 @media(max-width:767px){
