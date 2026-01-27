@@ -2553,10 +2553,8 @@ class LessonController extends Controller
         $model->updated_by = Auth::user()->id;
         $model->deleted_at = Carbon::now();
 
-        // udpate related lesson hours log
-        $lg = LessonLog::where("lesson_id", $request->id)->update([
-            "lesson_id" => null,
-        ]);
+        // delete related lesson hours log completely
+        LessonLog::where("lesson_id", $request->id)->delete();
 
         if ($model->save()) {
             $result = ["status" => true, "message" => "Delete successfully"];
