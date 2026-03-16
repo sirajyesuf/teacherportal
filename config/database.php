@@ -60,7 +60,10 @@ return [
             'engine' => null,
             'options' => extension_loaded('pdo_mysql') ? array_filter([
                 PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
-            ]) : [],
+                PDO::ATTR_TIMEOUT      => 3,
+            ]) : [
+                PDO::ATTR_TIMEOUT      => 3,   // still applies even if pdo_mysql not loaded
+            ],
         ],
 
         'pgsql' => [
